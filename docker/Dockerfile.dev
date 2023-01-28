@@ -1,0 +1,35 @@
+FROM ubuntu:22.04
+
+# Versions
+ARG NVM_VERSION=v0.39.3
+ARG NODE_VERSION=v18.13.0
+ARG YARN_VERSION=v3.3.1
+
+# Update system packages
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y \
+        curl \
+        git
+
+# Add user
+RUN useradd -m -s /bin/bash dev
+USER dev
+
+# Install NVM
+ENV NVM_DIR /home/dev/.nvm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh | bash; \
+    . $NVM_DIR/nvm.sh && \
+    nvm --version
+
+# Install Node.JS
+RUN . $NVM_DIR/nvm.sh && \
+    nvm install ${NODE_VERSION} && \
+    nvm use ${NODE_VERSION} && \
+    node --version
+
+# Install Yarn
+RUN . $NVM_DIR/nvm.sh && \
+    corepack enable && \
+    corepack prepare yarn@${YARN_VERSION} --activate && \
+    yarn --version
