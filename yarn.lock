@@ -530,6 +530,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"client@workspace:client":
+  version: 0.0.0-use.local
+  resolution: "client@workspace:client"
+  dependencies:
+    "@vitejs/plugin-vue": ^4.0.0
+    typescript: ^4.9.3
+    vite: ^4.0.0
+    vue: ^3.2.45
+    vue-tsc: ^1.0.11
+  languageName: unknown
+  linkType: soft
+
 "color-support@npm:^1.1.3":
   version: 1.1.3
   resolution: "color-support@npm:1.1.3"
@@ -1218,18 +1230,6 @@ __metadata:
   checksum: a2e8092dd86c8396bdba9f2b5481032848525b3dc295ce9b57896f931e63fc16f79805144321f72976383fc249584672a75cc18d6777c6b757603f372f745981
   languageName: node
   linkType: hard
-
-"portobello-client@workspace:portobello-client":
-  version: 0.0.0-use.local
-  resolution: "portobello-client@workspace:portobello-client"
-  dependencies:
-    "@vitejs/plugin-vue": ^4.0.0
-    typescript: ^4.9.3
-    vite: ^4.0.0
-    vue: ^3.2.45
-    vue-tsc: ^1.0.11
-  languageName: unknown
-  linkType: soft
 
 "portobello@workspace:.":
   version: 0.0.0-use.local

@@ -16,15 +16,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:."\
       },\
       {\
-        "name": "portobello-client",\
-        "reference": "workspace:portobello-client"\
+        "name": "client",\
+        "reference": "workspace:client"\
       }\
     ],\
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
-      ["portobello", ["workspace:."]],\
-      ["portobello-client", ["workspace:portobello-client"]]\
+      ["client", ["workspace:client"]],\
+      ["portobello", ["workspace:."]]\
     ],\
     "fallbackPool": [\
     ],\
@@ -323,13 +323,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:fb30d80fbb1dcb769af2031e813356ae272d18177c08ceb07203926854e602a36c7b1f8763ddef13c28380a7390280982342cca8d6f497ff57d8b1ecd6998513#npm:4.0.0", {\
-          "packageLocation": "./.yarn/__virtual__/@vitejs-plugin-vue-virtual-99993bebb0/0/cache/@vitejs-plugin-vue-npm-4.0.0-028e1c0d6d-5a53414912.zip/node_modules/@vitejs/plugin-vue/",\
+        ["virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:4.0.0", {\
+          "packageLocation": "./.yarn/__virtual__/@vitejs-plugin-vue-virtual-8db7ab645e/0/cache/@vitejs-plugin-vue-npm-4.0.0-028e1c0d6d-5a53414912.zip/node_modules/@vitejs/plugin-vue/",\
           "packageDependencies": [\
-            ["@vitejs/plugin-vue", "virtual:fb30d80fbb1dcb769af2031e813356ae272d18177c08ceb07203926854e602a36c7b1f8763ddef13c28380a7390280982342cca8d6f497ff57d8b1ecd6998513#npm:4.0.0"],\
+            ["@vitejs/plugin-vue", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:4.0.0"],\
             ["@types/vite", null],\
             ["@types/vue", null],\
-            ["vite", "virtual:fb30d80fbb1dcb769af2031e813356ae272d18177c08ceb07203926854e602a36c7b1f8763ddef13c28380a7390280982342cca8d6f497ff57d8b1ecd6998513#npm:4.0.4"],\
+            ["vite", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:4.0.4"],\
             ["vue", "npm:3.2.45"]\
           ],\
           "packagePeers": [\
@@ -676,6 +676,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["clean-stack", "npm:2.2.0"]\
           ],\
           "linkType": "HARD"\
+        }]\
+      ]],\
+      ["client", [\
+        ["workspace:client", {\
+          "packageLocation": "./client/",\
+          "packageDependencies": [\
+            ["client", "workspace:client"],\
+            ["@vitejs/plugin-vue", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:4.0.0"],\
+            ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=ad5954"],\
+            ["vite", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:4.0.4"],\
+            ["vue", "npm:3.2.45"],\
+            ["vue-tsc", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:1.0.24"]\
+          ],\
+          "linkType": "SOFT"\
         }]\
       ]],\
       ["color-support", [\
@@ -1407,20 +1421,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["portobello-client", [\
-        ["workspace:portobello-client", {\
-          "packageLocation": "./portobello-client/",\
-          "packageDependencies": [\
-            ["portobello-client", "workspace:portobello-client"],\
-            ["@vitejs/plugin-vue", "virtual:fb30d80fbb1dcb769af2031e813356ae272d18177c08ceb07203926854e602a36c7b1f8763ddef13c28380a7390280982342cca8d6f497ff57d8b1ecd6998513#npm:4.0.0"],\
-            ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=ad5954"],\
-            ["vite", "virtual:fb30d80fbb1dcb769af2031e813356ae272d18177c08ceb07203926854e602a36c7b1f8763ddef13c28380a7390280982342cca8d6f497ff57d8b1ecd6998513#npm:4.0.4"],\
-            ["vue", "npm:3.2.45"],\
-            ["vue-tsc", "virtual:fb30d80fbb1dcb769af2031e813356ae272d18177c08ceb07203926854e602a36c7b1f8763ddef13c28380a7390280982342cca8d6f497ff57d8b1ecd6998513#npm:1.0.24"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["postcss", [\
         ["npm:8.4.21", {\
           "packageLocation": "./.yarn/cache/postcss-npm-8.4.21-9ad76bf58d-e39ac60ccd.zip/node_modules/postcss/",\
@@ -1745,10 +1745,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:fb30d80fbb1dcb769af2031e813356ae272d18177c08ceb07203926854e602a36c7b1f8763ddef13c28380a7390280982342cca8d6f497ff57d8b1ecd6998513#npm:4.0.4", {\
-          "packageLocation": "./.yarn/__virtual__/vite-virtual-adc7cad221/0/cache/vite-npm-4.0.4-33a47fc7a2-eb86c8cdfe.zip/node_modules/vite/",\
+        ["virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:4.0.4", {\
+          "packageLocation": "./.yarn/__virtual__/vite-virtual-f2c02f8d71/0/cache/vite-npm-4.0.4-33a47fc7a2-eb86c8cdfe.zip/node_modules/vite/",\
           "packageDependencies": [\
-            ["vite", "virtual:fb30d80fbb1dcb769af2031e813356ae272d18177c08ceb07203926854e602a36c7b1f8763ddef13c28380a7390280982342cca8d6f497ff57d8b1ecd6998513#npm:4.0.4"],\
+            ["vite", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:4.0.4"],\
             ["@types/less", null],\
             ["@types/node", null],\
             ["@types/sass", null],\
@@ -1815,10 +1815,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:fb30d80fbb1dcb769af2031e813356ae272d18177c08ceb07203926854e602a36c7b1f8763ddef13c28380a7390280982342cca8d6f497ff57d8b1ecd6998513#npm:1.0.24", {\
-          "packageLocation": "./.yarn/__virtual__/vue-tsc-virtual-965c643679/0/cache/vue-tsc-npm-1.0.24-dfeba1be51-788535bd38.zip/node_modules/vue-tsc/",\
+        ["virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:1.0.24", {\
+          "packageLocation": "./.yarn/__virtual__/vue-tsc-virtual-05ba8d9806/0/cache/vue-tsc-npm-1.0.24-dfeba1be51-788535bd38.zip/node_modules/vue-tsc/",\
           "packageDependencies": [\
-            ["vue-tsc", "virtual:fb30d80fbb1dcb769af2031e813356ae272d18177c08ceb07203926854e602a36c7b1f8763ddef13c28380a7390280982342cca8d6f497ff57d8b1ecd6998513#npm:1.0.24"],\
+            ["vue-tsc", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:1.0.24"],\
             ["@types/typescript", null],\
             ["@volar/vue-language-core", "npm:1.0.24"],\
             ["@volar/vue-typescript", "npm:1.0.24"],\
