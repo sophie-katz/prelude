@@ -1,7 +1,17 @@
 {
   "recommendations": [
-    "vue.vscode-typescript-vue-plugin",
+    "arcanis.vscode-zipfs",
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
     "vue.volar",
-    "arcanis.vscode-zipfs"
+    "vue.vscode-typescript-vue-plugin",
+    "wayou.vscode-todo-highlight"
+  ],
+  "unwantedRecommendations": [
+    "dbaeumer.jshint",
+    "hookyqr.beautify",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "octref.vetur"
   ]
 }

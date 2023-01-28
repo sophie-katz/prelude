@@ -1,17 +1,21 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-	"name": "Dockerized dev environment",
-	"dockerComposeFile": "${localWorkspaceFolder}/docker/docker-compose.dev.yml",
-	"service": "dev",
-	"workspaceFolder": "/app",
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"Vue.volar",
-				"Vue.vscode-typescript-vue-plugin",
-				"arcanis.vscode-zipfs"
-			]
-		}
-	}
+  "name": "Dockerized dev environment",
+  "dockerComposeFile": "${localWorkspaceFolder}/docker/docker-compose.dev.yml",
+  "service": "dev",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "arcanis.vscode-zipfs",
+        "dbaeumer.vscode-eslint",
+        "editorconfig.editorconfig",
+        "esbenp.prettier-vscode",
+        "vue.volar",
+        "vue.vscode-typescript-vue-plugin",
+        "wayou.vscode-todo-highlight"
+      ]
+    }
+  }
 }
