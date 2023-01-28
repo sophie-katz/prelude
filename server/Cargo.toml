@@ -1,0 +1,8 @@
+[package]
+name = "server"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dotenv = "0.15.0"
+openapi = { version = "0.1.0", path = "../core/api-bindings-rust" }

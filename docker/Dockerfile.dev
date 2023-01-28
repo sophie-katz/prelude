@@ -5,16 +5,24 @@ ARG NVM_VERSION=v0.39.3
 ARG NODE_VERSION=v18.13.0
 ARG YARN_VERSION=v3.3.1
 
-# Update system packages
+# Update and install system packages
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
+        build-essential \
         curl \
-        git
+        default-jre \
+        git \
+        libssl-dev \
+        pkg-config
 
 # Add user
 RUN useradd -m -s /bin/bash dev
 USER dev
+
+# Install Rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly; \
+    source /home/dev/.cargo/env
 
 # Install NVM
 ENV NVM_DIR /home/dev/.nvm

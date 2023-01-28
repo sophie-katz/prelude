@@ -1,6 +1,6 @@
 # Portobello
 
-## Setup
+## Project setup
 
 ```bash
 # Install dependencies

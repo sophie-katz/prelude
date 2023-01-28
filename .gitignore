@@ -11,7 +11,13 @@
 node_modules
 dist
 dist-ssr
+typings
 *.local
+wwwroot/*.js
 
 # Quasar
 .quasar
+
+# Rust
+target
+**/*.rs.bk
