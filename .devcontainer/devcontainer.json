@@ -17,5 +17,6 @@
         "wayou.vscode-todo-highlight"
       ]
     }
-  }
+  },
+  "shutdownAction": "stopCompose"
 }
