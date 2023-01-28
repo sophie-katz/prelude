@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "vue.vscode-typescript-vue-plugin",
-    "vue.volar"
+    "vue.volar",
+    "arcanis.vscode-zipfs"
   ]
 }

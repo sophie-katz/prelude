@@ -9,7 +9,8 @@
 		"vscode": {
 			"extensions": [
 				"Vue.volar",
-				"Vue.vscode-typescript-vue-plugin"
+				"Vue.vscode-typescript-vue-plugin",
+				"arcanis.vscode-zipfs"
 			]
 		}
 	}
