@@ -4,6 +4,10 @@
 
 Portobello is a project management and monitoring suite.
 
+| Link                                                                                                           | Description                   |
+|----------------------------------------------------------------------------------------------------------------|-------------------------------|
+| [Google Drive folder](https://drive.google.com/drive/folders/1N00nt2MpcOYI9LJROfeZS94XxQnfkklY?usp=share_link) | Google Drive storage location |
+
 ## Project setup
 
 Click the green button on the bottom left of the VS Code window, and then select "Reopen in Container". See [https://code.visualstudio.com/docs/remote/containers](https://code.visualstudio.com/docs/remote/containers) for more details.
