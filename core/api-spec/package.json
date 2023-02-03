@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "@core/api",
   "private": true,
   "version": "0.1.0",
   "packageManager": "yarn@3.3.1",
@@ -13,7 +13,6 @@
     "validate": "openapi-generator-cli validate -i openapi.yml",
     "generate-client-typescript-axios": "openapi-generator-cli generate -i openapi.yml -g typescript-axios -o ../api-bindings-client-typescript-axios",
     "generate-client-rust": "openapi-generator-cli generate -i openapi.yml -g rust -o ../api-bindings-client-rust",
-    "generate-server-rust": "openapi-generator-cli generate -i openapi.yml -g rust-server -o ../api-bindings-server-rust",
-    "generate": "yarn run generate-client-typescript-axios; yarn run generate-client-rust; yarn run generate-server-rust"
+    "generate": "yarn run generate-client-typescript-axios; yarn run generate-client-rust"
   }
 }

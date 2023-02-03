@@ -20,21 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-version: "3.9"
-
-services:
-  # Development container for VS Code to use
-  dev:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    # Command required by VS Code to keep the container running during development
-    command: /bin/sh -c "while sleep 1000; do :; done"
-    # Mount project directory as a volume
-    volumes:
-      - ../:/app:cached
-    # Loosen security requirements to allow for debugging
-    cap_add:
-      - SYS_PTRACE
-    security_opt:
-      - seccomp:unconfined
+[target.x86_64-unknown-linux-gnu]
+rustflags = [
+    "-C", "link-arg=-fuse-ld=lld",
+]

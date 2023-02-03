@@ -39,6 +39,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@core/api-bindings-client-typescript-axios@0.1.0, @core/api-bindings-client-typescript-axios@workspace:core/api-bindings-client-typescript-axios":
+  version: 0.0.0-use.local
+  resolution: "@core/api-bindings-client-typescript-axios@workspace:core/api-bindings-client-typescript-axios"
+  dependencies:
+    axios: ^1.2.6
+  languageName: unknown
+  linkType: soft
+
+"@core/api@workspace:core/api":
+  version: 0.0.0-use.local
+  resolution: "@core/api@workspace:core/api"
+  dependencies:
+    "@openapitools/openapi-generator-cli": ^2.5.2
+  languageName: unknown
+  linkType: soft
+
 "@esbuild/linux-loong64@npm:0.14.54":
   version: 0.14.54
   resolution: "@esbuild/linux-loong64@npm:0.14.54"
@@ -875,22 +891,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"api-bindings-client-typescript-axios@0.1.0, api-bindings-client-typescript-axios@workspace:core/api-bindings-client-typescript-axios":
-  version: 0.0.0-use.local
-  resolution: "api-bindings-client-typescript-axios@workspace:core/api-bindings-client-typescript-axios"
-  dependencies:
-    axios: ^1.2.6
-  languageName: unknown
-  linkType: soft
-
-"api@workspace:core/api":
-  version: 0.0.0-use.local
-  resolution: "api@workspace:core/api"
-  dependencies:
-    "@openapitools/openapi-generator-cli": ^2.5.2
-  languageName: unknown
-  linkType: soft
-
 "aproba@npm:^1.0.3 || ^2.0.0":
   version: 2.0.0
   resolution: "aproba@npm:2.0.0"
@@ -1306,12 +1306,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "client@workspace:client"
   dependencies:
+    "@core/api-bindings-client-typescript-axios": 0.1.0
     "@quasar/app-vite": ^1.0.0
     "@quasar/extras": ^1.0.0
     "@types/node": ^12.20.21
     "@typescript-eslint/eslint-plugin": ^5.10.0
     "@typescript-eslint/parser": ^5.10.0
-    api-bindings-client-typescript-axios: 0.1.0
     autoprefixer: ^10.4.2
     eslint: ^8.10.0
     eslint-config-prettier: ^8.1.0

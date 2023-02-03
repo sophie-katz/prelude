@@ -1,12 +1,55 @@
 {
   "recommendations": [
+    // Provides access to Yarn cache
     "arcanis.vscode-zipfs",
+
+    // Javascript/Typescript linting
     "dbaeumer.vscode-eslint",
-    "editorconfig.editorconfig",
+
+    // Formatting for Javascript/Typescript
     "esbenp.prettier-vscode",
+
+    // Vue support
     "vue.volar",
+
+    // Typescript Vue support
     "vue.vscode-typescript-vue-plugin",
-    "wayou.vscode-todo-highlight"
+
+    // TODO highlighting
+    "wayou.vscode-todo-highlight",
+
+    // TOML support for Cargo.toml files
+    "tamasfe.even-better-toml",
+
+    // Quality of life for Cargo.toml files
+    "serayuzgur.crates",
+
+    // Debugging for Rust
+    "vadimcn.vscode-lldb",
+
+    // Used by the Rust test adapter
+    "hbenl.vscode-test-explorer",
+
+    // Rust automated test explorer
+    "swellaby.vscode-rust-test-adapter",
+
+    // Rust inline code coverage
+    "ryanluker.vscode-coverage-gutters",
+
+    // Quality of life for Cargo.toml files
+    "jedeop.crates-completer",
+
+    // Rust support
+    "rust-lang.rust-analyzer",
+
+    // Rust documentation support
+    "jscearcy.rust-doc-viewer",
+
+    // REST API Client
+    "rangav.vscode-thunder-client",
+
+    // Git quality of life
+    "eamodio.gitlens"
   ],
   "unwantedRecommendations": [
     "dbaeumer.jshint",

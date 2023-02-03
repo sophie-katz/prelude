@@ -24,19 +24,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:core"\
       },\
       {\
-        "name": "api",\
+        "name": "@core/api",\
         "reference": "workspace:core/api"\
       },\
       {\
-        "name": "api-bindings-client-typescript-axios",\
+        "name": "@core/api-bindings-client-typescript-axios",\
         "reference": "workspace:core/api-bindings-client-typescript-axios"\
       }\
     ],\
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
-      ["api", ["workspace:core/api"]],\
-      ["api-bindings-client-typescript-axios", ["workspace:core/api-bindings-client-typescript-axios"]],\
+      ["@core/api", ["workspace:core/api"]],\
+      ["@core/api-bindings-client-typescript-axios", ["workspace:core/api-bindings-client-typescript-axios"]],\
       ["client", ["workspace:client"]],\
       ["core", ["workspace:core"]],\
       ["portobello", ["workspace:."]]\
@@ -91,6 +91,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["to-fast-properties", "npm:2.0.0"]\
           ],\
           "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@core/api", [\
+        ["workspace:core/api", {\
+          "packageLocation": "./core/api/",\
+          "packageDependencies": [\
+            ["@core/api", "workspace:core/api"],\
+            ["@openapitools/openapi-generator-cli", "npm:2.5.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@core/api-bindings-client-typescript-axios", [\
+        ["workspace:core/api-bindings-client-typescript-axios", {\
+          "packageLocation": "./core/api-bindings-client-typescript-axios/",\
+          "packageDependencies": [\
+            ["@core/api-bindings-client-typescript-axios", "workspace:core/api-bindings-client-typescript-axios"],\
+            ["axios", "npm:1.2.6"]\
+          ],\
+          "linkType": "SOFT"\
         }]\
       ]],\
       ["@esbuild/linux-loong64", [\
@@ -1211,26 +1231,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["api", [\
-        ["workspace:core/api", {\
-          "packageLocation": "./core/api/",\
-          "packageDependencies": [\
-            ["api", "workspace:core/api"],\
-            ["@openapitools/openapi-generator-cli", "npm:2.5.2"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["api-bindings-client-typescript-axios", [\
-        ["workspace:core/api-bindings-client-typescript-axios", {\
-          "packageLocation": "./core/api-bindings-client-typescript-axios/",\
-          "packageDependencies": [\
-            ["api-bindings-client-typescript-axios", "workspace:core/api-bindings-client-typescript-axios"],\
-            ["axios", "npm:1.2.6"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["aproba", [\
         ["npm:2.0.0", {\
           "packageLocation": "./.yarn/cache/aproba-npm-2.0.0-8716bcfde6-5615cadcfb.zip/node_modules/aproba/",\
@@ -1709,12 +1709,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./client/",\
           "packageDependencies": [\
             ["client", "workspace:client"],\
+            ["@core/api-bindings-client-typescript-axios", "workspace:core/api-bindings-client-typescript-axios"],\
             ["@quasar/app-vite", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:1.2.0"],\
             ["@quasar/extras", "npm:1.15.10"],\
             ["@types/node", "npm:12.20.55"],\
             ["@typescript-eslint/eslint-plugin", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:5.49.0"],\
             ["@typescript-eslint/parser", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:5.49.0"],\
-            ["api-bindings-client-typescript-axios", "workspace:core/api-bindings-client-typescript-axios"],\
             ["autoprefixer", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:10.4.13"],\
             ["eslint", "npm:8.32.0"],\
             ["eslint-config-prettier", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:8.6.0"],\

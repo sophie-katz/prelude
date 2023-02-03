@@ -20,21 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-version: "3.9"
+[workspace]
+members = ["server", "core/api-bindings-client-rust"]
 
-services:
-  # Development container for VS Code to use
-  dev:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    # Command required by VS Code to keep the container running during development
-    command: /bin/sh -c "while sleep 1000; do :; done"
-    # Mount project directory as a volume
-    volumes:
-      - ../:/app:cached
-    # Loosen security requirements to allow for debugging
-    cap_add:
-      - SYS_PTRACE
-    security_opt:
-      - seccomp:unconfined
+[profile.dev]
+opt-level = 0 # Ensure that optimization is disabled while debugging
