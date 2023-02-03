@@ -10,7 +10,8 @@ Portobello is a project management and monitoring suite.
 
 ## Project setup
 
-Click the green button on the bottom left of the VS Code window, and then select "Reopen in Container". See [https://code.visualstudio.com/docs/remote/containers](https://code.visualstudio.com/docs/remote/containers) for more details.
+* Click the green button on the bottom left of the VS Code window, and then select "Reopen in Container". See [https://code.visualstudio.com/docs/remote/containers](https://code.visualstudio.com/docs/remote/containers) for more details.
+* Copy `.env.example.dev` to `.env` and edit it, following instructions within
 
 This will install all dependencies needed within the container and reload the container. It will use a production-like Docker Compose environment and automatically launch all needed third-party services such as the database service.
 
@@ -35,6 +36,27 @@ Category        | Functionality                           | Usage
 |               | Generate HTML Rust test coverage report | Run the VS Code task `rust: llvm-cov --html`.
 |               | View HTML Rust test coverage report     | Run the VS Code command `Coverage Gutters: Preview Coverage Report`.<br /><br />**NOTE:** The project's HTML test coverage report must be generated first (see previous).
 
+### REST API client
+
+To set up the REST API in VS Code, import the Portobello collection in Thunder:
+* Navigate to the Thunder sidebar panel
+* Go to the Collections tab
+* Using the hamburger menu, click Import
+* Import `/app/portobello-thunder.json`
+
+In order to update the REST API configuration, re-export over the same path.
+
+### Database client
+
+To set up the database client in VS Code, add the connection to Database Client:
+* Navigate to the Database sidebar panel
+* Add a new connection
+    * **Host:** `db`
+    * **Port:** `5432`
+    * **Username:** must match `POSTGRES_USER` in `.env`
+    * **Password:** must match `POSTGRES_PASSWORD` in `.env`
+* Click save - it should appear in the sidebar
+
 ## Running Portobello for development
 
 These commands will launch the hot-loading development environment and allow you to develop in a production-like environment.
@@ -43,10 +65,10 @@ These commands will launch the hot-loading development environment and allow you
 # All commands should be run from /app
 
 # Launch server
-# TODO!
+cargo run server
 
 # Launch client
-# TODO!
+yarn workspace client run dev
 ```
 
 ## Building and running production Portobello image

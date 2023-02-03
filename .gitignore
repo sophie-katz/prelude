@@ -43,3 +43,6 @@ wwwroot/*.js
 # Rust
 target
 **/*.rs.bk
+
+# Environment
+.env

@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 [workspace]
-members = ["server", "core/api-bindings-client-rust"]
+members = ["server", "core/db"]
 
 [profile.dev]
 opt-level = 0 # Ensure that optimization is disabled while debugging

@@ -57,7 +57,10 @@
         "rangav.vscode-thunder-client",
 
         // Git quality of life
-        "eamodio.gitlens"
+        "eamodio.gitlens",
+
+        // Database client
+        "cweijan.vscode-database-client2"
       ]
     }
   },

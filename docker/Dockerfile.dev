@@ -36,6 +36,7 @@ RUN apt-get update && \
         default-jre \
         git \
         libssl-dev \
+        lld \
         pkg-config
 
 # Add user
@@ -44,13 +45,13 @@ USER dev
 
 # Install Rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly; \
-    source /home/dev/.cargo/env && \
+    . /home/dev/.cargo/env && \
     rustup --version && \
     rustc --version && \
     cargo --version
 
 # Install additional Rust components
-RUN source /home/dev/.cargo/env && \
+RUN . /home/dev/.cargo/env && \
     rustup component add llvm-tools-preview
 
 # Install NVM
