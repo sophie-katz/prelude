@@ -60,7 +60,10 @@
         "eamodio.gitlens",
 
         // Database client
-        "cweijan.vscode-database-client2"
+        "cweijan.vscode-database-client2",
+
+        // Terminal quality of life
+        "fabiospampinato.vscode-terminals"
       ]
     }
   },

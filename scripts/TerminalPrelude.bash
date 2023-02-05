@@ -20,11 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-[package]
-name = "db"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-futures = "0.3.21"
-sea-orm = { version = "0.10.7", features = [ "sqlx-postgres", "runtime-tokio-native-tls", "macros" ] }
+clear
+python3 /app/scripts/CheckForUpdates.py
+echo

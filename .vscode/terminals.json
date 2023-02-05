@@ -1,0 +1,44 @@
+{
+  "autorun": true,
+  "terminals": [
+    {
+      "name": "Primary",
+      "description": "General-use terminal",
+      "command": "bash /app/scripts/TerminalPrelude.bash",
+      "recycle": false,
+      "focus": true
+    },
+    {
+      "name": "Git",
+      "description": "Terminal for git commands",
+      "command": "bash /app/scripts/TerminalPrelude.bash",
+      "recycle": false
+    },
+    {
+      "name": "Rust",
+      "description": "Terminal for Cargo and other Rust commands",
+      "command": "bash /app/scripts/TerminalPrelude.bash",
+      "recycle": false
+    },
+    {
+      "name": "Client",
+      "description": "Terminal for running the Portobello client",
+      "commands": [
+        "bash /app/scripts/TerminalPrelude.bash",
+        "yarn workspace client run dev"
+      ],
+      "recycle": false,
+      "execute": false
+    },
+    {
+      "name": "Server",
+      "description": "Terminal for running the Portobello server",
+      "commands": [
+        "bash /app/scripts/TerminalPrelude.bash",
+        "cargo run server"
+      ],
+      "recycle": false,
+      "execute": false
+    }
+  ]
+}
