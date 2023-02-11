@@ -66,6 +66,9 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --de
 RUN . /home/dev/.cargo/env && \
     rustup component add llvm-tools-preview
 
+# Install global Rust dependencies
+RUN cargo install sea-orm-cli
+
 # Install NVM
 ENV NVM_DIR /home/dev/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${PORTOBELLO_NVM_VERSION}/install.sh | bash; \

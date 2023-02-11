@@ -23,10 +23,19 @@
 #[macro_use]
 extern crate rocket;
 
+use config_env::Configuration;
+
 use rocket::{
     build,
     serde::{json::Json, Deserialize, Serialize},
+    State,
 };
+
+use sea_orm::*;
+
+use rocket::futures::executor;
+
+use db::entities::prelude::User;
 
 #[derive(Serialize, Deserialize)]
 #[serde(crate = "rocket::serde")]
@@ -36,14 +45,35 @@ struct UserResponse {
 }
 
 #[get("/")]
-fn index() -> Json<UserResponse> {
-    Json(UserResponse {
-        id: 1,
-        username: "admin".to_owned(),
-    })
+async fn index(connection: &State<DatabaseConnection>) -> Json<Vec<UserResponse>> {
+    // Json(UserResponse {
+    //     id: 1,
+    //     username: "admin".to_owned(),
+    // })
+
+    let connection = connection as &DatabaseConnection;
+
+    let users = User::find()
+        .all(connection)
+        .await
+        .unwrap()
+        .into_iter()
+        .map(|row| UserResponse {
+            id: row.id,
+            username: row.username,
+        })
+        .collect::<Vec<UserResponse>>();
+
+    Json(users)
 }
 
 #[launch]
 fn rocket() -> _ {
-    build().mount("/", routes![index])
+    let configuration =
+        Configuration::new().expect("unable to load configuration from environment");
+
+    let connection = executor::block_on(Database::connect(configuration.database_url))
+        .expect("unable to connect to database");
+
+    build().manage(connection).mount("/", routes![index])
 }

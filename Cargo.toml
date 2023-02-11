@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 [workspace]
-members = ["server", "core/db"]
+members = ["server", "core/config-env", "core/db", "core/db/migration"]
 
 [profile.dev]
 opt-level = 0 # Ensure that optimization is disabled while debugging
