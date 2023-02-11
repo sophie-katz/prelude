@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -20,37 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub mod entities;
+use db::entities::prelude::User;
+use domain_api::user::UserResponse;
+use rocket::{serde::json::Json, State};
+use sea_orm::{DatabaseConnection, EntityTrait};
 
-#[cfg(test)]
-mod tests {
-    use sea_orm::*;
+#[get("/")]
+pub async fn index(db: &State<DatabaseConnection>) -> Json<Vec<UserResponse>> {
+    let db = db as &DatabaseConnection;
 
-    use crate::entities::{prelude::*, user};
+    let users = User::find()
+        .all(db)
+        .await
+        .unwrap()
+        .into_iter()
+        .map(|row| UserResponse {
+            id: row.id,
+            username: row.username,
+            icon: row.icon,
+        })
+        .collect::<Vec<UserResponse>>();
 
-    #[async_std::test]
-    async fn test_find_users() -> Result<(), DbErr> {
-        let db = MockDatabase::new(DatabaseBackend::Postgres)
-            .append_query_results([vec![user::Model {
-                id: 1,
-                username: "admin".to_owned(),
-                icon: None,
-            }]])
-            .into_connection();
-
-        assert_eq!(
-            User::find()
-                .all(&db)
-                .await?
-                .into_iter()
-                .collect::<Vec<user::Model>>(),
-            vec![user::Model {
-                id: 1,
-                username: "admin".to_owned(),
-                icon: None
-            }]
-        );
-
-        Ok(())
-    }
+    Json(users)
 }

@@ -9,3 +9,5 @@ The majority of the code is in this directory. Any shared TypeScript/Vue package
 | `api-spec` | OpenAPI specification which generates `api-bindings-client-rust` and `api-bindings-client-typescript-axios`. | OpenAPI/YAML |
 | `config-env` | A configuration loader for environment variables and from `.env`. | Rust |
 | `db` | The database layer. | Rust |
+| `domain-api` | Domain objects for the API. | Rust |
+| `server-routes` | A crate to store Rocket API routes. | Rust |

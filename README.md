@@ -28,7 +28,7 @@ sea-orm-cli migrate refresh
 
 # Launch server
 cd /app
-cargo run server
+cargo run --bin server
 
 # Launch client
 yarn workspace client run dev
@@ -61,6 +61,8 @@ Category        | Functionality                           | Usage
 |               | View inline Rust test coverage          | Run the VS Code command `Coverage Gutters: Display Coverage`.<br /><br />**NOTE:** The project's inline test coverage data must be generated first (see previous).
 |               | Generate HTML Rust test coverage report | Run the VS Code task `rust: llvm-cov --html`.
 |               | View HTML Rust test coverage report     | Run the VS Code command `Coverage Gutters: Preview Coverage Report`.<br /><br />**NOTE:** The project's HTML test coverage report must be generated first (see previous).
+*API*           | Validate OpenAPI specification          | Run the VS Code task `yarn: validate api spec`.
+|               | Generate OpenAPI bindings               | Run the VS Code task `yarn: generate api bindings`.
 *Database*      | Run migrations                          | Run the VS Code task `db: migrate`.
 |               | Generate entities                       | Run the VS Code task `db: generate entities`.
 

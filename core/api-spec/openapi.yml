@@ -38,17 +38,63 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/userResponse"
+  /user/{id}:
+    get:
+      summary: Get user by id
+      description: Gets a single user by their user id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Id of the user to get
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/userResponse"
+        "400":
+          description: "No user with id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
 
 components:
   schemas:
     userResponse:
       type: object
+      required:
+        - id
+        - username
       properties:
         id:
           type: integer
+          description: Unique id for the user
           minimum: 1
           example: 5
         username:
           type: string
+          description: Username for the user
           minLength: 1
-          example: admin
+          pattern: "^[a-zA-Z0-9_.-]*[a-zA-Z0-9]+[a-zA-Z0-9_.-]*$"
+          example: "admin"
+        icon:
+          type: string
+          description: An HTML base64 image value
+          minLength: 1
+          pattern: "^data:image/[a-z0-9]+;base64, [a-zA-Z0-9/]+$"
+          example: "data:image/jpeg;base64, LzlqLzRBQ... <!-- Base64 data -->"
+    error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          minLength: 1
+          example: "no user with id"
+

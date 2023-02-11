@@ -26,3 +26,7 @@ When changing the database structure, the entity code (Rust bindings for the dat
 cd /app/core/db
 sea-orm-cli generate entity -o src/entities
 ```
+
+## Unit tests
+
+All unit tests for the database are stored under `lib.rs`.

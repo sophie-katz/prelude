@@ -87,6 +87,32 @@
 			],
 			"label": "rust: cargo llvm-cov --html"
 		},
+		// Validate OpenAPI specification
+		{
+			"type": "shell",
+			"command": "yarn",
+			"args": [
+				"workspace",
+				"@core/api-spec",
+				"run",
+				"validate"
+			],
+			"problemMatcher": [],
+			"label": "yarn: validate api spec"
+		},
+		// Generate OpenAPI bindings
+		{
+			"type": "shell",
+			"command": "yarn",
+			"args": [
+				"workspace",
+				"@core/api-spec",
+				"run",
+				"generate"
+			],
+			"problemMatcher": [],
+			"label": "yarn: generate api bindings"
+		},
 		// Run database migrations
 		{
 			"type": "shell",

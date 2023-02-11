@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -20,37 +20,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub mod entities;
-
-#[cfg(test)]
-mod tests {
-    use sea_orm::*;
-
-    use crate::entities::{prelude::*, user};
-
-    #[async_std::test]
-    async fn test_find_users() -> Result<(), DbErr> {
-        let db = MockDatabase::new(DatabaseBackend::Postgres)
-            .append_query_results([vec![user::Model {
-                id: 1,
-                username: "admin".to_owned(),
-                icon: None,
-            }]])
-            .into_connection();
-
-        assert_eq!(
-            User::find()
-                .all(&db)
-                .await?
-                .into_iter()
-                .collect::<Vec<user::Model>>(),
-            vec![user::Model {
-                id: 1,
-                username: "admin".to_owned(),
-                icon: None
-            }]
-        );
-
-        Ok(())
-    }
-}
+pub mod user;
