@@ -28,8 +28,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-config-env = { path = "../config-env" }
 domain-api = { path = "../domain-api" }
 db = { path = "../db" }
 rocket = { version = "0.5.0-rc.2", features = ["json"] }
 sea-orm = { version = "0.11.0", features = [ "sqlx-postgres", "runtime-async-std-native-tls", "macros" ] }
+validator = { version = "0.16.0", features = [ "derive" ] }

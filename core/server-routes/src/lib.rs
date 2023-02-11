@@ -23,61 +23,10 @@
 #[macro_use]
 extern crate rocket;
 
-use config_env::Configuration;
-use rocket::{build, futures::executor, Build, Rocket};
-use sea_orm::{Database, DatabaseConnection, DbErr};
-use std::{
-    error,
-    fmt::{self, Display},
-};
+use rocket::{build, Build, Rocket};
+use sea_orm::DatabaseConnection;
 
 pub mod user;
-
-/// Error type for this crate
-#[derive(Debug)]
-pub enum Error {
-    /// Wrapper for config-env errors
-    ConfigEnvError(config_env::Error),
-    /// Wrapper for SeaORM errors
-    SeaORMDbErr(DbErr),
-}
-
-impl From<config_env::Error> for Error {
-    fn from(value: config_env::Error) -> Self {
-        Self::ConfigEnvError(value)
-    }
-}
-
-impl From<DbErr> for Error {
-    fn from(value: DbErr) -> Self {
-        Self::SeaORMDbErr(value)
-    }
-}
-
-impl Display for Error {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Error::ConfigEnvError(err) => write!(f, "{err}"),
-            Error::SeaORMDbErr(err) => write!(f, "{err}"),
-        }
-    }
-}
-
-impl error::Error for Error {}
-
-/// Connect to the Portobello database
-///
-/// # Errors
-///
-/// If there is an issue loading the database connection configuration or in
-/// connecting to the database, an error will be returned.
-pub fn connect_db() -> Result<DatabaseConnection, Error> {
-    let configuration = Configuration::new()?;
-
-    Ok(executor::block_on(Database::connect(
-        configuration.database_url,
-    ))?)
-}
 
 /// Build Rocket instance
 pub fn rocket(db: DatabaseConnection) -> Rocket<Build> {

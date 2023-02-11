@@ -21,11 +21,13 @@
 # SOFTWARE.
 
 [package]
-name = "server"
+name = "db-seed"
 version = "0.1.0"
 edition = "2021"
 
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
 [dependencies]
-rocket = { version = "0.5.0-rc.2", features = ["json"] }
-server-routes = { path = "../core/server-routes" }
-db = { path = "../core/db" }
+db = { path = "../../core/db" }
+sea-orm = { version = "0.11.0", features = [ "sqlx-postgres", "runtime-async-std-native-tls", "macros" ] }
+futures = "0.3.26"

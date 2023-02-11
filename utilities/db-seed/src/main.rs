@@ -20,10 +20,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#[macro_use]
-extern crate rocket;
+use db::{connect_db, entities::user};
+use futures::executor;
+use sea_orm::{ActiveModelTrait, DatabaseConnection, DbErr, Set};
 
-#[launch]
-fn rocket() -> _ {
-    server_routes::rocket(db::connect_db().expect("unable to connect to database"))
+async fn seed_user(db: &DatabaseConnection) -> Result<(), DbErr> {
+    let user_admin = user::ActiveModel {
+        username: Set("admin".to_owned()),
+        ..Default::default()
+    };
+
+    user_admin.insert(db).await?;
+
+    Ok(())
+}
+
+async fn seed(db: &DatabaseConnection) -> Result<(), DbErr> {
+    seed_user(db).await?;
+
+    Ok(())
+}
+
+fn main() {
+    let db = connect_db().expect("unable to connect to database");
+
+    executor::block_on(seed(&db)).expect("error while seeding");
 }

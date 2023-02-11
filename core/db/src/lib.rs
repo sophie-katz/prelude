@@ -20,13 +20,75 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+use config_env::Configuration;
+use futures::executor;
+use sea_orm::{Database, DatabaseConnection, DbErr};
+use std::{
+    error,
+    fmt::{self, Display},
+};
+
 pub mod entities;
+
+/// Error type for this crate
+#[derive(Debug)]
+pub enum Error {
+    /// Wrapper for config-env errors
+    ConfigEnvError(config_env::Error),
+    /// Wrapper for SeaORM errors
+    SeaORMDbErr(DbErr),
+}
+
+impl From<config_env::Error> for Error {
+    fn from(value: config_env::Error) -> Self {
+        Self::ConfigEnvError(value)
+    }
+}
+
+impl From<DbErr> for Error {
+    fn from(value: DbErr) -> Self {
+        Self::SeaORMDbErr(value)
+    }
+}
+
+impl Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Error::ConfigEnvError(err) => write!(f, "{err}"),
+            Error::SeaORMDbErr(err) => write!(f, "{err}"),
+        }
+    }
+}
+
+impl error::Error for Error {}
+
+/// Connect to the Portobello database
+///
+/// # Errors
+///
+/// If there is an issue loading the database connection configuration or in
+/// connecting to the database, an error will be returned.
+pub fn connect_db() -> Result<DatabaseConnection, Error> {
+    let configuration = Configuration::new()?;
+
+    Ok(executor::block_on(Database::connect(
+        configuration.database_url,
+    ))?)
+}
 
 #[cfg(test)]
 mod tests {
     use sea_orm::*;
 
+    use super::{connect_db, Error};
     use crate::entities::{prelude::*, user};
+
+    #[test]
+    fn test_connect_db() -> Result<(), Error> {
+        connect_db()?;
+
+        Ok(())
+    }
 
     #[async_std::test]
     async fn test_find_users() -> Result<(), DbErr> {

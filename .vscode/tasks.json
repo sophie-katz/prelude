@@ -61,6 +61,15 @@
 			],
 			"label": "rust: cargo doc"
 		},
+		// Run tests
+		{
+			"type": "cargo",
+			"command": "test",
+			"problemMatcher": [
+				"$rustc"
+			],
+			"label": "rust: cargo test"
+		},
 		// Generate code coverage LCOV file
 		{
 			"type": "cargo",
@@ -142,6 +151,19 @@
 			"options": {
 				"cwd": "${workspaceFolder}/core/db"
 			}
+		},
+		// Seed database
+		{
+			"type": "cargo",
+			"command": "run",
+			"args": [
+				"--bin",
+				"db-seed"
+			],
+			"problemMatcher": [
+				"$rustc"
+			],
+			"label": "db: seed"
 		}
 	]
 }

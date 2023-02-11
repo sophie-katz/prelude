@@ -26,6 +26,10 @@ These commands will launch the hot-loading development environment and allow you
 cd /app/core/db
 sea-orm-cli migrate refresh
 
+# Seed database (only before first run)
+cd /app
+cargo run --bin db-seed
+
 # Launch server
 cd /app
 cargo run --bin server
@@ -53,6 +57,7 @@ Category        | Functionality                           | Usage
 |               | Debug all tests for a Rust package      | Debug configurations exist for all relevant test binaries.<br /><br />**NOTE:** The project must be built first.
 |               | Debug just one test                     | Just above each unit test in the code, there is a code lens with an option to debug the test.<br /><br />**NOTE:** Unfortunately, the Rust Test Adapter VS Code extension does not support debugging unit tests from the test explorer.<br /><br />**NOTE:** The project must be built first.
 *Testing*       | Run all tests in project                | Tests are all available in the VS Code test explorer.<br /><br />**NOTE:** The project must be built first.
+|               | Run tests in batch                      | Run the VS Code task: `rust: cargo test`.
 *Linting*       | Lint the current file                   | Linting is automatically run after every file save.
 *Formatting*    | Format the current file                 | Formatting is automatically done after every file save.
 *Documentation* | Generate Rust documentation             | Run the VS Code task `rust: cargo doc` to generate HTML documentation for the whole project.
@@ -65,6 +70,7 @@ Category        | Functionality                           | Usage
 |               | Generate OpenAPI bindings               | Run the VS Code task `yarn: generate api bindings`.
 *Database*      | Run migrations                          | Run the VS Code task `db: migrate`.
 |               | Generate entities                       | Run the VS Code task `db: generate entities`.
+|               | Seed database                           | Run the VS Code task `db: seed`.
 
 ### REST API client
 

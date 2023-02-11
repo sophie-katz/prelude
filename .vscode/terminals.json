@@ -35,7 +35,7 @@
       "description": "Terminal for running the Portobello server",
       "commands": [
         "bash /app/scripts/TerminalPrelude.bash",
-        "cargo run server"
+        "cargo run --bin server"
       ],
       "recycle": false,
       "execute": false

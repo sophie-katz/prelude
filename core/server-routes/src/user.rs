@@ -24,6 +24,7 @@ use db::entities::prelude::User;
 use domain_api::user::UserResponse;
 use rocket::{serde::json::Json, State};
 use sea_orm::{DatabaseConnection, EntityTrait};
+use validator::Validate;
 
 #[get("/")]
 pub async fn index(db: &State<DatabaseConnection>) -> Json<Vec<UserResponse>> {
@@ -34,10 +35,18 @@ pub async fn index(db: &State<DatabaseConnection>) -> Json<Vec<UserResponse>> {
         .await
         .unwrap()
         .into_iter()
-        .map(|row| UserResponse {
-            id: row.id,
-            username: row.username,
-            icon: row.icon,
+        .map(|row| {
+            let user_response = UserResponse {
+                id: row.id,
+                username: row.username,
+                icon: row.icon,
+            };
+
+            user_response
+                .validate()
+                .expect("user response loaded from database does not pass validation");
+
+            user_response
         })
         .collect::<Vec<UserResponse>>();
 
