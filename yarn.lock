@@ -47,11 +47,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@core/api@workspace:core/api":
+"@core/api-spec@workspace:core/api-spec":
   version: 0.0.0-use.local
-  resolution: "@core/api@workspace:core/api"
+  resolution: "@core/api-spec@workspace:core/api-spec"
   dependencies:
     "@openapitools/openapi-generator-cli": ^2.5.2
+  languageName: unknown
+  linkType: soft
+
+"@core/db@workspace:core/db":
+  version: 0.0.0-use.local
+  resolution: "@core/db@workspace:core/db"
   languageName: unknown
   linkType: soft
 

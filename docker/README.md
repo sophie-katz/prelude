@@ -1,0 +1,1 @@
+Any files used to support the use of Docker are stored here.

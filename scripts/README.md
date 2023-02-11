@@ -1,0 +1,1 @@
+Any scripts that are used in development are stored here.

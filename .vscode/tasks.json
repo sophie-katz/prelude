@@ -86,6 +86,36 @@
 				"$rustc"
 			],
 			"label": "rust: cargo llvm-cov --html"
+		},
+		// Run database migrations
+		{
+			"type": "shell",
+			"command": "sea-orm-cli",
+			"args": [
+				"migrate",
+				"refresh"
+			],
+			"label": "db: migrate",
+			"problemMatcher": [],
+			"options": {
+				"cwd": "${workspaceFolder}/core/db"
+			}
+		},
+		// Generate database entities
+		{
+			"type": "shell",
+			"command": "sea-orm-cli",
+			"args": [
+				"generate",
+				"entity",
+				"-o",
+				"${workspaceFolder}/core/db/src/entities"
+			],
+			"label": "db: generate entities",
+			"problemMatcher": [],
+			"options": {
+				"cwd": "${workspaceFolder}/core/db"
+			}
 		}
 	]
 }

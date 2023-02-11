@@ -4,8 +4,8 @@
 
 Portobello is a project management and monitoring suite.
 
-| Link                                                                                                           | Description                   |
-|----------------------------------------------------------------------------------------------------------------|-------------------------------|
+| Link | Description |
+|------|-------------|
 | [Google Drive folder](https://drive.google.com/drive/folders/1N00nt2MpcOYI9LJROfeZS94XxQnfkklY?usp=share_link) | Google Drive storage location |
 
 ## Project setup
@@ -35,6 +35,8 @@ Category        | Functionality                           | Usage
 |               | View inline Rust test coverage          | Run the VS Code command `Coverage Gutters: Display Coverage`.<br /><br />**NOTE:** The project's inline test coverage data must be generated first (see previous).
 |               | Generate HTML Rust test coverage report | Run the VS Code task `rust: llvm-cov --html`.
 |               | View HTML Rust test coverage report     | Run the VS Code command `Coverage Gutters: Preview Coverage Report`.<br /><br />**NOTE:** The project's HTML test coverage report must be generated first (see previous).
+*Database*      | Run migrations                          | Run the VS Code task `db: migrate`.
+|               | Generate entities                       | Run the VS Code task `db: generate entities`.
 
 ### REST API client
 
@@ -62,9 +64,12 @@ To set up the database client in VS Code, add the connection to Database Client:
 These commands will launch the hot-loading development environment and allow you to develop in a production-like environment.
 
 ```bash
-# All commands should be run from /app
+# Run database migrations (only before first run)
+cd /app/core/db
+sea-orm-cli migrate refresh
 
 # Launch server
+cd /app
 cargo run server
 
 # Launch client

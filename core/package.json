@@ -4,6 +4,7 @@
   "private": true,
   "workspaces": [
     "api",
-    "api-bindings-client-typescript-axios"
+    "api-bindings-client-typescript-axios",
+    "api-spec"
   ]
 }

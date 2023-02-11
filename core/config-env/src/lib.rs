@@ -20,17 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use dotenv;
 use std::{
     error,
     fmt::{self, Display},
     num::ParseIntError,
 };
 
+/// Error type for this crate
 #[derive(Debug)]
 pub enum Error {
-    KeyEmpty { key: &'static str },
+    /// Error for when an environemnt variable has an empty value
+    KeyEmpty {
+        /// The errneous key
+        key: &'static str,
+    },
+    /// Wrapper for dotenv errors
     DotEnvError(dotenv::Error),
+    /// Wrapper for integer parsing errors
     ParseError(ParseIntError),
 }
 
@@ -58,16 +64,34 @@ impl Display for Error {
 
 impl error::Error for Error {}
 
+/// A configuration structure that contains all of the loaded keys from the shell environment and from `.env`.
 #[derive(Debug)]
 pub struct Configuration {
+    /// Loaded from `POSTGRES_HOST`. Hostname or IP address of the server on which PostgreSQL is running.
     pub postgres_host: String,
+
+    /// Loaded from `POSTGRES_PORT`. The port on which PostgreSQL is exposed.
     pub postgres_port: u32,
+
+    /// Loaded from `POSTGRES_USER`. The username to use to login to PostgreSQL.
     pub postgres_user: String,
+
+    /// Loaded from `POSTGRES_PASSWORD`. The password to use to login to PostgreSQL.
     pub postgres_password: String,
+
+    /// Loaded from `DATABASE_URL`. The connection string that SeaORM uses.
     pub database_url: String,
 }
 
 impl Configuration {
+    /// Loads a Configuration from the shell environment and from `.env`.
+    ///
+    /// # Errors
+    ///
+    /// Iff there is any issue with dotenv, an error will be returned. Some keys
+    /// are for integers; if there is any issue parsing them, an error will be
+    /// returned. If an environment variable is empty or undefined, an error will
+    /// be thrown.
     pub fn new() -> Result<Self, Error> {
         dotenv::dotenv()?;
 

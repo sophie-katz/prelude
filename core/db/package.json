@@ -1,0 +1,9 @@
+{
+  "name": "@core/db",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "migrate": "sea-orm-cli migrate refresh",
+    "generate-entities": "sea-orm-cli generate entity -o /app/core/db/src/entities"
+  }
+}

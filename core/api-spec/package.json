@@ -1,5 +1,5 @@
 {
-  "name": "@core/api",
+  "name": "@core/api-spec",
   "private": true,
   "version": "0.1.0",
   "packageManager": "yarn@3.3.1",
