@@ -17,6 +17,32 @@ This will install all dependencies needed within the container and reload the co
 
 **NOTE:** This will require [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) to be installed on the host system and the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension to be installed in VS Code.
 
+## Running Portobello for development
+
+These commands will launch the hot-loading development environment and allow you to develop in a production-like environment.
+
+```bash
+# Run database migrations (only before first run)
+cd /app/core/db
+sea-orm-cli migrate refresh
+
+# Launch server
+cd /app
+cargo run server
+
+# Launch client
+yarn workspace client run dev
+```
+
+## Building and running production Portobello image
+
+```bash
+# All commands should be run from /app
+
+# Run production Docker-compose
+# TODO!
+```
+
 ## Using VS Code to develop
 
 The VS Code project is set up for the following features:
@@ -58,32 +84,6 @@ To set up the database client in VS Code, add the connection to Database Client:
     * **Username:** must match `POSTGRES_USER` in `.env`
     * **Password:** must match `POSTGRES_PASSWORD` in `.env`
 * Click save - it should appear in the sidebar
-
-## Running Portobello for development
-
-These commands will launch the hot-loading development environment and allow you to develop in a production-like environment.
-
-```bash
-# Run database migrations (only before first run)
-cd /app/core/db
-sea-orm-cli migrate refresh
-
-# Launch server
-cd /app
-cargo run server
-
-# Launch client
-yarn workspace client run dev
-```
-
-## Building and running production Portobello image
-
-```bash
-# All commands should be run from /app
-
-# Run production Docker-compose
-# TODO!
-```
 
 ## Project layout
 
