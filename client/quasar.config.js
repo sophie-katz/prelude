@@ -86,8 +86,7 @@ module.exports = configure(function (/* ctx */) {
         }
 
         viteConf.build.rollupOptions.external = [
-          "vue",
-          "vue3-hotkey"
+          "vue"
         ];
       },
       // viteVuePluginOptions: {},

@@ -2,6 +2,9 @@
   <q-layout view="hHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
+        <q-btn
+        icon="menu" />
+
         <q-toolbar-title>
           Quasar App
         </q-toolbar-title>
@@ -48,7 +51,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import useHotKey, { HotKey } from "vue3-hotkey";
 import UnderConstructionLarge from '../components/UnderConstructionLarge.vue';
 
 export default defineComponent({
@@ -56,22 +58,19 @@ export default defineComponent({
     setup() {
         const leftDrawerOpen = ref(false);
 
-        const hotkeys = ref<HotKey[]>([
-          {
-            keys: ['['],
-            handler(keys) {
-              leftDrawerOpen.value = !leftDrawerOpen.value;
-            }
-          }
-        ]);
+        function toggleLeftDrawer() {
+            leftDrawerOpen.value = !leftDrawerOpen.value;
+        };
 
-        useHotKey(hotkeys.value);
+        document.addEventListener("keydown", function (event) {
+          if (event.key == "[") {
+            toggleLeftDrawer();
+          }
+        });
 
         return {
             leftDrawerOpen,
-            toggleLeftDrawer() {
-                leftDrawerOpen.value = !leftDrawerOpen.value;
-            }
+            toggleLeftDrawer
         };
     },
     components: { UnderConstructionLarge }
