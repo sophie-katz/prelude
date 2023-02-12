@@ -1,7 +1,5 @@
 <template>
-  <q-page>
-    <under-construction-large />
-  </q-page>
+  <under-construction-large />
 </template>
 
 <script lang="ts">

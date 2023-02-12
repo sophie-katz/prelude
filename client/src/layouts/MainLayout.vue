@@ -2,15 +2,6 @@
   <q-layout view="hHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
         <q-toolbar-title>
           Quasar App
         </q-toolbar-title>
@@ -24,29 +15,65 @@
       show-if-above
       bordered
     >
+      <div class="column full-height">
+        <div class="col">
+          <under-construction-large />
+        </div>
+        <div class="col-auto text-center" style="opacity: 0.5;">
+          Press [ to open/close
+        </div>
+      </div>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <q-page>
+        <div class="row absolute-left items-center">
+          <div class="col column" style="margin-left: -12px;">
+            <q-btn
+              class="rotate-90"
+              square
+              unelevated
+              color="grey-3"
+              text-color="black"
+              size="xs"
+              :icon="leftDrawerOpen ? 'expand_more' : 'expand_less'"
+              @click="toggleLeftDrawer" />
+          </div>
+        </div>
+        <router-view />
+      </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import useHotKey, { HotKey } from "vue3-hotkey";
+import UnderConstructionLarge from '../components/UnderConstructionLarge.vue';
 
 export default defineComponent({
-  name: 'MainLayout',
+    name: "MainLayout",
+    setup() {
+        const leftDrawerOpen = ref(false);
 
-  setup () {
-    const leftDrawerOpen = ref(false)
+        const hotkeys = ref<HotKey[]>([
+          {
+            keys: ['['],
+            handler(keys) {
+              leftDrawerOpen.value = !leftDrawerOpen.value;
+            }
+          }
+        ]);
 
-    return {
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
+        useHotKey(hotkeys.value);
+
+        return {
+            leftDrawerOpen,
+            toggleLeftDrawer() {
+                leftDrawerOpen.value = !leftDrawerOpen.value;
+            }
+        };
+    },
+    components: { UnderConstructionLarge }
 });
 </script>
