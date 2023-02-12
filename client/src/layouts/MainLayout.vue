@@ -1,9 +1,14 @@
 <template>
   <q-layout view="hHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar>
+      <q-toolbar class="items-stretch">
         <q-btn
-        icon="menu" />
+          flat
+          icon="apps">
+          <q-menu anchor="bottom left">
+            <under-construction-large />
+          </q-menu>
+        </q-btn>
 
         <q-toolbar-title>
           Quasar App
