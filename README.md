@@ -93,6 +93,10 @@ To set up the database client in VS Code, add the connection to Database Client:
     * **Password:** must match `POSTGRES_PASSWORD` in `.env`
 * Click save - it should appear in the sidebar
 
+### Known issues
+
+* If you run into errors saying that modules cannot be imported in `*.vue` files, you may need to set the typescript version. Run the VS Code command `Volar: Select Typescript Version...` and select the version prefixed with `.yarn/`.
+
 ## Project layout
 
 | Path     | Description                                                         |

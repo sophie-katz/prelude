@@ -16,7 +16,7 @@
     "@core/api-bindings-client-typescript-axios": "0.1.0",
     "@quasar/extras": "^1.0.0",
     "postcss": "^8.4.21",
-    "quasar": "^2.6.0",
+    "quasar": "^2.11.5",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0"
   },

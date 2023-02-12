@@ -71,4 +71,5 @@
     // Formatting
     "editor.formatOnSave": true,
   },
+  "eslint.packageManager": "yarn"
 }

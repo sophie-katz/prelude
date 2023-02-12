@@ -76,7 +76,19 @@ module.exports = configure(function (/* ctx */) {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      extendViteConf (viteConf) {
+        if (!viteConf.build) {
+          viteConf.build = {};
+        }
+
+        if (!viteConf.build.rollupOptions) {
+          viteConf.build.rollupOptions = {};
+        }
+
+        viteConf.build.rollupOptions.external = [
+          "vue"
+        ];
+      },
       // viteVuePluginOptions: {},
 
 

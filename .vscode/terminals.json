@@ -5,20 +5,25 @@
       "name": "Primary",
       "description": "General-use terminal",
       "command": "bash /app/scripts/TerminalPrelude.bash",
-      "recycle": false,
-      "focus": true
+      "recycle": true,
+      "focus": true,
+      "color": "terminal.ansiWhite"
     },
     {
       "name": "Git",
       "description": "Terminal for git commands",
       "command": "bash /app/scripts/TerminalPrelude.bash",
-      "recycle": false
+      "recycle": true,
+      "icon": "git-branch",
+      "color": "terminal.ansiGreen"
     },
     {
       "name": "Rust",
       "description": "Terminal for Cargo and other Rust commands",
       "command": "bash /app/scripts/TerminalPrelude.bash",
-      "recycle": false
+      "recycle": true,
+      "icon": "gear",
+      "color": "terminal.ansiRed"
     },
     {
       "name": "Client",
@@ -27,8 +32,10 @@
         "bash /app/scripts/TerminalPrelude.bash",
         "yarn workspace client run dev"
       ],
-      "recycle": false,
-      "execute": false
+      "recycle": true,
+      "execute": false,
+      "icon": "debug",
+      "color": "terminal.ansiMagenta"
     },
     {
       "name": "Server",
@@ -37,8 +44,10 @@
         "bash /app/scripts/TerminalPrelude.bash",
         "cargo run --bin server"
       ],
-      "recycle": false,
-      "execute": false
+      "recycle": true,
+      "execute": false,
+      "icon": "debug",
+      "color": "terminal.ansiBlue"
     }
   ]
 }

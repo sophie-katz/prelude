@@ -30,10 +30,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "@core/api-spec",\
         "reference": "workspace:core/api-spec"\
-      },\
-      {\
-        "name": "@core/db",\
-        "reference": "workspace:core/db"\
       }\
     ],\
     "enableTopLevelFallback": true,\
@@ -41,7 +37,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "fallbackExclusionList": [\
       ["@core/api-bindings-client-typescript-axios", ["workspace:core/api-bindings-client-typescript-axios"]],\
       ["@core/api-spec", ["workspace:core/api-spec"]],\
-      ["@core/db", ["workspace:core/db"]],\
       ["client", ["workspace:client"]],\
       ["core", ["workspace:core"]],\
       ["portobello", ["workspace:."]]\
@@ -114,15 +109,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@core/api-spec", "workspace:core/api-spec"],\
             ["@openapitools/openapi-generator-cli", "npm:2.5.2"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@core/db", [\
-        ["workspace:core/db", {\
-          "packageLocation": "./core/db/",\
-          "packageDependencies": [\
-            ["@core/db", "workspace:core/db"]\
           ],\
           "linkType": "SOFT"\
         }]\
