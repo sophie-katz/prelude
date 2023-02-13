@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@core/api-bindings-client-typescript-axios": "0.1.0",
+    "@fontsource/poppins": "^4.5.10",
     "@quasar/extras": "^1.0.0",
     "postcss": "^8.4.21",
     "quasar": "^2.11.5",

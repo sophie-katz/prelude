@@ -1,11 +1,11 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar class="items-stretch">
+    <q-header>
+      <q-toolbar class="items-stretch bg-grey-3 text-primary">
         <q-btn
           flat
           icon="apps">
-          <q-menu anchor="bottom left" style="width: 500px;">
+          <q-menu anchor="bottom left" style="width: 500px;" class="bg-grey-1">
             <div class="column">
               <div class="row col q-pa-md">
                 <q-btn
@@ -62,7 +62,7 @@
           class="column justify-center q-ml-lg">
           <q-breadcrumbs
             class="col-auto"
-            active-color="white">
+            active-color="primary">
             <q-breadcrumbs-el icon="home" />
             <q-breadcrumbs-el label="Tickets" />
             <q-breadcrumbs-el label="PBLO-1" />
@@ -71,6 +71,7 @@
 
         <div class="column justify-center">
           <q-btn
+            flat
             round>
             <q-avatar
                 color="secondary"
@@ -78,7 +79,7 @@
                 SK
             </q-avatar>
 
-            <q-menu anchor="bottom left">
+            <q-menu anchor="bottom left" class="bg-grey-1" style="width: 200px;" :offset="[0, 4]">
               <div class="column q-ma-md items-center">
                 <div class="col">
                   Sophie Katz
@@ -109,12 +110,13 @@
 
     <q-page-container>
       <q-page>
-        <div class="row absolute-left items-center">
-          <div class="col column" style="margin-left: -12px;">
+        <div class="row absolute-left items-end">
+          <div class="col column" style="margin-left: -12px; margin-bottom: 24px;">
             <q-btn
               class="rotate-90"
               square
               unelevated
+              :ripple="false"
               color="grey-3"
               text-color="black"
               size="xs"

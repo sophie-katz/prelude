@@ -140,6 +140,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@fontsource/poppins", [\
+        ["npm:4.5.10", {\
+          "packageLocation": "./.yarn/cache/@fontsource-poppins-npm-4.5.10-8546537566-873ea31740.zip/node_modules/@fontsource/poppins/",\
+          "packageDependencies": [\
+            ["@fontsource/poppins", "npm:4.5.10"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@gar/promisify", [\
         ["npm:1.1.3", {\
           "packageLocation": "./.yarn/cache/@gar-promisify-npm-1.1.3-ac1a325862-4059f790e2.zip/node_modules/@gar/promisify/",\
@@ -1710,6 +1719,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["client", "workspace:client"],\
             ["@core/api-bindings-client-typescript-axios", "workspace:core/api-bindings-client-typescript-axios"],\
+            ["@fontsource/poppins", "npm:4.5.10"],\
             ["@quasar/app-vite", "virtual:656141524fab26d76b9a0de37412b0bd8d68b112a7ae5bb3607d411763274ecb93d754bd2292ee7cee1844b867cae11a6a7be00b96f1e87fd47684b593faaa6e#npm:1.2.0"],\
             ["@quasar/extras", "npm:1.15.10"],\
             ["@types/node", "npm:12.20.55"],\
