@@ -5,8 +5,56 @@
         <q-btn
           flat
           icon="apps">
-          <q-menu anchor="bottom left">
-            <under-construction-large />
+          <q-menu anchor="bottom left" style="width: 500px;">
+            <div class="column">
+              <div class="row col q-pa-md">
+                <q-btn
+                  class="q-mr-md col-5"
+                  color="primary"
+                  icon="computer"
+                  label="Code"
+                  size="md"
+                  to="/code"
+                  />
+
+                <q-btn
+                  class="col-5"
+                  color="primary"
+                  icon="bar_chart"
+                  label="Dashboard"
+                  size="md"
+                  to="/dashboard"
+                  />
+              </div>
+
+              <div class="row col q-pa-md">
+                <q-btn
+                  class="q-mr-md col-5"
+                  color="primary"
+                  icon="sync"
+                  label="Deploy"
+                  to="/deploy"
+                  />
+
+                <q-btn
+                  class="col-5"
+                  color="primary"
+                  icon="description"
+                  label="Document"
+                  to="/document"
+                  />
+              </div>
+
+              <div class="row col q-pa-md">
+                <q-btn
+                  class="col-5 q-pr-md"
+                  color="primary"
+                  icon="view_kanban"
+                  label="Ticket"
+                  to="/ticket"
+                  />
+              </div>
+            </div>
           </q-menu>
         </q-btn>
 
