@@ -74,20 +74,93 @@ components:
         id:
           type: integer
           description: Unique id for the user
+          nullable: false
           minimum: 1
           example: 5
         username:
           type: string
           description: Username for the user
+          nullable: false
           minLength: 1
           pattern: "^[a-zA-Z0-9_.-]*[a-zA-Z0-9]+[a-zA-Z0-9_.-]*$"
           example: "admin"
         icon:
           type: string
           description: An HTML base64 image value
+          nullable: false
           minLength: 1
           pattern: "^data:image/[a-z0-9]+;base64, [a-zA-Z0-9/]+$"
           example: "data:image/jpeg;base64, LzlqLzRBQ... <!-- Base64 data -->"
+    # configurationOptionRequest:
+    configurationOptionResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          description: Unique id for the configuration option
+          nullable: false
+          minimum: 1
+          example: 5
+        name:
+          type: string
+          description: Name of the configuration option
+          nullable: false
+          minLength: 1
+          pattern: "^[a-zA-Z_.-][a-zA-Z0-9_.-]*$"
+          example: "enabledSystems.ticket"
+        typeId:
+          type: integer
+          description: Unique id for the type of the value of the configuration option
+          nullable: false
+          minimum: 1
+          example: 5
+        typeName:
+          type: string
+          description: Name of the type of the value of the configuration option
+          nullable: false
+          minLength: 1
+          enum:
+            - boolean
+            - integer
+            - string
+          example: "integer"
+        isList:
+          type: boolean
+          description: Whether or not the configuration option has a list of values (true) or just a single value (false)
+          nullable: false
+        value:
+          oneOf:
+            - type: boolean
+              nullable: false
+            - type: integer
+              nullable: false
+            - type: string
+              nullable: false
+            - type: array
+              nullable: false
+              minLength: 1
+              items:
+                oneOf:
+                  - type: boolean
+                    nullable: false
+                  - type: integer
+                    nullable: false
+                  - type: string
+                    nullable: false
+          description: The value of the configuration option
+          nullable: true
+          examples:
+            null:
+              value: null
+              summary: Configuration options can be null
+            singleValue:
+              value: 5
+              summary: Configuration options can be single values of boolean, integer, or string types
+            multipleValues:
+              value: [1, 5, 9]
+              summary: Configuration options can also be ordered lists of values
     error:
       type: object
       required:
