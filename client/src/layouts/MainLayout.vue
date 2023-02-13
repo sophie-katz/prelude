@@ -58,11 +58,21 @@
           </q-menu>
         </q-btn>
 
-        <q-toolbar-title>
+        <!-- <q-toolbar-title>
           Quasar App
-        </q-toolbar-title>
+        </q-toolbar-title> -->
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div class="column justify-center q-ml-lg">
+          <q-breadcrumbs
+            class="col-auto"
+            active-color="white">
+            <q-breadcrumbs-el icon="home" />
+            <q-breadcrumbs-el label="Tickets" />
+            <q-breadcrumbs-el label="PBLO-1" />
+          </q-breadcrumbs>
+        </div>
+
+        <!-- <div>Quasar v{{ $q.version }}</div> -->
       </q-toolbar>
     </q-header>
 
