@@ -58,11 +58,8 @@
           </q-menu>
         </q-btn>
 
-        <!-- <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title> -->
-
-        <div class="column justify-center q-ml-lg">
+        <q-toolbar-title
+          class="column justify-center q-ml-lg">
           <q-breadcrumbs
             class="col-auto"
             active-color="white">
@@ -70,9 +67,28 @@
             <q-breadcrumbs-el label="Tickets" />
             <q-breadcrumbs-el label="PBLO-1" />
           </q-breadcrumbs>
-        </div>
+        </q-toolbar-title>
 
-        <!-- <div>Quasar v{{ $q.version }}</div> -->
+        <div class="column justify-center">
+          <q-btn
+            round>
+            <q-avatar
+                color="secondary"
+                text-color="white">
+                SK
+            </q-avatar>
+
+            <q-menu anchor="bottom left">
+              <div class="column q-ma-md items-center">
+                <div class="col">
+                  Sophie Katz
+                </div>
+
+                <q-btn class="col-auto q-mt-md" color="primary" label="Sign out" />
+              </div>
+            </q-menu>
+          </q-btn>
+        </div>
       </q-toolbar>
     </q-header>
 
