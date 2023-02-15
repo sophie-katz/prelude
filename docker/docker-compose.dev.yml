@@ -49,6 +49,15 @@ services:
     volumes:
       - db:/var/lib/postgresql/data:cached
 
+  # Authentication service container
+  auth:
+    image: quay.io/keycloak/keycloak:20.0.3
+    env_file:
+      - ../.env
+    ports:
+      - "8080:8080"
+    command: start-dev
+
 volumes:
   db:
     driver: local

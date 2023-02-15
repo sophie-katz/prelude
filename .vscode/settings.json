@@ -4,47 +4,49 @@
     "**/.yarn": true,
     "**/.pnp.*": true
   },
-
   // Connect to Yarn's installed Typescript SDK
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-
   // Editor quality of life
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
-
   "[javascript]": {
     // Formatting
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.codeActionsOnSave": ["source.fixAll.eslint"]
+    "editor.codeActionsOnSave": [
+      "source.fixAll.eslint"
+    ]
   },
-
   "[vue]": {
     // Formatting
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.codeActionsOnSave": ["source.fixAll.eslint"]
+    "editor.codeActionsOnSave": [
+      "source.fixAll.eslint"
+    ]
   },
-
   "[json]": {
     // Formatting
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.codeActionsOnSave": ["source.fixAll.eslint"]
+    "editor.codeActionsOnSave": [
+      "source.fixAll.eslint"
+    ]
   },
-
   // Linting for Javascript/Typescript
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
-
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "vue"
+  ],
   // Allow LLDB expression evaluation to take longer
   "lldb.evaluationTimeout": 30,
-
   // Tweaking TOML style
   "evenBetterToml.formatter.alignEntries": true,
   "evenBetterToml.formatter.indentTables": true,
   "evenBetterToml.formatter.reorderKeys": true,
-
   // More advanced Rust linting with Clippy
   "rust-analyzer.lens.enable": true,
   "rust-analyzer.checkOnSave": true,
@@ -54,22 +56,18 @@
     "-W",
     "clippy::all"
   ],
-
   // Improving Rust unit tests
   "testExplorer.showOnRun": true,
   "testExplorer.addToEditorContextMenu": false,
   "testExplorer.codeLens": false, // Make sure there's no codelens conflicts
-
   // Rust coverage
   "coverage-gutters.coverageReportFileName": "**/llvm-cov/html/index.html",
   "coverage-gutters.coverageBaseDir": "/app/target/llvm-cov",
-
   // Misc
   "rust-analyzer.imports.granularity.enforce": true,
-
   "[rust]": {
     // Formatting
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": true
   },
   "eslint.packageManager": "yarn"
 }

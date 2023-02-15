@@ -85,7 +85,7 @@
                   Sophie Katz
                 </div>
 
-                <q-btn class="col-auto q-mt-md" color="primary" label="Sign out" />
+                <q-btn class="col-auto q-mt-md" color="primary" label="Sign out" @click="signOut" />
               </div>
             </q-menu>
           </q-btn>
@@ -133,6 +133,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import UnderConstructionLarge from '../components/UnderConstructionLarge.vue';
+import app from "../boot/keycloak";
 
 export default defineComponent({
     name: "MainLayout",
@@ -151,7 +152,19 @@ export default defineComponent({
 
         return {
             leftDrawerOpen,
-            toggleLeftDrawer
+            toggleLeftDrawer,
+            signOut: () => {
+              console.log(app);
+              // const keycloak = new VueKeyCloak({
+              //   url: "http://localhost:8080",
+              //   realm: "portobello",
+              //   clientId: "portobello"
+              // });
+
+              // keycloak.logout({redirectUri: "http://localhost:9000/#/code"});
+
+              // console.log(keycloak.logout);
+            }
         };
     },
     components: { UnderConstructionLarge }

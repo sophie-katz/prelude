@@ -67,7 +67,8 @@ RUN . /home/dev/.cargo/env && \
     rustup component add llvm-tools-preview
 
 # Install global Rust dependencies
-RUN cargo install sea-orm-cli
+RUN . /home/dev/.cargo/env && \
+    cargo install sea-orm-cli
 
 # Install NVM
 ENV NVM_DIR /home/dev/.nvm

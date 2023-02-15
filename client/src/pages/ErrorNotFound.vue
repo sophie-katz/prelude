@@ -9,6 +9,10 @@
         Oops. Nothing here...
       </div>
 
+      <div class="q-mt-md">
+        {{ currentUrl }}
+      </div>
+
       <q-btn
         class="q-mt-xl"
         color="white"
@@ -26,6 +30,11 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'ErrorNotFound'
+  name: 'ErrorNotFound',
+  data() {
+    return {
+      currentUrl: window.location.href,
+    };
+  },
 });
 </script>

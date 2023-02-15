@@ -30,8 +30,7 @@ module.exports = configure(function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
-
-
+      'keycloak.ts'
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -86,7 +85,8 @@ module.exports = configure(function (/* ctx */) {
         }
 
         viteConf.build.rollupOptions.external = [
-          "vue"
+          "vue",
+          "quasar/wrappers"
         ];
       },
       // viteVuePluginOptions: {},
@@ -100,7 +100,16 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+
+      // proxy: {
+      //   "/auth": {
+      //     target: "http://auth:8080",
+      //     changeOrigin: true,
+      //     secure: false,
+      //     rewrite: (path) => path.replace(/^\/auth/, "")
+      //   }
+      // }
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
