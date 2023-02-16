@@ -96,6 +96,8 @@ To set up the database client in VS Code, add the connection to Database Client:
 ### Known issues
 
 * If you run into errors saying that modules cannot be imported in `*.vue` files, you may need to set the typescript version. Run the VS Code command `Volar: Select Typescript Version...` and select the version prefixed with `.yarn/`.
+* If you use "Reopen in Container" in VS Code and it errors out silently and immediately, try running the command "Dev Containers: Show Container Log" to get more details.
+    * Frequently, this is caused by not copying `.env.example.dev` to `.env`.
 
 ## Project layout
 

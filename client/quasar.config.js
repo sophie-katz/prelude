@@ -110,6 +110,11 @@ module.exports = configure(function (/* ctx */) {
       //     rewrite: (path) => path.replace(/^\/auth/, "")
       //   }
       // }
+
+      watch: {
+        // Needed for WSL2
+        usePolling: true,
+      },
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework

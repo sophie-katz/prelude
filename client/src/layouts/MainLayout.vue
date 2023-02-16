@@ -82,7 +82,7 @@
             <q-menu anchor="bottom left" class="bg-grey-1" style="width: 200px;" :offset="[0, 4]">
               <div class="column q-ma-md items-center">
                 <div class="col">
-                  Sophie Katz
+                  {{ currentUserName() }}
                 </div>
 
                 <q-btn class="col-auto q-mt-md" color="primary" label="Sign out" @click="signOut" />
@@ -133,12 +133,14 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import UnderConstructionLarge from '../components/UnderConstructionLarge.vue';
-import app from "../boot/keycloak";
+import { useAuthenticationStore } from "../stores/authentication";
 
 export default defineComponent({
     name: "MainLayout",
     setup() {
         const leftDrawerOpen = ref(false);
+
+        const authenticationStore = useAuthenticationStore();
 
         function toggleLeftDrawer() {
             leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -154,17 +156,11 @@ export default defineComponent({
             leftDrawerOpen,
             toggleLeftDrawer,
             signOut: () => {
-              console.log(app);
-              // const keycloak = new VueKeyCloak({
-              //   url: "http://localhost:8080",
-              //   realm: "portobello",
-              //   clientId: "portobello"
-              // });
-
-              // keycloak.logout({redirectUri: "http://localhost:9000/#/code"});
-
-              // console.log(keycloak.logout);
-            }
+              authenticationStore.keycloakInstance?.logout({
+                redirectUri: "http://localhost:9000/#/"
+              });
+            },
+            currentUserName: () => authenticationStore.keycloakInstance?.idTokenParsed?.preferred_username,
         };
     },
     components: { UnderConstructionLarge }

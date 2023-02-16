@@ -56,7 +56,9 @@ services:
       - ../.env
     ports:
       - "8080:8080"
-    command: start-dev
+    command: start-dev --import-realm
+    volumes:
+      - ../docker/keycloak-import:/opt/keycloak/data/import
 
 volumes:
   db:
