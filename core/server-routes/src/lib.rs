@@ -26,11 +26,18 @@ extern crate rocket;
 use rocket::{build, Build, Rocket};
 use sea_orm::DatabaseConnection;
 
+pub mod authorization;
 pub mod user;
 
 /// Build Rocket instance
 pub fn rocket(db: DatabaseConnection) -> Rocket<Build> {
-    build().manage(db).mount("/user", routes![user::index])
+    build()
+        .manage(db)
+        .mount("/user", routes![user::index])
+        .mount(
+            "/authorization",
+            routes![authorization::login, authorization::test],
+        )
 }
 
 #[cfg(test)]

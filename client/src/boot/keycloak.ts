@@ -23,7 +23,7 @@ export default boot(async ({app, store}) => {
       console.error("Could not authenticate");
       window.location.reload();
     } else {
-      console.log("Authenticated");
+      console.log(`Authenticated - token: ${JSON.stringify(keycloak.token)}`);
       authenticationStore.keycloakInstance = keycloak;
     }
   }).catch((error) => {

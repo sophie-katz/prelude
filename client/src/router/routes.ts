@@ -15,6 +15,11 @@ const routes: RouteRecordRaw[] = [
     ],
   },
 
+  {
+    path: '/authorization/token',
+    component: () => import('pages/AuthorizationTokenPage.vue'),
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {
