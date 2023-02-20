@@ -38,9 +38,17 @@ services:
       - SYS_PTRACE
     security_opt:
       - seccomp:unconfined
+    # Set update tag
+    environment:
+      # Versions of images used in this file
+      - PORTOBELLO_POSTGRES_VERSION_LAST_UPDATED=2023-02-18
+      - PORTOBELLO_PGADMIN4_VERSION_LAST_UPDATED=2023-02-18
+      - PORTOBELLO_KEYCLOAK_VERSION_LAST_UPDATED=2023-02-18
 
   # Database container
   db:
+    # When updating this version, make sure to also update the *_LAST_UPDATED
+    # date so that out-of-date dependencies can be tracked.
     image: postgres:15.1-alpine
     env_file:
       - ../.env
@@ -48,9 +56,24 @@ services:
       - "5432:5432"
     volumes:
       - db:/var/lib/postgresql/data:cached
+      - ./postgres-initdb.d:/docker-entrypoint-initdb.d:cached
+  
+  # Database client
+  db_client:
+    # When updating this version, make sure to also update the *_LAST_UPDATED
+    # date so that out-of-date dependencies can be tracked.
+    image: dpage/pgadmin4:6.20
+    env_file:
+      - ../.env
+    ports:
+      - "5050:80"
+    volumes:
+      - ./pgadmin4/servers.json:/pgadmin4/servers.json:cached
 
   # Authentication service container
   auth:
+    # When updating this version, make sure to also update the *_LAST_UPDATED
+    # date so that out-of-date dependencies can be tracked.
     image: quay.io/keycloak/keycloak:20.0.3
     env_file:
       - ../.env
@@ -58,7 +81,7 @@ services:
       - "8080:8080"
     command: start-dev --import-realm
     volumes:
-      - ../docker/keycloak-import:/opt/keycloak/data/import
+      - ./keycloak-import:/opt/keycloak/data/import
 
 volumes:
   db:

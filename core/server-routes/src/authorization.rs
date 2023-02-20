@@ -22,82 +22,80 @@
 
 // TODO: https://github.com/sophie-katz/portobello/issues/11
 
-use jsonwebtoken::{decode, Algorithm, DecodingKey, Validation};
-use oauth2::{
-    basic::BasicClient, reqwest::async_http_client, AuthUrl, AuthorizationCode, ClientId,
-    CsrfToken, PkceCodeChallenge, RedirectUrl, Scope, TokenUrl,
-};
-use rocket::http::RawStr;
-use serde::{Deserialize, Serialize};
+// use jsonwebtoken::{decode, Algorithm, DecodingKey, Validation};
+// use oauth2::{
+//     basic::BasicClient, AuthUrl, ClientId, CsrfToken, PkceCodeChallenge, RedirectUrl, TokenUrl,
+// };
+// use serde::{Deserialize, Serialize};
 
-#[get("/login")]
-pub async fn login() {
-    // Go to http://localhost:8080/realms/portobello/.well-known/openid-configuration to get configuration details
+// #[get("/login")]
+// pub fn login() {
+//     // Go to http://localhost:8080/realms/portobello/.well-known/openid-configuration to get configuration details
 
-    let client = BasicClient::new(
-        // client_id
-        ClientId::new("portobello".to_owned()),
-        // client_secret
-        None,
-        // auth_url
-        AuthUrl::new(
-            "http://localhost:8080/realms/portobello/protocol/openid-connect/auth".to_owned(),
-        )
-        .expect("todo"),
-        // token_url
-        Some(
-            TokenUrl::new(
-                "http://auth:8080/realms/portobello/protocol/openid-connect/token".to_owned(),
-            )
-            .expect("todo"),
-        ),
-    )
-    .set_redirect_uri(
-        RedirectUrl::new("http://localhost:9000/#/authorization/token".to_owned()).expect("todo"),
-    );
+//     let client = BasicClient::new(
+//         // client_id
+//         ClientId::new("portobello".to_owned()),
+//         // client_secret
+//         None,
+//         // auth_url
+//         AuthUrl::new(
+//             "http://localhost:8080/realms/portobello/protocol/openid-connect/auth".to_owned(),
+//         )
+//         .expect("todo"),
+//         // token_url
+//         Some(
+//             TokenUrl::new(
+//                 "http://auth:8080/realms/portobello/protocol/openid-connect/token".to_owned(),
+//             )
+//             .expect("todo"),
+//         ),
+//     )
+//     .set_redirect_uri(
+//         RedirectUrl::new("http://localhost:9000/#/authorization/token".to_owned()).expect("todo"),
+//     );
 
-    let (pkce_challenge, pkce_verifier) = PkceCodeChallenge::new_random_sha256();
+//     let (pkce_challenge, _) = PkceCodeChallenge::new_random_sha256();
 
-    let (auth_url, _) = client
-        .authorize_url(CsrfToken::new_random)
-        // .add_scope(Scope::new("read".to_owned()))
-        // .add_scope(Scope::new("write".to_owned()))
-        .set_pkce_challenge(pkce_challenge)
-        .url();
+//     let (auth_url, _) = client
+//         .authorize_url(CsrfToken::new_random)
+//         // .add_scope(Scope::new("read".to_owned()))
+//         // .add_scope(Scope::new("write".to_owned()))
+//         .set_pkce_challenge(pkce_challenge)
+//         .url();
 
-    println!(
-        "Open URL in browser to get authorized credentials: {:}",
-        auth_url
-    );
+//     println!(
+//         "Open URL in browser to get authorized credentials: {:}",
+//         auth_url
+//     );
 
-    // let token_result = client
-    //     .exchange_code(AuthorizationCode::new("asdf".to_owned()))
-    //     .set_pkce_verifier(pkce_verifier)
-    //     .request_async(async_http_client)
-    //     .await
-    //     .expect("todo");
+//     // let token_result = client
+//     //     .exchange_code(AuthorizationCode::new("asdf".to_owned()))
+//     //     .set_pkce_verifier(pkce_verifier)
+//     //     .request_async(async_http_client)
+//     //     .await
+//     //     .expect("todo");
 
-    // println!("Token result: {:#?}", token_result);
-}
+//     // println!("Token result: {:#?}", token_result);
+// }
 
-#[derive(Debug, Serialize, Deserialize)]
-struct Claims {
-    aud: String,
-    sub: String,
-}
+// #[derive(Debug, Serialize, Deserialize)]
+// struct Claims {
+//     aud: String,
+//     sub: String,
+// }
 
-#[get("/test?<token>")]
-pub async fn test(token: &str) {
-    let mut validation = Validation::new(Algorithm::RS256);
+// #[get("/test?<token>")]
+// pub async fn test(token: &str) {
+//     let mut validation = Validation::new(Algorithm::RS256);
 
-    validation.sub = Some("sophie".to_owned());
-    validation.set_audience(&["me"]);
+//     validation.sub = Some("sophie".to_owned());
+//     validation.set_audience(&["me"]);
 
-    let token_data =
-        decode::<Claims>(token, &DecodingKey::from_secret(b"secret"), &validation).expect("todo");
+//     let token_data =
+//         decode::<Claims>(token, &DecodingKey::from_secret(b"secret"), &validation).expect("todo");
 
-    println!(
-        "Claims {:?}, header {:?}",
-        token_data.claims, token_data.header
-    );
-}
+//     println!(
+//         "Claims {:?}, header {:?}",
+//         token_data.claims, token_data.header
+//     );
+// }

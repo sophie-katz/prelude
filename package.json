@@ -5,7 +5,8 @@
   "version": "0.1.0",
   "workspaces": [
     "core",
-    "client"
+    "client",
+    "utilities"
   ],
   "devDependencies": {
     "typescript": "^4.9.4"

@@ -78,9 +78,6 @@ pub struct Configuration {
 
     /// Loaded from `POSTGRES_PASSWORD`. The password to use to login to PostgreSQL.
     pub postgres_password: String,
-
-    /// Loaded from `DATABASE_URL`. The connection string that SeaORM uses.
-    pub database_url: String,
 }
 
 impl Configuration {
@@ -100,7 +97,6 @@ impl Configuration {
             postgres_port: Self::get_var_safe("POSTGRES_PORT")?.parse::<u32>()?,
             postgres_user: Self::get_var_safe("POSTGRES_USER")?,
             postgres_password: Self::get_var_safe("POSTGRES_PASSWORD")?,
-            database_url: Self::get_var_safe("DATABASE_URL")?,
         })
     }
 
@@ -127,6 +123,5 @@ mod tests {
         assert!(cfg.postgres_port > 0);
         assert!(!cfg.postgres_user.is_empty());
         assert!(!cfg.postgres_password.is_empty());
-        assert!(!cfg.database_url.is_empty());
     }
 }

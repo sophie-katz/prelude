@@ -3,7 +3,16 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "migrate": "sea-orm-cli migrate refresh",
-    "generate-entities": "sea-orm-cli generate entity -o /app/core/db/src/entities"
+    "migrate-dev-update": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash portobello_dev up\"",
+    "migrate-dev-refresh": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash portobello_dev refresh\"",
+    "migrate-unit-update": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash portobello_unit up\"",
+    "migrate-unit-refresh": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash portobello_unit refresh\"",
+    "migrate-update": "yarn workspace @core/db run migrate-dev-update && yarn workspace @core/db run migrate-unit-update",
+    "migrate-refresh": "yarn workspace @core/db run migrate-dev-refresh && yarn workspace @core/db run migrate-unit-refresh",
+    "generate-entities": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/GenerateEntities.bash portobello_dev refresh\""
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv-cli": "^7.0.0"
   }
 }

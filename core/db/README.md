@@ -7,8 +7,7 @@ This crate uses SeaORM to interact with the PostgreSQL database.
 When starting off with a new PostgreSQL instance, all migrations must be run:
 
 ```bash
-cd /app/core/db
-sea-orm-cli migrate refresh
+yarn workspace @core/db run migrate-update
 ```
 
 ## Add new migration
@@ -23,9 +22,10 @@ sea-orm-cli migrate generate <name>
 When changing the database structure, the entity code (Rust bindings for the database) must also be generated:
 
 ```bash
-cd /app/core/db
-sea-orm-cli generate entity -o src/entities
+yarn workspace @core/db run generate-entities
 ```
+
+**NOTE:** Entities are generated off of the `portobello_dev` database, so make sure that this is fully migrated before running this.
 
 ## Unit tests
 

@@ -23,7 +23,11 @@
 #[macro_use]
 extern crate rocket;
 
+use db::{connect_db, DatabaseInstance};
+
 #[launch]
 fn rocket() -> _ {
-    server_routes::rocket(db::connect_db().expect("unable to connect to database"))
+    server_routes::rocket(
+        connect_db(DatabaseInstance::Development).expect("unable to connect to database"),
+    )
 }

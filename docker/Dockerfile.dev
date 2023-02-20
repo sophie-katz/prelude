@@ -70,6 +70,9 @@ RUN . /home/dev/.cargo/env && \
 RUN . /home/dev/.cargo/env && \
     cargo install sea-orm-cli
 
+# Set Rust environment variables
+ENV CARGO_TARGET_DIR /home/dev/target
+
 # Install NVM
 ENV NVM_DIR /home/dev/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${PORTOBELLO_NVM_VERSION}/install.sh | bash; \

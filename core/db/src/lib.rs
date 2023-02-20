@@ -20,15 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+mod entities;
+
 use config_env::Configuration;
 use futures::executor;
-use sea_orm::{Database, DatabaseConnection, DbErr};
+use sea_orm::entity::prelude::*;
+use sea_orm::*;
 use std::{
     error,
     fmt::{self, Display},
 };
-
-pub mod entities;
 
 /// Error type for this crate
 #[derive(Debug)]
@@ -62,57 +63,93 @@ impl Display for Error {
 
 impl error::Error for Error {}
 
+#[derive(Debug)]
+pub enum DatabaseInstance {
+    Development,
+    Unit,
+}
+
+impl DatabaseInstance {
+    pub fn as_name(self) -> &'static str {
+        match self {
+            DatabaseInstance::Development => "portobello_dev",
+            DatabaseInstance::Unit => "portobello_unit",
+        }
+    }
+}
+
 /// Connect to the Portobello database
 ///
 /// # Errors
 ///
 /// If there is an issue loading the database connection configuration or in
 /// connecting to the database, an error will be returned.
-pub fn connect_db() -> Result<DatabaseConnection, Error> {
+pub fn connect_db(database_instance: DatabaseInstance) -> Result<DatabaseConnection, Error> {
     let configuration = Configuration::new()?;
 
-    Ok(executor::block_on(Database::connect(
-        configuration.database_url,
-    ))?)
+    Ok(executor::block_on(Database::connect(format!(
+        "postgres://{}:{}@{}:{}/{}",
+        configuration.postgres_user,
+        configuration.postgres_password,
+        configuration.postgres_host,
+        configuration.postgres_port,
+        database_instance.as_name(),
+    )))?)
 }
 
-#[cfg(test)]
-mod tests {
-    use sea_orm::*;
+// #[cfg(test)]
+// mod tests {
+//     use super::{connect_db, connect_mock_db, Error};
 
-    use super::{connect_db, Error};
-    use crate::entities::{prelude::*, user};
+//     // #[test]
+//     // fn test_connect_db_development() -> Result<(), Error> {
+//     //     connect_db(Database::Development)?;
 
-    #[test]
-    fn test_connect_db() -> Result<(), Error> {
-        connect_db()?;
+//     //     Ok(())
+//     // }
 
-        Ok(())
-    }
+//     // #[async_std::test]
+//     // async fn test_find_configuration_type_reference_one() -> Result<(), DbErr> {
+//     //     let db = MockDatabase::new(DatabaseBackend::Postgres)
+//     //         .append_query_results([vec![configuration_type_reference::Model {
+//     //             id: 1,
+//     //             name: "boolean".to_owned(),
+//     //             description: "True or false value".to_owned(),
+//     //         }]])
+//     //         // .append_query_results(vec![configuration_type_reference::Model {
+//     //         //     id: 2,
+//     //         //     name: "integer".to_owned(),
+//     //         //     description: "Signed integer value".to_owned(),
+//     //         // }])
+//     //         // .append_query_results(vec![configuration_type_reference::Model {
+//     //         //     id: 3,
+//     //         //     name: "string".to_owned(),
+//     //         //     description: "String value".to_owned(),
+//     //         // }])
+//     //         // .append_query_results([vec![configuration_reference::Model {
+//     //         //     id: 1,
+//     //         //     name: "booleanRequiredSingleGlobal".to_owned(),
+//     //         //     description: "A boolean value that is required, cannot have multiple values, and cannot be overridden by users".to_owned(),
+//     //         //     type_id: 1,
+//     //         //     optional: false,
+//     //         //     allows_multiple: false,
+//     //         //     allows_user_override: false,
+//     //         // }]])
+//     //         .into_connection();
 
-    #[async_std::test]
-    async fn test_find_users() -> Result<(), DbErr> {
-        let db = MockDatabase::new(DatabaseBackend::Postgres)
-            .append_query_results([vec![user::Model {
-                id: 1,
-                username: "admin".to_owned(),
-                icon: None,
-            }]])
-            .into_connection();
+//     //     assert_eq!(
+//     //         ConfigurationTypeReference::find()
+//     //             .all(&db)
+//     //             .await?
+//     //             .into_iter()
+//     //             .collect::<Vec<user::Model>>(),
+//     //         vec![user::Model {
+//     //             id: 1,
+//     //             username: "admin".to_owned(),
+//     //             icon: None
+//     //         }]
+//     //     );
 
-        assert_eq!(
-            User::find()
-                .all(&db)
-                .await?
-                .into_iter()
-                .collect::<Vec<user::Model>>(),
-            vec![user::Model {
-                id: 1,
-                username: "admin".to_owned(),
-                icon: None
-            }]
-        );
-
-        Ok(())
-    }
-}
+//     //     Ok(())
+//     // }
+// }

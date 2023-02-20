@@ -4,6 +4,7 @@
     "baseUrl": "."
   },
   "include": [
-    "vue-global.d.ts"
+    "vue-global.d.ts",
+    "empty.ts"
   ]
 }

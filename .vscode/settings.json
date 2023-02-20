@@ -51,11 +51,6 @@
   "rust-analyzer.lens.enable": true,
   "rust-analyzer.checkOnSave": true,
   "rust-analyzer.check.command": "clippy",
-  "rust-analyzer.check.extraArgs": [
-    "--",
-    "-W",
-    "clippy::all"
-  ],
   // Improving Rust unit tests
   "testExplorer.showOnRun": true,
   "testExplorer.addToEditorContextMenu": false,
@@ -70,5 +65,12 @@
     "editor.formatOnSave": true
   },
   "eslint.packageManager": "yarn",
-  "thunder-client.saveToWorkspace": true
+  "thunder-client.saveToWorkspace": false,
+  "rust-analyzer.check.allTargets": false,
+  "rust-analyzer.check.extraArgs": [
+    "--",
+    "-W",
+    "clippy::all"
+  ],
+  "thunder-client.customLocation": "/app/thunder"
 }

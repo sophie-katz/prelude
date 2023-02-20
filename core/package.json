@@ -1,10 +1,11 @@
 {
-  "name": "core",
+  "name": "@core",
   "version": "0.1.0",
   "private": true,
   "workspaces": [
     "api",
     "api-bindings-client-typescript-axios",
-    "api-spec"
+    "api-spec",
+    "db"
   ]
 }

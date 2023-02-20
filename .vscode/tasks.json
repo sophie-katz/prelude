@@ -125,32 +125,28 @@
 		// Run database migrations
 		{
 			"type": "shell",
-			"command": "sea-orm-cli",
+			"command": "yarn",
 			"args": [
-				"migrate",
-				"refresh"
+				"workspace",
+				"@core/db",
+				"run",
+				"migrate-update"
 			],
 			"label": "db: migrate",
-			"problemMatcher": [],
-			"options": {
-				"cwd": "${workspaceFolder}/core/db"
-			}
+			"problemMatcher": []
 		},
 		// Generate database entities
 		{
 			"type": "shell",
-			"command": "sea-orm-cli",
+			"command": "yarn",
 			"args": [
-				"generate",
-				"entity",
-				"-o",
-				"${workspaceFolder}/core/db/src/entities"
+				"workspace",
+				"@core/db",
+				"run",
+				"generate-entities"
 			],
 			"label": "db: generate entities",
-			"problemMatcher": [],
-			"options": {
-				"cwd": "${workspaceFolder}/core/db"
-			}
+			"problemMatcher": []
 		},
 		// Seed database
 		{

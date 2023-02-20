@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # MIT License
 #
 # Copyright (c) 2023 Sophie Katz
@@ -20,13 +22,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-[package]
-name = "db"
-version = "0.1.0"
-edition = "2021"
+set -e
 
-[dependencies]
-config-env = { path = "../config-env" }
-futures = "0.3.21"
-sea-orm = { version = "0.11.0", features = [ "sqlx-postgres", "runtime-async-std-native-tls", "macros", "mock" ] }
-async-std = { version = "1.12.0", features = [ "attributes" ] }
+function usage() {
+    echo "usage: $0 <database>" >&2
+    echo >&2
+    echo "OPTIONS" >&2
+    echo "  database - The name of the Postgres database from which to generate entities." >&2
+}
+
+DATABASE="$1"
+
+if [ -z "$DATABASE" ]; then
+    echo "error: database parameter is missing" >&2
+    echo >&2
+    usage
+    exit 1
+fi
+
+cd /app/core/db && sea-orm-cli generate entity -u "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${DATABASE}" -o /app/core/db/src/entities

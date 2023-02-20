@@ -20,35 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// use db::entities::prelude::User;
-// use domain_api::user::UserResponse;
-// use rocket::{serde::json::Json, State};
-// use sea_orm::{DatabaseConnection, EntityTrait};
-// use validator::Validate;
+pub struct ConfigurationType {
+    pub id: i32,
+    pub name: String,
+    pub description: String,
+}
 
-// #[get("/")]
-// pub async fn index(db: &State<DatabaseConnection>) -> Json<Vec<UserResponse>> {
-//     let db = db as &DatabaseConnection;
+pub struct ConfigurationKey<'configuration_type> {
+    pub id: i32,
+    pub name: String,
+    pub description: String,
+    pub type_id: i32,
+    pub type_value: &'configuration_type ConfigurationType,
+    pub optional: bool,
+    pub allows_multiple: bool,
+    pub allows_user_override: bool,
+}
 
-//     let users = User::find()
-//         .all(db)
-//         .await
-//         .unwrap()
-//         .into_iter()
-//         .map(|row| {
-//             let user_response = UserResponse {
-//                 id: row.id,
-//                 username: row.username,
-//                 icon: row.icon,
-//             };
-
-//             user_response
-//                 .validate()
-//                 .expect("user response loaded from database does not pass validation");
-
-//             user_response
-//         })
-//         .collect::<Vec<UserResponse>>();
-
-//     Json(users)
-// }
+pub struct ConfigurationValue<'configuration_key> {
+    pub id: i32,
+    configuration_key_id: i32,
+    configuration_key_value: &'configuration_key ConfigurationKey,
+}

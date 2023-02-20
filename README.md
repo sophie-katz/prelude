@@ -38,6 +38,19 @@ cargo run --bin server
 yarn workspace client run dev
 ```
 
+Before using Portobello, a user will have to be created. Go to http://localhost:8080/admin/master/console/#/portobello/users and log into Keycloak with the admin credentials in `.env` (`KEYCLOAK_ADMIN` and `KEYCLOAK_ADMIN_PASSWORD`).
+
+* Click "Add user"
+* Enter in a username
+* Click "Create"
+* Navigate to the "Credentials" tab
+* Click "Set password"
+* Enter in a secure password
+* Disable the "Temporary" setting
+* Click "Save" and then "Save password"
+
+You may now log into Portobello as this user when prompted.
+
 ## Building and running production Portobello image
 
 ```bash
@@ -84,14 +97,7 @@ In order to update the REST API configuration, re-export over the same path.
 
 ### Database client
 
-To set up the database client in VS Code, add the connection to Database Client:
-* Navigate to the Database sidebar panel
-* Add a new connection
-    * **Host:** `db`
-    * **Port:** `5432`
-    * **Username:** must match `POSTGRES_USER` in `.env`
-    * **Password:** must match `POSTGRES_PASSWORD` in `.env`
-* Click save - it should appear in the sidebar
+Portobello includes pgAdmin4 in its development environment. As long as the VS Code dev container is running, go to http://localhost:5050 to log into pgAdmin4. Use the login credentials provided in `.env`.
 
 ### Known issues
 

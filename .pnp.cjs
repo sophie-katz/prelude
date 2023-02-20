@@ -20,8 +20,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:client"\
       },\
       {\
-        "name": "core",\
+        "name": "@core",\
         "reference": "workspace:core"\
+      },\
+      {\
+        "name": "@utilities",\
+        "reference": "workspace:utilities"\
       },\
       {\
         "name": "@core/api-bindings-client-typescript-axios",\
@@ -30,15 +34,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "@core/api-spec",\
         "reference": "workspace:core/api-spec"\
+      },\
+      {\
+        "name": "@core/db",\
+        "reference": "workspace:core/db"\
+      },\
+      {\
+        "name": "@utilities/db-seed",\
+        "reference": "workspace:utilities/db-seed"\
       }\
     ],\
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
+      ["@core", ["workspace:core"]],\
       ["@core/api-bindings-client-typescript-axios", ["workspace:core/api-bindings-client-typescript-axios"]],\
       ["@core/api-spec", ["workspace:core/api-spec"]],\
+      ["@core/db", ["workspace:core/db"]],\
+      ["@utilities", ["workspace:utilities"]],\
+      ["@utilities/db-seed", ["workspace:utilities/db-seed"]],\
       ["client", ["workspace:client"]],\
-      ["core", ["workspace:core"]],\
       ["portobello", ["workspace:."]]\
     ],\
     "fallbackPool": [\
@@ -93,6 +108,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@core", [\
+        ["workspace:core", {\
+          "packageLocation": "./core/",\
+          "packageDependencies": [\
+            ["@core", "workspace:core"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@core/api-bindings-client-typescript-axios", [\
         ["workspace:core/api-bindings-client-typescript-axios", {\
           "packageLocation": "./core/api-bindings-client-typescript-axios/",\
@@ -109,6 +133,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@core/api-spec", "workspace:core/api-spec"],\
             ["@openapitools/openapi-generator-cli", "npm:2.5.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@core/db", [\
+        ["workspace:core/db", {\
+          "packageLocation": "./core/db/",\
+          "packageDependencies": [\
+            ["@core/db", "workspace:core/db"],\
+            ["cross-env", "npm:7.0.3"],\
+            ["dotenv-cli", "npm:7.0.0"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -921,6 +956,24 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-visitor-keys", "npm:3.3.0"]\
           ],\
           "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@utilities", [\
+        ["workspace:utilities", {\
+          "packageLocation": "./utilities/",\
+          "packageDependencies": [\
+            ["@utilities", "workspace:utilities"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@utilities/db-seed", [\
+        ["workspace:utilities/db-seed", {\
+          "packageLocation": "./utilities/db-seed/",\
+          "packageDependencies": [\
+            ["@utilities/db-seed", "workspace:utilities/db-seed"]\
+          ],\
+          "linkType": "SOFT"\
         }]\
       ]],\
       ["@vitejs/plugin-vue", [\
@@ -1977,15 +2030,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["core", [\
-        ["workspace:core", {\
-          "packageLocation": "./core/",\
-          "packageDependencies": [\
-            ["core", "workspace:core"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["core-util-is", [\
         ["npm:1.0.3", {\
           "packageLocation": "./.yarn/cache/core-util-is-npm-1.0.3-ca74b76c90-9de8597363.zip/node_modules/core-util-is/",\
@@ -2011,6 +2055,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["crc32-stream", "npm:4.0.2"],\
             ["crc-32", "npm:1.2.2"],\
             ["readable-stream", "npm:3.6.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["cross-env", [\
+        ["npm:7.0.3", {\
+          "packageLocation": "./.yarn/cache/cross-env-npm-7.0.3-96d81820f4-26f2f3ea2a.zip/node_modules/cross-env/",\
+          "packageDependencies": [\
+            ["cross-env", "npm:7.0.3"],\
+            ["cross-spawn", "npm:7.0.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -2195,6 +2249,37 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["dot-prop", "npm:6.0.1"],\
             ["is-obj", "npm:2.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["dotenv", [\
+        ["npm:16.0.3", {\
+          "packageLocation": "./.yarn/cache/dotenv-npm-16.0.3-4cc29121dc-afcf03f373.zip/node_modules/dotenv/",\
+          "packageDependencies": [\
+            ["dotenv", "npm:16.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["dotenv-cli", [\
+        ["npm:7.0.0", {\
+          "packageLocation": "./.yarn/cache/dotenv-cli-npm-7.0.0-6726d8533f-de4ed19bc0.zip/node_modules/dotenv-cli/",\
+          "packageDependencies": [\
+            ["dotenv-cli", "npm:7.0.0"],\
+            ["cross-spawn", "npm:7.0.3"],\
+            ["dotenv", "npm:16.0.3"],\
+            ["dotenv-expand", "npm:10.0.0"],\
+            ["minimist", "npm:1.2.7"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["dotenv-expand", [\
+        ["npm:10.0.0", {\
+          "packageLocation": "./.yarn/cache/dotenv-expand-npm-10.0.0-fa5b032ad9-2a38b470ef.zip/node_modules/dotenv-expand/",\
+          "packageDependencies": [\
+            ["dotenv-expand", "npm:10.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\

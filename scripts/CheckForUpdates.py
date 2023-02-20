@@ -32,12 +32,15 @@ datetime_format                           = "%Y-%m-%d %H:%M:%S"
 
 name_length_max                           = 19
 version_length_max                        = 10
-description_length_max                    = 26
+description_length_max                    = 29
 
 days_threshold_ubuntu_version             = 180
 days_threshold_nvm_version                = 30
 days_threshold_node_version               = 30
 days_threshold_yarn_version               = 30
+days_threshold_postgres_version           = 30
+days_threshold_pgadmin4_version           = 30
+days_threshold_keycloak_version           = 30
 days_threshold_yarn_lock_committed        = 30
 days_threshold_cargo_lock_committed       = 30
 days_threshold_apt_packages_last_upgraded = 30
@@ -158,18 +161,21 @@ def get_env_safe(name: str) -> str:
     return result
 
 # Extract versions
-ubuntu_version:              str           = get_env_safe("PORTOBELLO_UBUNTU_VERSION")
-ubuntu_version_last_updated: datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_UBUNTU_VERSION_LAST_UPDATED"), date_format).date()
-nvm_version:                 str           = get_env_safe("PORTOBELLO_NVM_VERSION")
-nvm_version_last_updated:    datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_NVM_VERSION_LAST_UPDATED"), date_format).date()
-node_version:                str           = get_env_safe("PORTOBELLO_NODE_VERSION")
-node_version_last_updated:   datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_NODE_VERSION_LAST_UPDATED"), date_format).date()
-yarn_version:                str           = get_env_safe("PORTOBELLO_YARN_VERSION")
-yarn_version_last_updated:   datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_YARN_VERSION_LAST_UPDATED"), date_format).date()
-yarn_lock_last_committed:    datetime.date = get_last_commit_date_of_file("/app/yarn.lock")
-cargo_lock_last_committed:   datetime.date = get_last_commit_date_of_file("/app/Cargo.lock")
-apt_packages_last_upgraded:  datetime.date = get_apt_packages_last_upgraded()
-docker_image_last_built:     datetime.date = datetime.datetime.strptime(pathlib.Path("/home/dev/image/build_timestamp").read_text().strip(), datetime_format).date()
+ubuntu_version:                str           = get_env_safe("PORTOBELLO_UBUNTU_VERSION")
+ubuntu_version_last_updated:   datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_UBUNTU_VERSION_LAST_UPDATED"), date_format).date()
+nvm_version:                   str           = get_env_safe("PORTOBELLO_NVM_VERSION")
+nvm_version_last_updated:      datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_NVM_VERSION_LAST_UPDATED"), date_format).date()
+node_version:                  str           = get_env_safe("PORTOBELLO_NODE_VERSION")
+node_version_last_updated:     datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_NODE_VERSION_LAST_UPDATED"), date_format).date()
+yarn_version:                  str           = get_env_safe("PORTOBELLO_YARN_VERSION")
+yarn_version_last_updated:     datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_YARN_VERSION_LAST_UPDATED"), date_format).date()
+postgres_version_last_updated: datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_POSTGRES_VERSION_LAST_UPDATED"), date_format).date()
+pgadmin4_version_last_updated: datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_PGADMIN4_VERSION_LAST_UPDATED"), date_format).date()
+keycloak_version_last_updated: datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_KEYCLOAK_VERSION_LAST_UPDATED"), date_format).date()
+yarn_lock_last_committed:      datetime.date = get_last_commit_date_of_file("/app/yarn.lock")
+cargo_lock_last_committed:     datetime.date = get_last_commit_date_of_file("/app/Cargo.lock")
+apt_packages_last_upgraded:    datetime.date = get_apt_packages_last_upgraded()
+docker_image_last_built:       datetime.date = datetime.datetime.strptime(pathlib.Path("/home/dev/image/build_timestamp").read_text().strip(), datetime_format).date()
 
 all_up_to_date = True
 update_instructions = []
@@ -212,16 +218,40 @@ if not check_version("Yarn", yarn_version, yarn_version_last_updated, days_thres
 print()
 print("Last updated:")
 
+if not check_date("Postgres version last updated", postgres_version_last_updated, days_threshold_postgres_version):
+    all_up_to_date = False
+    update_instructions.append("""To update Postgres version:
+
+- Go to https://hub.docker.com/_/postgres to find the latest Postgres version
+- Edit docker-compose.dev.yml
+- Update the version for the 'db' container and the POSTOBELLO_POSTGRES_VERSION_LAST_UPDATED variable""")
+
+if not check_date("pgAdmin4 version last updated", pgadmin4_version_last_updated, days_threshold_pgadmin4_version):
+    all_up_to_date = False
+    update_instructions.append("""To update pgAdmin4 version:
+
+- Go to https://hub.docker.com/r/dpage/pgadmin4 to find the latest pgAdmin4 version
+- Edit docker-compose.dev.yml
+- Update the version for the 'db_client' container and the POSTOBELLO_PGADMIN4_VERSION_LAST_UPDATED variable""")
+
+if not check_date("Keycloak version last updated", keycloak_version_last_updated, days_threshold_keycloak_version):
+    all_up_to_date = False
+    update_instructions.append("""To update Keycloak version:
+
+- Go to https://quay.io/repository/keycloak/keycloak to find the latest Keycloak version
+- Edit docker-compose.dev.yml
+- Update the version for the 'auth' container and the POSTOBELLO_KEYCLOAK_VERSION_LAST_UPDATED variable""")
+
 if not check_date("Cargo lock last committed", cargo_lock_last_committed, days_threshold_cargo_lock_committed):
     all_up_to_date = False
-    update_instructions.append("""To Cargo lock:
+    update_instructions.append("""To update Cargo lock:
 
 - Run 'cargo update'
 - Commit changes to cargo.lock""")
 
 if not check_date("Yarn lock last committed", yarn_lock_last_committed, days_threshold_yarn_lock_committed):
     all_up_to_date = False
-    update_instructions.append("""To upgrade Yarn lock:
+    update_instructions.append("""To update Yarn lock:
 
 - Run 'yarn install'
 - Commit changes to yarn.lock""")
