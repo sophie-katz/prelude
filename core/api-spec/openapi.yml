@@ -1,36 +1,18 @@
-# MIT License
-#
-# Copyright (c) 2023 Sophie Katz
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
 openapi: 3.0.3
-
 info:
   title: Portobello API
   description: Primary REST API for Portobello
   version: 0.1.0
-
+  contact:
+    name: Portobello
+    email: sophie@sophiekatz.us
+    url: 'https://github.com/sophie-katz/portobello'
+  license:
+    name: MIT
+    url: 'https://opensource.org/license/mit/'
 servers:
-  - url: http://localhost:8000
+  - url: 'http://localhost:8000'
     description: Local development
-
 paths:
   /configuration:
     get:
@@ -38,101 +20,104 @@ paths:
       summary: List configuration values
       description: Gets the current values of all configuration keys
       responses:
-        "200":
-          description: OK
+        '200':
+          description: Gets the list of configuration values
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/configurationEntrySetResponse"
-        "500":
-          $ref: "#/components/responses/unexpectedError"
-
+                $ref: '#/components/schemas/configurationEntryResponse'
+              examples:
+                simple:
+                  value:
+                    key:
+                      id: 5
+                      name: string
+                      description: string
+                      type:
+                        id: 1
+                        name: boolean
+                        description: A true/false value
+                      optional: true
+                      allowsMultiple: true
+                      allowsUserOverride: true
+                    itemsGlobal:
+                      - id: 5
+                        value:
+                          asInteger: 5
+                    user:
+                      userId: 6b2a369d-77bb-440e-acae-d742a40473db
+                      items:
+                        - id: 5
+                          value:
+                            asInteger: 5
+        '500':
+          $ref: '#/components/responses/unexpectedError'
   /configuration/types:
     get:
       operationId: getConfigurationTypes
       summary: List types for configuration values
       description: Returns a map of named types for configuration values
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/configurationTypeSetResponse"
-        "500":
-          $ref: "#/components/responses/unexpectedError"
-  
+                $ref: '#/components/schemas/configurationTypeSetResponse'
+        '500':
+          $ref: '#/components/responses/unexpectedError'
   /configuration/keys:
     get:
       operationId: getConfigurationKeys
       summary: List configuration keys
       description: Returns a map of named configuration keys
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/configurationKeySetResponse"
-        "500":
-          $ref: "#/components/responses/unexpectedError"
-
+                $ref: '#/components/schemas/configurationKeySetResponse'
+        '500':
+          $ref: '#/components/responses/unexpectedError'
 components:
   schemas:
-    # General-purpose reusable schemas
-    #---------------------------------------------------------------------------
-
     id:
       description: A unique id for the object
       type: integer
       nullable: false
       minimum: 1
       example: 5
-    
     name:
       description: A human-readable name for the object
       type: string
       nullable: false
       minLength: 1
-    
     description:
       description: A human-readable description of the object
       type: string
       nullable: false
       minLength: 1
-    
-    # Specialized reusable schemas
-    #---------------------------------------------------------------------------
-
     configurationTypeName:
-      $ref: "#/components/schemas/name"
+      $ref: '#/components/schemas/name'
       description: Name of the configuration value type
       nullable: false
-      pattern: "^[a-zA-Z0-9_]+$"
+      pattern: '^[a-zA-Z0-9_]+$'
       examples:
-        - "integer"
-        - "string"
-    
+        - integer
+        - string
     configurationKeyName:
-      $ref: "#/components/schemas/name"
+      $ref: '#/components/schemas/name'
       description: Name of the configuration key
       nullable: false
-      pattern: "^[a-zA-Z0-9_.]+"
-      example: "systems.enabled.code"
-    
+      pattern: '^[a-zA-Z0-9_.]+'
+      example: systems.enabled.code
     userId:
       description: The id of a given user in the authentication provider service
       type: string
       nullable: false
       minLength: 1
-      example: "6b2a369d-77bb-440e-acae-d742a40473db"
-
-    # Request schemas
-    #---------------------------------------------------------------------------
-
-    # Response schemas
-    #---------------------------------------------------------------------------
-
+      example: 6b2a369d-77bb-440e-acae-d742a40473db
     configurationTypeResponse:
       description: A type for the data stored in a configuration key
       type: object
@@ -143,38 +128,34 @@ components:
         - description
       properties:
         id:
-          $ref: "#/components/schemas/id"
+          $ref: '#/components/schemas/id'
           description: Unique id of the configuration value type
         name:
-          $ref: "#/components/schemas/configurationTypeName"
+          $ref: '#/components/schemas/configurationTypeName'
         description:
-          $ref: "#/components/schemas/description"
+          $ref: '#/components/schemas/description'
           description: Name of the configuration value type
           examples:
-            - "A signed integer value"
-            - "A string value"
+            - A signed integer value
+            - A string value
       example:
         id: 1
         name: boolean
-        description: "A true/false value"
-    
+        description: A true/false value
     configurationTypeSetResponse:
       description: A set of configuration types
-      type: object
+      type: array
       nullable: false
-      additionalProperties:
-        $ref: "#/components/schemas/configurationTypeResponse"
-      minProperties: 1
+      items:
+        $ref: '#/components/schemas/configurationTypeResponse'
+      minItems: 1
       example:
-        boolean:
-          id: 1
+        - id: 1
           name: boolean
-          description: "A true/false value"
-        integer:
-          id: 2
+          description: A true/false value
+        - id: 2
           name: integer
           description: A signed integer value
-    
     configurationKeyResponse:
       description: A single configuration key
       type: object
@@ -189,41 +170,36 @@ components:
         - allowsUserOverride
       properties:
         id:
-          $ref: "#/components/schemas/id"
+          $ref: '#/components/schemas/id'
           description: Unique id of the configuration key
         name:
-          $ref: "#/components/schemas/configurationKeyName"
+          $ref: '#/components/schemas/configurationKeyName'
         description:
-          $ref: "#/components/schemas/description"
+          $ref: '#/components/schemas/description'
           description: Name of the type
-          example: "Whether or not the Code system is enabled"
+          example: Whether or not the Code system is enabled
         type:
-          $ref: "#/components/schemas/configurationTypeResponse"
+          $ref: '#/components/schemas/configurationTypeResponse'
           nullable: false
         optional:
           description: Whether or not the key is optional
           type: boolean
           nullable: false
         allowsMultiple:
-          description: >-
-            Whether or not the key allows multiple values in an ordered list
+          description: Whether or not the key allows multiple values in an ordered list
           type: boolean
           nullable: false
         allowsUserOverride:
-          description: >-
-            Whether or not the key allows users to override the configuration
-            value in their personal profiles
+          description: Whether or not the key allows users to override the configuration value in their personal profiles
           type: boolean
           nullable: false
-    
     configurationKeySetResponse:
       description: A set of configuration keys
-      type: object
+      type: array
       nullable: false
-      additionalProperties:
-        $ref: "#/components/schemas/configurationKeyResponse"
-      minProperties: 1
-    
+      minItems: 1
+      items:
+        $ref: '#/components/schemas/configurationKeyResponse'
     configurationValueResponse:
       description: |-
         A value for a configuration key.
@@ -252,7 +228,6 @@ components:
           nullable: false
       example:
         asInteger: 5
-
     configurationEntryItemResponse:
       type: object
       description: An item containing a single value of a configuration key
@@ -262,20 +237,18 @@ components:
         - value
       properties:
         id:
-          $ref: "#/components/schemas/id"
+          $ref: '#/components/schemas/id'
           description: Unique id of the configuration entry
         value:
-          $ref: "#/components/schemas/configurationValueResponse"
+          $ref: '#/components/schemas/configurationValueResponse'
           description: Value for the configuration key
-    
     configurationEntryItemSetResponse:
       description: A set of configuration entry items
       type: array
       nullable: false
       minItems: 1
       items:
-        $ref: "#/components/schemas/configurationEntryItemResponse"
-    
+        $ref: '#/components/schemas/configurationEntryItemResponse'
     configurationEntryUserResponse:
       type: object
       description: The part of a configuration entry that is user-specific
@@ -285,12 +258,11 @@ components:
         - items
       properties:
         userId:
-          $ref: "#/components/schemas/userId"
+          $ref: '#/components/schemas/userId'
           description: The user id for which the entry items are set
         items:
-          $ref: "#/components/schemas/configurationEntryItemSetResponse"
+          $ref: '#/components/schemas/configurationEntryItemSetResponse'
           description: The user-set items
-
     configurationEntryResponse:
       type: object
       description: An entry representing the stored value of a configuration key
@@ -301,23 +273,20 @@ components:
         - user
       properties:
         key:
-          $ref: "#/components/schemas/configurationKeyResponse"
+          $ref: '#/components/schemas/configurationKeyResponse'
           description: The configuration key of the entry
         itemsGlobal:
-          $ref: "#/components/schemas/configurationEntryItemSetResponse"
+          $ref: '#/components/schemas/configurationEntryItemSetResponse'
           description: The globally set items
         user:
-          $ref: "#/components/schemas/configurationEntryUserResponse"
-
+          $ref: '#/components/schemas/configurationEntryUserResponse'
     configurationEntrySetResponse:
-      type: object
+      type: array
       description: A set of configuration entries
       nullable: false
-      minProperties: 1
-      additionalProperties:
-        $ref: "#/components/schemas/configurationEntryResponse"
-      
-
+      minItems: 1
+      items:
+        $ref: '#/components/schemas/configurationEntryResponse'
     errorWithMessageResponse:
       type: object
       required:
@@ -326,12 +295,11 @@ components:
         message:
           type: string
           minLength: 1
-          example: "could not connect to database"
-
+          example: could not connect to database
   responses:
     unexpectedError:
       description: An unexpected error occurred when handling the request
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/errorWithMessageResponse"
+            $ref: '#/components/schemas/errorWithMessageResponse'
