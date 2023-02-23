@@ -26,30 +26,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/configurationEntryResponse'
-              examples:
-                simple:
-                  value:
-                    key:
-                      id: 5
-                      name: string
-                      description: string
-                      type:
-                        id: 1
-                        name: boolean
-                        description: A true/false value
-                      optional: true
-                      allowsMultiple: true
-                      allowsUserOverride: true
-                    itemsGlobal:
-                      - id: 5
-                        value:
-                          asInteger: 5
-                    user:
-                      userId: 6b2a369d-77bb-440e-acae-d742a40473db
-                      items:
-                        - id: 5
-                          value:
-                            asInteger: 5
+              example:
+                key:
+                  id: 5
+                  name: string
+                  description: string
+                  type:
+                    id: 1
+                    name: boolean
+                    description: A true/false value
+                  optional: true
+                  allowsMultiple: true
+                  allowsUserOverride: true
+                itemsGlobal:
+                  - id: 5
+                    value:
+                      asInteger: 5
+                user:
+                  userId: 6b2a369d-77bb-440e-acae-d742a40473db
+                  items:
+                    - id: 5
+                      value:
+                        asInteger: 5
         '500':
           $ref: '#/components/responses/unexpectedError'
   /configuration/types:
