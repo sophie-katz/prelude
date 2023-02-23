@@ -16,11 +16,6 @@ const routes: RouteRecordRaw[] = [
   },
 
   {
-    path: '/openapi/explorer',
-    component: () => import('pages/OpenApiExplorerPage.vue'),
-  },
-
-  {
     path: '/authorization/token',
     component: () => import('pages/AuthorizationTokenPage.vue'),
   },

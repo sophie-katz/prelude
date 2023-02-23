@@ -17,7 +17,6 @@
     "@fontsource/poppins": "^4.5.10",
     "@quasar/extras": "^1.0.0",
     "keycloak-js": "^20.0.3",
-    "openapi-explorer": "^1.0.499",
     "pinia": "^2.0.30",
     "postcss": "^8.4.21",
     "quasar": "^2.11.5",
