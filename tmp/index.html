@@ -196,17 +196,17 @@ font-style: italic;
   <div class="method-summary"></div>
   <h4><a href="#Default">Default</a></h4>
   <ul>
-  <li><a href="#configurationGet"><code><span class="http-method">get</span> /configuration</code></a></li>
-  <li><a href="#configurationKeysGet"><code><span class="http-method">get</span> /configuration/keys</code></a></li>
-  <li><a href="#configurationTypesGet"><code><span class="http-method">get</span> /configuration/types</code></a></li>
+  <li><a href="#getConfiguration"><code><span class="http-method">get</span> /configuration</code></a></li>
+  <li><a href="#getConfigurationKeys"><code><span class="http-method">get</span> /configuration/keys</code></a></li>
+  <li><a href="#getConfigurationTypes"><code><span class="http-method">get</span> /configuration/types</code></a></li>
   </ul>
 
   <h1><a name="Default">Default</a></h1>
-  <div class="method"><a name="configurationGet"/>
+  <div class="method"><a name="getConfiguration"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /configuration</code></pre></div>
-    <div class="method-summary">List configuration values (<span class="nickname">configurationGet</span>)</div>
+    <div class="method-summary">List configuration values (<span class="nickname">getConfiguration</span>)</div>
     <div class="method-notes">Gets the current values of all configuration keys</div>
 
 
@@ -217,12 +217,17 @@ font-style: italic;
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      map[<a href="#configurationEntryResponse">configurationEntryResponse</a>]
+      <a href="#configurationValueResponse">configurationValueResponse</a>
       
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "asInteger" : 5
+}</code></pre>
 
     <h3 class="field-label">Produces</h3>
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
@@ -234,17 +239,17 @@ font-style: italic;
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     OK
-        <a href="#map[String, configurationEntryResponse]">map[String, configurationEntryResponse]</a>
+        <a href="#configurationValueResponse">configurationValueResponse</a>
     <h4 class="field-label">500</h4>
-    
-        <a href="#"></a>
+    An unexpected error occurred when handling the request
+        <a href="#errorWithMessageResponse">errorWithMessageResponse</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="configurationKeysGet"/>
+  <div class="method"><a name="getConfigurationKeys"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /configuration/keys</code></pre></div>
-    <div class="method-summary">List configuration keys (<span class="nickname">configurationKeysGet</span>)</div>
+    <div class="method-summary">List configuration keys (<span class="nickname">getConfigurationKeys</span>)</div>
     <div class="method-notes">Returns a map of named configuration keys</div>
 
 
@@ -255,12 +260,15 @@ font-style: italic;
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      map[<a href="#configurationKeyResponse">configurationKeyResponse</a>]
+      <a href="#configurationKeySetResponse">configurationKeySetResponse</a>
       
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>null</code></pre>
 
     <h3 class="field-label">Produces</h3>
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
@@ -272,17 +280,17 @@ font-style: italic;
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     OK
-        <a href="#map[String, configurationKeyResponse]">map[String, configurationKeyResponse]</a>
+        <a href="#configurationKeySetResponse">configurationKeySetResponse</a>
     <h4 class="field-label">500</h4>
-    
-        <a href="#"></a>
+    An unexpected error occurred when handling the request
+        <a href="#errorWithMessageResponse">errorWithMessageResponse</a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="configurationTypesGet"/>
+  <div class="method"><a name="getConfigurationTypes"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /configuration/types</code></pre></div>
-    <div class="method-summary">List types for configuration values (<span class="nickname">configurationTypesGet</span>)</div>
+    <div class="method-summary">List types for configuration values (<span class="nickname">getConfigurationTypes</span>)</div>
     <div class="method-notes">Returns a map of named types for configuration values</div>
 
 
@@ -293,12 +301,26 @@ font-style: italic;
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      map[<a href="#configurationTypeResponse">configurationTypeResponse</a>]
+      <a href="#configurationTypeSetResponse">configurationTypeSetResponse</a>
       
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "boolean" : {
+    "id" : 1,
+    "name" : "boolean",
+    "description" : "A true/false value"
+  },
+  "integer" : {
+    "id" : 2,
+    "name" : "integer",
+    "description" : "A signed integer value"
+  }
+}</code></pre>
 
     <h3 class="field-label">Produces</h3>
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
@@ -310,10 +332,10 @@ font-style: italic;
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     OK
-        <a href="#map[String, configurationTypeResponse]">map[String, configurationTypeResponse]</a>
+        <a href="#configurationTypeSetResponse">configurationTypeSetResponse</a>
     <h4 class="field-label">500</h4>
-    
-        <a href="#"></a>
+    An unexpected error occurred when handling the request
+        <a href="#errorWithMessageResponse">errorWithMessageResponse</a>
   </div> <!-- method -->
   <hr/>
 
@@ -322,56 +344,63 @@ font-style: italic;
 
   <h3>Table of Contents</h3>
   <ol>
-    <li><a href="#configurationEntryResponse"><code>configurationEntryResponse</code> - </a></li>
-    <li><a href="#configurationEntryUserResponse"><code>configurationEntryUserResponse</code> - </a></li>
     <li><a href="#configurationKeyResponse"><code>configurationKeyResponse</code> - </a></li>
+    <li><a href="#configurationKeySetResponse"><code>configurationKeySetResponse</code> - </a></li>
     <li><a href="#configurationTypeResponse"><code>configurationTypeResponse</code> - </a></li>
+    <li><a href="#configurationTypeSetResponse"><code>configurationTypeSetResponse</code> - </a></li>
+    <li><a href="#configurationValueResponse"><code>configurationValueResponse</code> - </a></li>
     <li><a href="#errorWithMessageResponse"><code>errorWithMessageResponse</code> - </a></li>
   </ol>
 
   <div class="model">
-    <h3><a name="configurationEntryResponse"><code>configurationEntryResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>An entry representing the stored value of a configuration key</div>
-    <div class="field-items">
-      <div class="param">key </div><div class="param-desc"><span class="param-type"><a href="#configurationKeyResponse">configurationKeyResponse</a></span> The configuration key of the entry </div>
-<div class="param">user </div><div class="param-desc"><span class="param-type"><a href="#configurationEntryUserResponse">configurationEntryUserResponse</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="configurationEntryUserResponse"><code>configurationEntryUserResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>The part of a configuration entry that is user-specific</div>
-    <div class="field-items">
-      <div class="param">userId </div><div class="param-desc"><span class="param-type"><a href="#">oas_any_type_not_mapped</a></span> The id of a given user in the authentication provider service </div>
-<div class="param">items </div><div class="param-desc"><span class="param-type"><a href="#">oas_any_type_not_mapped</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
     <h3><a name="configurationKeyResponse"><code>configurationKeyResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>A single configuration key</div>
     <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#">oas_any_type_not_mapped</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#">oas_any_type_not_mapped</a></span>  </div>
-<div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#">oas_any_type_not_mapped</a></span>  </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> A unique id for the object </div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> A human-readable name for the object </div>
+<div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> A human-readable description of the object </div>
 <div class="param">type </div><div class="param-desc"><span class="param-type"><a href="#configurationTypeResponse">configurationTypeResponse</a></span>  </div>
-<div class="param">optional </div><div class="param-desc"><span class="param-type"><a href="#">oas_any_type_not_mapped</a></span> Whether or not the key is optional </div>
-<div class="param">allowsMultiple </div><div class="param-desc"><span class="param-type"><a href="#">oas_any_type_not_mapped</a></span> Whether or not the key allows multiple values in an ordered list </div>
-<div class="param">allowsUserOverride </div><div class="param-desc"><span class="param-type"><a href="#">oas_any_type_not_mapped</a></span> Whether or not the key allows users to override the configuration value in their personal profiles </div>
+<div class="param">optional </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether or not the key is optional </div>
+<div class="param">allowsMultiple </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether or not the key allows multiple values in an ordered list </div>
+<div class="param">allowsUserOverride </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether or not the key allows users to override the configuration value in their personal profiles </div>
     </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="configurationKeySetResponse"><code>configurationKeySetResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>A set of configuration keys</div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="configurationTypeResponse"><code>configurationTypeResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>A type for the data stored in a configuration key</div>
     <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#">oas_any_type_not_mapped</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#">oas_any_type_not_mapped</a></span>  </div>
-<div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#">oas_any_type_not_mapped</a></span>  </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> A unique id for the object </div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> A human-readable name for the object </div>
+<div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> A human-readable description of the object </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="configurationTypeSetResponse"><code>configurationTypeSetResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>A set of configuration types</div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="configurationValueResponse"><code>configurationValueResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>A value for a configuration key</div>
+    <div class="field-items">
+      <div class="param">asBoolean (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> The value as a boolean </div>
+<div class="param">asInteger (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> The value as an integer </div>
+<div class="param">asFloat (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> The value as a floating-point number </div>
+<div class="param">asString (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The value as a string </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="errorWithMessageResponse"><code>errorWithMessageResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
-      <div class="param">message </div><div class="param-desc"><span class="param-type"><a href="#">oas_any_type_not_mapped</a></span>  </div>
+      <div class="param">message </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   </body>

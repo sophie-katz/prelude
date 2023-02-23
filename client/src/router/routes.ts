@@ -16,12 +16,15 @@ const routes: RouteRecordRaw[] = [
   },
 
   {
+    path: '/openapi/explorer',
+    component: () => import('pages/OpenApiExplorerPage.vue'),
+  },
+
+  {
     path: '/authorization/token',
     component: () => import('pages/AuthorizationTokenPage.vue'),
   },
 
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
