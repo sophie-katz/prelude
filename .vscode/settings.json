@@ -75,5 +75,6 @@
   "thunder-client.customLocation": "/app/thunder",
   "editor.rulers": [
     80
-  ]
+  ],
+  "java.compile.nullAnalysis.mode": "automatic"
 }

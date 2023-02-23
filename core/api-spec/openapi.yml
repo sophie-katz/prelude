@@ -353,9 +353,8 @@ components:
           description: The value as a string
           type: string
           nullable: false
-      examples:
-        - asInteger: 5
-        - asString: some string
+      example:
+        asInteger: 5
 
     configurationEntryItemResponse:
       type: object

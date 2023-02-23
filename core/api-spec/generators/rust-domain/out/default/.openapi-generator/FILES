@@ -1,0 +1,9 @@
+myFile.sample
+src/org/openapitools/api/DefaultApi.sample
+src/org/openapitools/model/ConfigurationEntryItemResponse.sample
+src/org/openapitools/model/ConfigurationEntryResponse.sample
+src/org/openapitools/model/ConfigurationEntryUserResponse.sample
+src/org/openapitools/model/ConfigurationKeyResponse.sample
+src/org/openapitools/model/ConfigurationTypeResponse.sample
+src/org/openapitools/model/ConfigurationValueResponse.sample
+src/org/openapitools/model/ErrorWithMessageResponse.sample
