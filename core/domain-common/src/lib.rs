@@ -20,4 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub mod configuration;
+use lazy_static::lazy_static;
+use regex::Regex;
+
+pub type DateTime = chrono::DateTime<chrono::Utc>;
+
+lazy_static! {
+    pub static ref CONFIGURATION_KEY_NAME_REGEX: Regex = Regex::new(r"^[a-zA-Z0-9_.]+$").unwrap();
+    pub static ref CONFIGURATION_TYPE_NAME_REGEX: Regex = Regex::new(r"^[a-zA-Z0-9_]+$").unwrap();
+}

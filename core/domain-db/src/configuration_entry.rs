@@ -20,4 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub mod configuration;
+use std::collections::HashMap;
+
+use serde::{Deserialize, Serialize};
+use validator::Validate;
+
+use crate::{
+    configuration_entry_item::ConfigurationEntryItem,
+    configuration_entry_user::ConfigurationEntryUser, configuration_key::ConfigurationKey,
+};
+
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+pub struct ConfigurationEntry<'configuration_type, 'key> {
+    #[validate(range(min = 1))]
+    pub key_id: i32,
+    #[serde(skip_serializing, skip_deserializing)]
+    pub key_value: Option<&'key ConfigurationKey<'configuration_type>>,
+    #[validate(length(min = 1))]
+    pub items_global: Vec<ConfigurationEntryItem>,
+    pub user: Option<ConfigurationEntryUser>,
+}
+
+pub type ConfigurationEntrySet<'type_set, 'key_set> =
+    HashMap<i32, ConfigurationEntry<'type_set, 'key_set>>;

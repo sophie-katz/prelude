@@ -20,4 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub mod configuration;
+pub mod configuration_entry;
+pub mod configuration_entry_item;
+pub mod configuration_entry_user;
+pub mod configuration_key;
+pub mod configuration_type;
+pub mod configuration_value;
+pub mod constants;

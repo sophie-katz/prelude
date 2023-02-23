@@ -14,13 +14,13 @@ pub struct Model {
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation {
-    #[sea_orm(has_many = "super::configuration_reference::Entity")]
-    ConfigurationReference,
+    #[sea_orm(has_many = "super::configuration_key_reference::Entity")]
+    ConfigurationKeyReference,
 }
 
-impl Related<super::configuration_reference::Entity> for Entity {
+impl Related<super::configuration_key_reference::Entity> for Entity {
     fn to() -> RelationDef {
-        Relation::ConfigurationReference.def()
+        Relation::ConfigurationKeyReference.def()
     }
 }
 

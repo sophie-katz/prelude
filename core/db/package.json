@@ -9,7 +9,8 @@
     "migrate-unit-refresh": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash portobello_unit refresh\"",
     "migrate-update": "yarn workspace @core/db run migrate-dev-update && yarn workspace @core/db run migrate-unit-update",
     "migrate-refresh": "yarn workspace @core/db run migrate-dev-refresh && yarn workspace @core/db run migrate-unit-refresh",
-    "generate-entities": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/GenerateEntities.bash portobello_dev refresh\""
+    "generate-entities": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/GenerateEntities.bash portobello_dev refresh\"",
+    "recreate-databases": "dotenv -e /app/.env -- cross-env-shell \"bash /app/docker/postgres-initdb.d/RecreateDatabases.bash\""
   },
   "dependencies": {
     "cross-env": "^7.0.3",

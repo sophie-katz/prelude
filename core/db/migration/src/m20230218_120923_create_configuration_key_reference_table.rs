@@ -32,43 +32,43 @@ impl MigrationTrait for Migration {
         manager
             .create_table(
                 Table::create()
-                    .table(ConfigurationReference::Table)
+                    .table(ConfigurationKeyReference::Table)
                     .if_not_exists()
                     .col(
-                        ColumnDef::new(ConfigurationReference::Id)
+                        ColumnDef::new(ConfigurationKeyReference::Id)
                             .integer()
                             .not_null()
                             .auto_increment()
                             .primary_key(),
                     )
                     .col(
-                        ColumnDef::new(ConfigurationReference::Name)
+                        ColumnDef::new(ConfigurationKeyReference::Name)
                             .string()
                             .not_null()
                             .unique_key(),
                     )
                     .col(
-                        ColumnDef::new(ConfigurationReference::Description)
+                        ColumnDef::new(ConfigurationKeyReference::Description)
                             .string()
                             .not_null(),
                     )
                     .col(
-                        ColumnDef::new(ConfigurationReference::TypeId)
+                        ColumnDef::new(ConfigurationKeyReference::TypeId)
                             .integer()
                             .not_null(),
                     )
                     .col(
-                        ColumnDef::new(ConfigurationReference::Optional)
+                        ColumnDef::new(ConfigurationKeyReference::Optional)
                             .boolean()
                             .not_null(),
                     )
                     .col(
-                        ColumnDef::new(ConfigurationReference::AllowsMultiple)
+                        ColumnDef::new(ConfigurationKeyReference::AllowsMultiple)
                             .boolean()
                             .not_null(),
                     )
                     .col(
-                        ColumnDef::new(ConfigurationReference::AllowsUserOverride)
+                        ColumnDef::new(ConfigurationKeyReference::AllowsUserOverride)
                             .boolean()
                             .not_null(),
                     )
@@ -76,8 +76,8 @@ impl MigrationTrait for Migration {
                         ForeignKey::create()
                             .name("foreign_key_configuration_reference_type_id")
                             .from(
-                                ConfigurationReference::Table,
-                                ConfigurationReference::TypeId,
+                                ConfigurationKeyReference::Table,
+                                ConfigurationKeyReference::TypeId,
                             )
                             .to(
                                 ConfigurationTypeReference::Table,
@@ -93,7 +93,7 @@ impl MigrationTrait for Migration {
         manager
             .drop_table(
                 Table::drop()
-                    .table(ConfigurationReference::Table)
+                    .table(ConfigurationKeyReference::Table)
                     .to_owned(),
             )
             .await
@@ -102,7 +102,7 @@ impl MigrationTrait for Migration {
 
 /// Learn more at https://docs.rs/sea-query#iden
 #[derive(Iden)]
-pub enum ConfigurationReference {
+pub enum ConfigurationKeyReference {
     Table,
     Id,
     Name,

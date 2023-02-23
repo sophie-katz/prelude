@@ -72,5 +72,8 @@
     "-W",
     "clippy::all"
   ],
-  "thunder-client.customLocation": "/app/thunder"
+  "thunder-client.customLocation": "/app/thunder",
+  "editor.rulers": [
+    80
+  ]
 }

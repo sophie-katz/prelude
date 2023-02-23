@@ -20,4 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub mod configuration;
+pub const CONFIGURATION_TYPE_BOOLEAN: &str = "boolean";
+pub const CONFIGURATION_TYPE_INTEGER: &str = "integer";
+pub const CONFIGURATION_TYPE_FLOAT: &str = "float";
+pub const CONFIGURATION_TYPE_STRING: &str = "string";

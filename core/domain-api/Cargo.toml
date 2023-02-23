@@ -30,5 +30,4 @@ edition = "2021"
 [dependencies]
 serde = "1.0.152"
 validator = { version = "0.16.0", features = [ "derive" ] }
-lazy_static = "1.4.0"
-regex = "1.7.1"
+domain-common = { path = "../domain-common" }

@@ -20,4 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub mod configuration;
+use serde::{Deserialize, Serialize};
+use validator::Validate;
+
+use crate::configuration_entry_item::ConfigurationEntryItem;
+
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+pub struct ConfigurationEntryUser {
+    #[validate(length(min = 1))]
+    pub user_id: String,
+    #[validate(length(min = 1))]
+    pub items: Vec<ConfigurationEntryItem>,
+}

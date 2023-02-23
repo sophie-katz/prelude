@@ -20,4 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub mod configuration;
+use domain_common::CONFIGURATION_TYPE_NAME_REGEX;
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
+use validator::Validate;
+
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+pub struct ConfigurationType {
+    #[validate(range(min = 1))]
+    pub id: i32,
+    #[validate(length(min = 1))]
+    #[validate(regex = "CONFIGURATION_TYPE_NAME_REGEX")]
+    pub name: String,
+    #[validate(length(min = 1))]
+    pub description: String,
+}
+
+pub type ConfigurationTypeSet = HashMap<i32, ConfigurationType>;

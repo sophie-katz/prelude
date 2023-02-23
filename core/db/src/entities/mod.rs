@@ -2,6 +2,6 @@
 
 pub mod prelude;
 
-pub mod configuration;
-pub mod configuration_reference;
+pub mod configuration_entries;
+pub mod configuration_key_reference;
 pub mod configuration_type_reference;

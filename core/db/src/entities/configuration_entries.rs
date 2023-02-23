@@ -3,32 +3,33 @@
 use sea_orm::entity::prelude::*;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "configuration")]
+#[sea_orm(table_name = "configuration_entries")]
 pub struct Model {
     #[sea_orm(primary_key)]
     pub id: i32,
-    pub configuration_id: i32,
+    pub key_id: i32,
+    pub user_id: Option<String>,
     pub order: i32,
     pub value: String,
     pub create_timestamp: DateTime,
-    pub deactivate_timestamp: DateTime,
+    pub deactivate_timestamp: Option<DateTime>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation {
     #[sea_orm(
-        belongs_to = "super::configuration_reference::Entity",
-        from = "Column::ConfigurationId",
-        to = "super::configuration_reference::Column::Id",
+        belongs_to = "super::configuration_key_reference::Entity",
+        from = "Column::KeyId",
+        to = "super::configuration_key_reference::Column::Id",
         on_update = "NoAction",
         on_delete = "NoAction"
     )]
-    ConfigurationReference,
+    ConfigurationKeyReference,
 }
 
-impl Related<super::configuration_reference::Entity> for Entity {
+impl Related<super::configuration_key_reference::Entity> for Entity {
     fn to() -> RelationDef {
-        Relation::ConfigurationReference.def()
+        Relation::ConfigurationKeyReference.def()
     }
 }
 

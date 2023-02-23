@@ -20,4 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub mod configuration;
+use domain_common::DateTime;
+use serde::{Deserialize, Serialize};
+use validator::Validate;
+
+use crate::configuration_value::ConfigurationValue;
+
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+pub struct ConfigurationEntryItem {
+    #[validate(range(min = 1))]
+    pub id: i32,
+    #[validate(range(min = 1))]
+    pub order: i32,
+    pub value: ConfigurationValue,
+    pub create_timestamp: DateTime,
+    pub deactivate_timestamp: Option<DateTime>,
+}

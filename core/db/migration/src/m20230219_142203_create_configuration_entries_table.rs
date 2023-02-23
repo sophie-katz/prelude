@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use super::m20230218_120923_create_configuration_reference_table::ConfigurationReference;
+use super::m20230218_120923_create_configuration_key_reference_table::ConfigurationKeyReference;
 use sea_orm_migration::prelude::*;
 
 #[derive(DeriveMigrationName)]
@@ -32,37 +32,45 @@ impl MigrationTrait for Migration {
         manager
             .create_table(
                 Table::create()
-                    .table(Configuration::Table)
+                    .table(ConfigurationEntries::Table)
                     .if_not_exists()
                     .col(
-                        ColumnDef::new(Configuration::Id)
+                        ColumnDef::new(ConfigurationEntries::Id)
                             .integer()
                             .not_null()
                             .auto_increment()
                             .primary_key(),
                     )
                     .col(
-                        ColumnDef::new(Configuration::ConfigurationId)
+                        ColumnDef::new(ConfigurationEntries::KeyId)
                             .integer()
                             .not_null(),
                     )
-                    .col(ColumnDef::new(Configuration::Order).integer().not_null())
-                    .col(ColumnDef::new(Configuration::Value).string().not_null())
+                    .col(ColumnDef::new(ConfigurationEntries::UserId).string())
                     .col(
-                        ColumnDef::new(Configuration::CreateTimestamp)
-                            .timestamp()
+                        ColumnDef::new(ConfigurationEntries::Order)
+                            .integer()
                             .not_null(),
                     )
                     .col(
-                        ColumnDef::new(Configuration::DeactivateTimestamp)
+                        ColumnDef::new(ConfigurationEntries::Value)
+                            .string()
+                            .not_null(),
+                    )
+                    .col(
+                        ColumnDef::new(ConfigurationEntries::CreateTimestamp)
                             .timestamp()
                             .not_null(),
                     )
+                    .col(ColumnDef::new(ConfigurationEntries::DeactivateTimestamp).timestamp())
                     .foreign_key(
                         ForeignKey::create()
                             .name("foreign_key_configuration_id")
-                            .from(Configuration::Table, Configuration::ConfigurationId)
-                            .to(ConfigurationReference::Table, ConfigurationReference::Id),
+                            .from(ConfigurationEntries::Table, ConfigurationEntries::KeyId)
+                            .to(
+                                ConfigurationKeyReference::Table,
+                                ConfigurationKeyReference::Id,
+                            ),
                     )
                     .to_owned(),
             )
@@ -71,17 +79,18 @@ impl MigrationTrait for Migration {
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager
-            .drop_table(Table::drop().table(Configuration::Table).to_owned())
+            .drop_table(Table::drop().table(ConfigurationEntries::Table).to_owned())
             .await
     }
 }
 
 /// Learn more at https://docs.rs/sea-query#iden
 #[derive(Iden)]
-enum Configuration {
+enum ConfigurationEntries {
     Table,
     Id,
-    ConfigurationId,
+    KeyId,
+    UserId,
     Order,
     Value,
     CreateTimestamp,

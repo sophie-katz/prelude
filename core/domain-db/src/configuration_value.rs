@@ -20,4 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub mod configuration;
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+pub enum ConfigurationValue {
+    Boolean(bool),
+    Integer(i32),
+    Float(f64),
+    String(String),
+}
