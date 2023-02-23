@@ -7,6 +7,7 @@ Portobello is a project management and monitoring suite.
 | Link | Description |
 |------|-------------|
 | [Google Drive folder](https://drive.google.com/drive/folders/1N00nt2MpcOYI9LJROfeZS94XxQnfkklY?usp=share_link) | Google Drive storage location |
+| [REST API Documentation](https://portobello.stoplight.io/docs/portobello) | Documentation for REST API generated from OpenAPI spec with Spotlight |
 
 ## Project setup
 
