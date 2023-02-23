@@ -1,19 +1,49 @@
+# MIT License
+#
+# Copyright (c) 2023 Sophie Katz
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 openapi: 3.0.3
+
 info:
   title: Portobello API
   description: Primary REST API for Portobello
   version: 0.1.0
+  
   contact:
     name: Portobello
     email: sophie@sophiekatz.us
     url: 'https://github.com/sophie-katz/portobello'
+    
   license:
     name: MIT
     url: 'https://opensource.org/license/mit/'
+
 servers:
   - url: 'http://localhost:8000'
     description: Local development
+
 paths:
+  # Configuration paths
+  #####################
+
   /configuration:
     get:
       operationId: getConfiguration
@@ -25,31 +55,48 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configurationEntryResponse'
+                $ref: '#/components/schemas/configurationEntrySetResponse'
               example:
-                key:
-                  id: 5
-                  name: string
-                  description: string
-                  type:
-                    id: 1
-                    name: boolean
-                    description: A true/false value
-                  optional: true
-                  allowsMultiple: true
-                  allowsUserOverride: true
-                itemsGlobal:
-                  - id: 5
-                    value:
-                      asInteger: 5
-                user:
-                  userId: 6b2a369d-77bb-440e-acae-d742a40473db
-                  items:
-                    - id: 5
+                - key:
+                    id: 53
+                    name: systems.enabled.code
+                    description: Whether or not the Code system is enabled
+                    type:
+                      id: 1
+                      name: boolean
+                      description: A true/false value
+                    optional: false
+                    allowsMultiple: false
+                    allowsUserOverride: false
+                  itemsGlobal:
+                    - id: 895
                       value:
-                        asInteger: 5
+                        asBoolean: true
+                  user: null
+                - key:
+                    id: 97
+                    name: theme.darkMode
+                    description: Whether or not to use dark mode
+                    type:
+                      id: 1
+                      name: boolean
+                      description: A true/false value
+                    optional: false
+                    allowsMultiple: false
+                    allowsUserOverride: true
+                  itemsGlobal:
+                    - id: 734
+                      value:
+                        asBoolean: false
+                  user:
+                    userId: 6b2a369d-77bb-440e-acae-d742a40473db
+                    items:
+                      - id: 918
+                        value:
+                          asBoolean: true
         '500':
           $ref: '#/components/responses/unexpectedError'
+
   /configuration/types:
     get:
       operationId: getConfigurationTypes
@@ -62,8 +109,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/configurationTypeSetResponse'
+              example:
+                - id: 1
+                  name: boolean
+                  description: A true/false value
+                - id: 2
+                  name: integer
+                  description: A signed integer value
         '500':
           $ref: '#/components/responses/unexpectedError'
+
   /configuration/keys:
     get:
       operationId: getConfigurationKeys
@@ -76,26 +131,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/configurationKeySetResponse'
+              example:
+                - id: 53
+                  name: systems.enabled.code
+                  description: Whether or not the Code system is enabled
+                  type:
+                    id: 1
+                    name: boolean
+                    description: A true/false value
+                  optional: false
+                  allowsMultiple: false
+                  allowsUserOverride: false
+                - id: 97
+                  name: theme.darkMode
+                  description: Whether or not to use dark mode
+                  type:
+                    id: 1
+                    name: boolean
+                    description: A true/false value
+                  optional: false
+                  allowsMultiple: false
+                  allowsUserOverride: true
+
         '500':
           $ref: '#/components/responses/unexpectedError'
+
 components:
   schemas:
+    # General-purpose reusable objects
+    ##################################
+
     id:
       description: A unique id for the object
       type: integer
       nullable: false
       minimum: 1
       example: 5
+
     name:
       description: A human-readable name for the object
       type: string
       nullable: false
       minLength: 1
+
     description:
       description: A human-readable description of the object
       type: string
       nullable: false
       minLength: 1
+
+    # Specialized reusable objects
+    ##############################
+
     configurationTypeName:
       $ref: '#/components/schemas/name'
       description: Name of the configuration value type
@@ -104,18 +191,24 @@ components:
       examples:
         - integer
         - string
+
     configurationKeyName:
       $ref: '#/components/schemas/name'
       description: Name of the configuration key
       nullable: false
       pattern: '^[a-zA-Z0-9_.]+'
       example: systems.enabled.code
+
     userId:
       description: The id of a given user in the authentication provider service
       type: string
       nullable: false
       minLength: 1
       example: 6b2a369d-77bb-440e-acae-d742a40473db
+
+    # Reuable response objects
+    ##########################
+
     configurationTypeResponse:
       description: A type for the data stored in a configuration key
       type: object
@@ -140,6 +233,7 @@ components:
         id: 1
         name: boolean
         description: A true/false value
+
     configurationTypeSetResponse:
       description: A set of configuration types
       type: array
@@ -154,6 +248,7 @@ components:
         - id: 2
           name: integer
           description: A signed integer value
+
     configurationKeyResponse:
       description: A single configuration key
       type: object
@@ -191,6 +286,18 @@ components:
           description: Whether or not the key allows users to override the configuration value in their personal profiles
           type: boolean
           nullable: false
+      example:
+        id: 53
+        name: systems.enabled.code
+        description: Whether or not the Code system is enabled
+        type:
+          id: 1
+          name: boolean
+          description: A true/false value
+        optional: false
+        allowsMultiple: false
+        allowsUserOverride: false
+
     configurationKeySetResponse:
       description: A set of configuration keys
       type: array
@@ -198,6 +305,28 @@ components:
       minItems: 1
       items:
         $ref: '#/components/schemas/configurationKeyResponse'
+      example:
+        - id: 53
+          name: systems.enabled.code
+          description: Whether or not the Code system is enabled
+          type:
+            id: 1
+            name: boolean
+            description: A true/false value
+          optional: false
+          allowsMultiple: false
+          allowsUserOverride: false
+        - id: 97
+          name: theme.darkMode
+          description: Whether or not to use dark mode
+          type:
+            id: 1
+            name: boolean
+            description: A true/false value
+          optional: false
+          allowsMultiple: false
+          allowsUserOverride: true
+
     configurationValueResponse:
       description: |-
         A value for a configuration key.
@@ -224,8 +353,10 @@ components:
           description: The value as a string
           type: string
           nullable: false
-      example:
-        asInteger: 5
+      examples:
+        - asInteger: 5
+        - asString: some string
+
     configurationEntryItemResponse:
       type: object
       description: An item containing a single value of a configuration key
@@ -240,13 +371,29 @@ components:
         value:
           $ref: '#/components/schemas/configurationValueResponse'
           description: Value for the configuration key
+      example:
+        id: 895
+        value:
+          asBoolean: true
+
     configurationEntryItemSetResponse:
-      description: A set of configuration entry items
+      description: |-
+        A set of configuration entry items
+
+        **NOTE:** `id` values may not be in order because order is stored in an implementation specific way.
       type: array
       nullable: false
       minItems: 1
       items:
         $ref: '#/components/schemas/configurationEntryItemResponse'
+      example:
+        - id: 154
+          value:
+            asString: first entry
+        - id: 136
+          value:
+            asString: second entry
+
     configurationEntryUserResponse:
       type: object
       description: The part of a configuration entry that is user-specific
@@ -261,6 +408,13 @@ components:
         items:
           $ref: '#/components/schemas/configurationEntryItemSetResponse'
           description: The user-set items
+      example:
+        userId: 6b2a369d-77bb-440e-acae-d742a40473db
+        items:
+          - id: 918
+            value:
+              asBoolean: true
+
     configurationEntryResponse:
       type: object
       description: An entry representing the stored value of a configuration key
@@ -278,6 +432,29 @@ components:
           description: The globally set items
         user:
           $ref: '#/components/schemas/configurationEntryUserResponse'
+      example:
+        key:
+          id: 97
+          name: theme.darkMode
+          description: Whether or not to use dark mode
+          type:
+            id: 1
+            name: boolean
+            description: A true/false value
+          optional: false
+          allowsMultiple: false
+          allowsUserOverride: true
+        itemsGlobal:
+          - id: 734
+            value:
+              asBoolean: false
+        user:
+          userId: 6b2a369d-77bb-440e-acae-d742a40473db
+          items:
+            - id: 918
+              value:
+                asBoolean: true
+
     configurationEntrySetResponse:
       type: array
       description: A set of configuration entries
@@ -285,6 +462,45 @@ components:
       minItems: 1
       items:
         $ref: '#/components/schemas/configurationEntryResponse'
+      example:
+        - key:
+            id: 53
+            name: systems.enabled.code
+            description: Whether or not the Code system is enabled
+            type:
+              id: 1
+              name: boolean
+              description: A true/false value
+            optional: false
+            allowsMultiple: false
+            allowsUserOverride: false
+          itemsGlobal:
+            - id: 895
+              value:
+                asBoolean: true
+          user: null
+        - key:
+            id: 97
+            name: theme.darkMode
+            description: Whether or not to use dark mode
+            type:
+              id: 1
+              name: boolean
+              description: A true/false value
+            optional: false
+            allowsMultiple: false
+            allowsUserOverride: true
+          itemsGlobal:
+            - id: 734
+              value:
+                asBoolean: false
+          user:
+            userId: 6b2a369d-77bb-440e-acae-d742a40473db
+            items:
+              - id: 918
+                value:
+                  asBoolean: true
+
     errorWithMessageResponse:
       type: object
       required:
@@ -294,6 +510,7 @@ components:
           type: string
           minLength: 1
           example: could not connect to database
+
   responses:
     unexpectedError:
       description: An unexpected error occurred when handling the request
@@ -301,3 +518,5 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/errorWithMessageResponse'
+          example:
+            message: could not connect to database
