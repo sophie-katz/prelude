@@ -43,8 +43,7 @@ paths:
           content:
             application/json:
               schema:
-                # $ref: "#/components/schemas/configurationEntrySetResponse"
-                $ref: "#/components/schemas/configurationValueResponse"
+                $ref: "#/components/schemas/configurationEntrySetResponse"
         "500":
           $ref: "#/components/responses/unexpectedError"
 
@@ -223,19 +222,13 @@ components:
       nullable: false
       additionalProperties:
         $ref: "#/components/schemas/configurationKeyResponse"
-      minLength: 1
+      minProperties: 1
     
     configurationValueResponse:
-      # anyOf:
-      #   - type: boolean
-      #     nullable: false
-      #   - type: number
-      #     nullable: false
-      #   # - type: string
-      #   #   nullable: false
-      #   #   minLength: 1
-      # # type: boolean
-      description: A value for a configuration key
+      description: |-
+        A value for a configuration key.
+
+        **NOTE:** This is essentially a union of the property types.
       type: object
       nullable: false
       minProperties: 1
@@ -260,76 +253,70 @@ components:
       example:
         asInteger: 5
 
-    # configurationEntryItemResponse:
-    #   type: integer
-    #   # type: object
-    #   # description: An item containing a single value of a configuration key
-    #   # nullable: false
-    #   # required:
-    #   #   - id
-    #   #   - value
-    #   # properties:
-    #   #   id:
-    #   #     $ref: "#/components/schemas/id"
-    #   #     description: Unique id of the configuration entry
-    #     # value:
-    #     #   $ref: "#/components/schemas/configurationValueResponse"
-    #     #   description: Value for the configuration key
+    configurationEntryItemResponse:
+      type: object
+      description: An item containing a single value of a configuration key
+      nullable: false
+      required:
+        - id
+        - value
+      properties:
+        id:
+          $ref: "#/components/schemas/id"
+          description: Unique id of the configuration entry
+        value:
+          $ref: "#/components/schemas/configurationValueResponse"
+          description: Value for the configuration key
     
-    # configurationEntryItemSetResponse:
-    #   # type: array
-    #   # description: A set of configuration entry items
-    #   # nullable: false
-    #   # minItems: 1
-    #   # items:
-    #   type: array
-    #   items:
-    #     type: object
-    #     properties:
-    #       a:
-    #         $ref: "#/components/schemas/configurationEntryItemResponse"
-    #     # type: integer
+    configurationEntryItemSetResponse:
+      description: A set of configuration entry items
+      type: array
+      nullable: false
+      minItems: 1
+      items:
+        $ref: "#/components/schemas/configurationEntryItemResponse"
     
-    # configurationEntryUserResponse:
-    #   type: object
-    #   description: The part of a configuration entry that is user-specific
-    #   nullable: true
-    #   required:
-    #     - userId
-    #     - items
-    #   properties:
-    #     userId:
-    #       $ref: "#/components/schemas/userId"
-    #       # description: The user id for which the entry items are set
-    #     items:
-    #       $ref: "#/components/schemas/configurationEntryItemSetResponse"
-    #       # description: The user-set items
+    configurationEntryUserResponse:
+      type: object
+      description: The part of a configuration entry that is user-specific
+      nullable: true
+      required:
+        - userId
+        - items
+      properties:
+        userId:
+          $ref: "#/components/schemas/userId"
+          description: The user id for which the entry items are set
+        items:
+          $ref: "#/components/schemas/configurationEntryItemSetResponse"
+          description: The user-set items
 
-    # configurationEntryResponse:
-    #   type: object
-    #   description: An entry representing the stored value of a configuration key
-    #   nullable: false
-    #   required:
-    #     - key
-    #     - itemsGlobal
-    #     - user
-    #   properties:
-    #     key:
-    #       $ref: "#/components/schemas/configurationKeyResponse"
-    #       description: The configuration key of the entry
-    #     # itemsGlobal:
-    #     #   $ref: "#/components/schemas/configurationEntryItemSetResponse"
-    #     #   description: The globally set items
-    #     user:
-    #       $ref: "#/components/schemas/configurationEntryUserResponse"
+    configurationEntryResponse:
+      type: object
+      description: An entry representing the stored value of a configuration key
+      nullable: false
+      required:
+        - key
+        - itemsGlobal
+        - user
+      properties:
+        key:
+          $ref: "#/components/schemas/configurationKeyResponse"
+          description: The configuration key of the entry
+        itemsGlobal:
+          $ref: "#/components/schemas/configurationEntryItemSetResponse"
+          description: The globally set items
+        user:
+          $ref: "#/components/schemas/configurationEntryUserResponse"
 
-    # configurationEntrySetResponse:
-    #   type: object
-    #   description: A set of configuration entries
-    #   nullable: false
-    #   additionalProperties:
-    #     $ref: "#/components/schemas/configurationEntryResponse"
-    #   minLength: 1
+    configurationEntrySetResponse:
+      type: object
+      description: A set of configuration entries
+      nullable: false
+      minProperties: 1
+      additionalProperties:
+        $ref: "#/components/schemas/configurationEntryResponse"
+      
 
     errorWithMessageResponse:
       type: object
