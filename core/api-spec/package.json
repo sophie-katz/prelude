@@ -12,7 +12,6 @@
   "scripts": {
     "validate": "openapi-generator-cli validate -i openapi.yml",
     "generate-client-typescript-axios": "openapi-generator-cli generate -i openapi.yml -g typescript-axios -o ../api-bindings-client-typescript-axios",
-    "generate-client-rust": "openapi-generator-cli generate -i openapi.yml -g rust -o ../api-bindings-client-rust",
-    "generate": "yarn run generate-client-typescript-axios; yarn run generate-client-rust"
+    "generate": "yarn run generate-client-typescript-axios"
   }
 }
