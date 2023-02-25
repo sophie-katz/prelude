@@ -38,6 +38,13 @@
 		{
 			"type": "cargo",
 			"command": "clippy",
+			"args": [
+				"--",
+				"-W",
+				"clippy::all",
+				"-W",
+				"missing_docs"
+			],
 			"problemMatcher": [
 				"$rustc"
 			],

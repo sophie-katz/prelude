@@ -72,6 +72,12 @@ impl MigrationTrait for Migration {
                             .boolean()
                             .not_null(),
                     )
+                    // .col(
+                    //     ColumnDef::new(ConfigurationEntries::CreateTimestamp)
+                    //         .timestamp()
+                    //         .not_null(),
+                    // )
+                    // .col(ColumnDef::new(ConfigurationEntries::DeactivateTimestamp).timestamp())
                     .foreign_key(
                         ForeignKey::create()
                             .name("foreign_key_configuration_reference_type_id")

@@ -70,7 +70,9 @@
   "rust-analyzer.check.extraArgs": [
     "--",
     "-W",
-    "clippy::all"
+    "clippy::all",
+    "-W",
+    "missing_docs"
   ],
   "thunder-client.customLocation": "/app/thunder",
   "editor.rulers": [

@@ -23,7 +23,7 @@
 pub mod configuration;
 mod entities;
 
-use chrono::NaiveDateTime;
+use chrono::{NaiveDateTime, Utc};
 use config_env::Configuration;
 use futures::executor;
 use sea_orm::entity::prelude::*;
@@ -35,6 +35,8 @@ use std::{
     str::ParseBoolError,
 };
 use validator::ValidationErrors;
+
+pub type DateTime = chrono::DateTime<Utc>;
 
 /// Error type for this crate
 #[derive(Debug)]

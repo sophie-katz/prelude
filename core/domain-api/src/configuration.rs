@@ -20,14 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use domain_common::{CONFIGURATION_KEY_NAME_REGEX, CONFIGURATION_TYPE_NAME_REGEX};
+use lazy_static::lazy_static;
+use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use validator::Validate;
 
-/// A user object
+lazy_static! {
+    pub static ref CONFIGURATION_TYPE_NAME_REGEX: Regex = Regex::new(r"^[a-zA-Z0-9_]+$").unwrap();
+    pub static ref CONFIGURATION_KEY_NAME_REGEX: Regex = Regex::new(r"^[a-zA-Z0-9_.]+$").unwrap();
+}
+
+/// A configuration type object
 ///
-/// Documentation for fields can be found in `core/api-spec/openapi.yml`.
+/// Documentation can be found in `core/api-spec/openapi.yml`.
 #[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
 pub struct ConfigurationTypeResponse {
     #[validate(range(min = 1))]
@@ -39,9 +45,8 @@ pub struct ConfigurationTypeResponse {
     pub description: String,
 }
 
-/// A user object
-///
-/// Documentation for fields can be found in `core/api-spec/openapi.yml`.
+pub type ConfigurationTypeSetResponse = Vec<ConfigurationTypeResponse>;
+
 #[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
 pub struct ConfigurationKeyResponse {
     #[validate(range(min = 1))]
@@ -57,14 +62,40 @@ pub struct ConfigurationKeyResponse {
     pub allows_user_override: bool,
 }
 
-/// A user object
-///
-/// Documentation for fields can be found in `core/api-spec/openapi.yml`.
-#[derive(Debug, Serialize, Deserialize, Validate)]
-pub struct ConfigurationKeySetResponse {
-    #[validate(length(min = 1))]
-    pub keys: HashMap<i32, ConfigurationKeyResponse>,
+pub type ConfigurationKeySetResponse = Vec<ConfigurationKeyResponse>;
+
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+pub struct ConfigurationValueResponse {
+    pub as_boolean: Option<bool>,
+    pub as_integer: Option<i64>,
+    pub as_float: Option<f64>,
+    pub as_string: Option<String>,
 }
+
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+pub struct ConfigurationEntryItemResponse {
+    #[validate(range(min = 1))]
+    pub id: i32,
+    pub value: ConfigurationValueResponse,
+}
+
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+pub struct ConfigurationEntryUserResponse {
+    #[validate(length(min = 1))]
+    pub userId: String,
+    #[validate(length(min = 1))]
+    pub items: Vec<ConfigurationEntryItemResponse>,
+}
+
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+pub struct ConfigurationEntryResponse {
+    key: ConfigurationKeyResponse,
+    #[validate(length(min = 1))]
+    pub items_global: Vec<ConfigurationEntryItemResponse>,
+    pub user: Option<ConfigurationEntryUserResponse>,
+}
+
+pub type ConfigurationEntrySetResponse = Vec<ConfigurationEntryResponse>;
 
 // #[cfg(test)]
 // mod tests {

@@ -31,5 +31,4 @@ futures = "0.3.21"
 sea-orm = { version = "0.11.0", features = [ "sqlx-postgres", "runtime-async-std-native-tls", "macros", "mock", "with-chrono" ] }
 async-std = { version = "1.12.0", features = [ "attributes" ] }
 chrono = "0.4.23"
-domain-db = { path = "../domain-db" }
 validator = { version = "0.16.0" }

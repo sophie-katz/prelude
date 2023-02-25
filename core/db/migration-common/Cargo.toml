@@ -21,14 +21,15 @@
 # SOFTWARE.
 
 [package]
-name = "domain-db"
+name = "migration-common"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-validator = { version = "0.16.0", features = [ "derive" ] }
-chrono = "0.4.23"
-domain-common = { path = "../domain-common" }
-serde = "1.0.152"
+strum = "0.24.1"
+sea-query = "0.28.3"
+
+[dev-dependencies]
+strum_macros = "0.24.3"

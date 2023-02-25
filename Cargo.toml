@@ -25,8 +25,8 @@ members = [
     "core/config-env",
     "core/db",
     "core/domain-api",
-    "core/domain-db",
     "core/db/migration",
+    "core/db/migration-common",
     "core/server-routes",
     "server",
     "utilities/db-seed"
