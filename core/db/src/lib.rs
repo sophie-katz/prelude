@@ -20,10 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub mod configuration;
-mod entities;
+//! The Portobello database layer.
 
-use chrono::{NaiveDateTime, Utc};
+#![allow(missing_docs, incomplete_features)]
+#![feature(async_fn_in_trait)]
+
+pub mod entities;
+pub mod seeding;
+pub mod testing;
+
+use chrono::Utc;
 use config_env::Configuration;
 use futures::executor;
 use sea_orm::entity::prelude::*;
@@ -31,29 +37,18 @@ use sea_orm::*;
 use std::{
     error,
     fmt::{self, Display},
-    num::{ParseFloatError, ParseIntError},
-    str::ParseBoolError,
 };
-use validator::ValidationErrors;
 
+/// An alias for the datetime type used for timestamps in the database.
 pub type DateTime = chrono::DateTime<Utc>;
 
 /// Error type for this crate
 #[derive(Debug)]
 pub enum Error {
-    /// No configuration type with the given id
-    NoConfigurationTypeWithId(i32),
-    NoConfigurationKeyWithId(i32),
-    NoSingleDateTime(NaiveDateTime),
-    UnsupportedConfigurationType(i32, String),
-    ConfigurationValueParseErrorBoolean(i32, ParseBoolError),
-    ConfigurationValueParseErrorInteger(i32, ParseIntError),
-    ConfigurationValueParseErrorFloat(i32, ParseFloatError),
     /// Wrapper for config-env errors
     ConfigEnvError(config_env::Error),
     /// Wrapper for SeaORM errors
     SeaORMDbErr(DbErr),
-    ValidatorValidationErrors(ValidationErrors),
 }
 
 impl From<config_env::Error> for Error {
@@ -68,68 +63,35 @@ impl From<DbErr> for Error {
     }
 }
 
-impl From<ValidationErrors> for Error {
-    fn from(value: ValidationErrors) -> Self {
-        Self::ValidatorValidationErrors(value)
-    }
-}
-
 impl Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Error::NoConfigurationTypeWithId(id) => {
-                write!(f, "no configuration type with id {}", id)
-            }
-            Error::NoConfigurationKeyWithId(id) => {
-                write!(f, "no configuration key with id {}", id)
-            }
-            Error::NoSingleDateTime(datetime) => {
-                write!(f, "no single datetime in timezone for {}", datetime)
-            }
-            Error::UnsupportedConfigurationType(id, name) => {
-                write!(
-                    f,
-                    "unsupported configuration type {:#?} (configuration key id: {})",
-                    name, id
-                )
-            }
-            Error::ConfigurationValueParseErrorBoolean(id, err) => {
-                write!(
-                    f,
-                    "error parsing boolean configuration value (configuration key id: {}): {}",
-                    id, err
-                )
-            }
-            Error::ConfigurationValueParseErrorInteger(id, err) => {
-                write!(
-                    f,
-                    "error parsing integer configuration value (configuration key id: {}): {}",
-                    id, err
-                )
-            }
-            Error::ConfigurationValueParseErrorFloat(id, err) => {
-                write!(
-                    f,
-                    "error parsing float configuration value (configuration key id: {}): {}",
-                    id, err
-                )
-            }
             Error::ConfigEnvError(err) => write!(f, "{err}"),
             Error::SeaORMDbErr(err) => write!(f, "{err}"),
-            Error::ValidatorValidationErrors(err) => write!(f, "{err}"),
         }
     }
 }
 
 impl error::Error for Error {}
 
+/// An enum representing the different database instances
 #[derive(Debug)]
 pub enum DatabaseInstance {
+    /// The development instance
+    ///
+    /// Used for local development and testing. No automated tests are run
+    /// against this instance. It is, however, used to generate the entities.
     Development,
+
+    /// The unit test instance
+    ///
+    /// Used for automated testing. It is truncated and re-seeded before each
+    /// test as needed.
     Unit,
 }
 
 impl DatabaseInstance {
+    /// Gets the name of the database instance as it is known within PostgreSQL.
     pub fn as_name(self) -> &'static str {
         match self {
             DatabaseInstance::Development => "portobello_dev",
@@ -156,60 +118,3 @@ pub fn connect_db(database_instance: DatabaseInstance) -> Result<DatabaseConnect
         database_instance.as_name(),
     )))?)
 }
-
-// #[cfg(test)]
-// mod tests {
-//     use super::{connect_db, connect_mock_db, Error};
-
-//     // #[test]
-//     // fn test_connect_db_development() -> Result<(), Error> {
-//     //     connect_db(Database::Development)?;
-
-//     //     Ok(())
-//     // }
-
-//     // #[async_std::test]
-//     // async fn test_find_configuration_type_reference_one() -> Result<(), DbErr> {
-//     //     let db = MockDatabase::new(DatabaseBackend::Postgres)
-//     //         .append_query_results([vec![configuration_type_reference::Model {
-//     //             id: 1,
-//     //             name: "boolean".to_owned(),
-//     //             description: "True or false value".to_owned(),
-//     //         }]])
-//     //         // .append_query_results(vec![configuration_type_reference::Model {
-//     //         //     id: 2,
-//     //         //     name: "integer".to_owned(),
-//     //         //     description: "Signed integer value".to_owned(),
-//     //         // }])
-//     //         // .append_query_results(vec![configuration_type_reference::Model {
-//     //         //     id: 3,
-//     //         //     name: "string".to_owned(),
-//     //         //     description: "String value".to_owned(),
-//     //         // }])
-//     //         // .append_query_results([vec![configuration_reference::Model {
-//     //         //     id: 1,
-//     //         //     name: "booleanRequiredSingleGlobal".to_owned(),
-//     //         //     description: "A boolean value that is required, cannot have multiple values, and cannot be overridden by users".to_owned(),
-//     //         //     type_id: 1,
-//     //         //     optional: false,
-//     //         //     allows_multiple: false,
-//     //         //     allows_user_override: false,
-//     //         // }]])
-//     //         .into_connection();
-
-//     //     assert_eq!(
-//     //         ConfigurationTypeReference::find()
-//     //             .all(&db)
-//     //             .await?
-//     //             .into_iter()
-//     //             .collect::<Vec<user::Model>>(),
-//     //         vec![user::Model {
-//     //             id: 1,
-//     //             username: "admin".to_owned(),
-//     //             icon: None
-//     //         }]
-//     //     );
-
-//     //     Ok(())
-//     // }
-// }

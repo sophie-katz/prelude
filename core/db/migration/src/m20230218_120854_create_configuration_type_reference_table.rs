@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use migration_common::{create_audited_table, TableKind};
+use migration_common::{create_audited_table, table::TableKind};
 use sea_orm_migration::prelude::*;
 use strum_macros::EnumIter;
 
@@ -34,7 +34,7 @@ impl MigrationTrait for Migration {
             manager,
             ConfigurationTypeReference::Table,
             ConfigurationTypeReferenceAudit::Table,
-            &|table_kind: TableKind, table_create_statement: &mut TableCreateStatement| {
+            &|table_kind, table_create_statement| {
                 table_create_statement
                     .col(
                         match (
@@ -95,7 +95,7 @@ impl MigrationTrait for Migration {
 }
 
 /// Learn more at https://docs.rs/sea-query#iden
-#[derive(Iden, EnumIter, Clone)]
+#[derive(Iden, EnumIter, Clone, PartialEq)]
 pub enum ConfigurationTypeReference {
     Table,
     Id,
@@ -104,14 +104,14 @@ pub enum ConfigurationTypeReference {
     DeactivateTimestamp,
 }
 
-#[derive(Iden, EnumIter, Clone)]
+#[derive(Iden, EnumIter, Clone, PartialEq)]
 pub enum ConfigurationTypeReferenceAudit {
     Table,
-    AuditId,
     Id,
     Name,
     Description,
     DeactivateTimestamp,
+    AuditId,
     AuditAction,
     AuditTimestampTransactionStart,
     AuditTimestampStatementStart,
@@ -119,18 +119,4 @@ pub enum ConfigurationTypeReferenceAudit {
     AuditClientHost,
     AuditClientPort,
     AuditClientQuery,
-}
-
-#[cfg(test)]
-mod tests {
-    use super::{ConfigurationTypeReference, ConfigurationTypeReferenceAudit};
-    use migration_common::assert_audit_table_enum_valid;
-
-    #[test]
-    fn test_audit_table_columns() {
-        assert_audit_table_enum_valid::<ConfigurationTypeReference, ConfigurationTypeReferenceAudit>(
-            "configuration_type_reference",
-            "configuration_type_reference_audit",
-        );
-    }
 }

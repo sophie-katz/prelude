@@ -20,13 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+//! A utility program to seed the database with minimal usable data.
+
 use db::{
     connect_db,
-    entities::{configuration_reference, configuration_type_reference},
+    seeding::{
+        insert_configuration_entry, insert_configuration_key_reference,
+        insert_configuration_type_reference,
+    },
     DatabaseInstance,
 };
 use futures::executor;
-use sea_orm::{DatabaseConnection, DbErr, EntityTrait, Set};
+use sea_orm::DatabaseConnection;
 
 struct ConfigurationTypeReferenceIds {
     boolean: i32,
@@ -35,128 +40,149 @@ struct ConfigurationTypeReferenceIds {
     string: i32,
 }
 
+struct ConfigurationKeyReferenceIds {
+    system_enabled_code: i32,
+    system_enabled_dashboard: i32,
+    system_enabled_deploy: i32,
+    system_enabled_document: i32,
+    system_enabled_ticket: i32,
+}
+
 async fn seed_configuration_type_reference(
     connection: &DatabaseConnection,
-) -> Result<ConfigurationTypeReferenceIds, DbErr> {
-    let boolean =
-        configuration_type_reference::Entity::insert(configuration_type_reference::ActiveModel {
-            name: Set("boolean".to_owned()),
-            description: Set("A true/false value".to_owned()),
-            ..Default::default()
-        })
-        .exec(connection)
-        .await?
-        .last_insert_id;
-
-    let integer =
-        configuration_type_reference::Entity::insert(configuration_type_reference::ActiveModel {
-            name: Set("integer".to_owned()),
-            description: Set("A signed integer number".to_owned()),
-            ..Default::default()
-        })
-        .exec(connection)
-        .await?
-        .last_insert_id;
-
-    let float =
-        configuration_type_reference::Entity::insert(configuration_type_reference::ActiveModel {
-            name: Set("float".to_owned()),
-            description: Set("A floating-point number".to_owned()),
-            ..Default::default()
-        })
-        .exec(connection)
-        .await?
-        .last_insert_id;
-
-    let string =
-        configuration_type_reference::Entity::insert(configuration_type_reference::ActiveModel {
-            name: Set("string".to_owned()),
-            description: Set("A string value".to_owned()),
-            ..Default::default()
-        })
-        .exec(connection)
-        .await?
-        .last_insert_id;
-
+) -> Result<ConfigurationTypeReferenceIds, db::Error> {
     Ok(ConfigurationTypeReferenceIds {
-        boolean,
-        integer,
-        float,
-        string,
+        boolean: insert_configuration_type_reference(connection, "boolean", "A true/false value")
+            .await?,
+        integer: insert_configuration_type_reference(
+            connection,
+            "integer",
+            "A signed integer number",
+        )
+        .await?,
+        float: insert_configuration_type_reference(connection, "float", "A floating-point number")
+            .await?,
+        string: insert_configuration_type_reference(connection, "string", "A string value").await?,
     })
 }
 
-async fn seed_configuration_reference(
+async fn seed_configuration_key_reference(
     connection: &DatabaseConnection,
     configuration_type_reference_ids: &ConfigurationTypeReferenceIds,
-) -> Result<(), DbErr> {
-    configuration_reference::Entity::insert(configuration_reference::ActiveModel {
-        name: Set("system.enabled.code".to_owned()),
-        description: Set("Whether or not the Code system is enabled".to_owned()),
-        type_id: Set(configuration_type_reference_ids.boolean),
-        optional: Set(false),
-        allows_multiple: Set(false),
-        allows_user_override: Set(false),
-        ..Default::default()
+) -> Result<ConfigurationKeyReferenceIds, db::Error> {
+    Ok(ConfigurationKeyReferenceIds {
+        system_enabled_code: insert_configuration_key_reference(
+            connection,
+            "system.enabled.code",
+            "Whether or not the Code system is enabled",
+            configuration_type_reference_ids.boolean,
+            false,
+            false,
+            false,
+        )
+        .await?,
+        system_enabled_dashboard: insert_configuration_key_reference(
+            connection,
+            "system.enabled.dashboard",
+            "Whether or not the Dashboard system is enabled",
+            configuration_type_reference_ids.boolean,
+            false,
+            false,
+            false,
+        )
+        .await?,
+        system_enabled_deploy: insert_configuration_key_reference(
+            connection,
+            "system.enabled.deploy",
+            "Whether or not the Deploy system is enabled",
+            configuration_type_reference_ids.boolean,
+            false,
+            false,
+            false,
+        )
+        .await?,
+        system_enabled_document: insert_configuration_key_reference(
+            connection,
+            "system.enabled.document",
+            "Whether or not the Document system is enabled",
+            configuration_type_reference_ids.boolean,
+            false,
+            false,
+            false,
+        )
+        .await?,
+        system_enabled_ticket: insert_configuration_key_reference(
+            connection,
+            "system.enabled.ticket",
+            "Whether or not the Ticket system is enabled",
+            configuration_type_reference_ids.boolean,
+            false,
+            false,
+            false,
+        )
+        .await?,
     })
-    .exec(connection)
+}
+
+async fn seed_configuration_entries(
+    connection: &DatabaseConnection,
+    configuration_key_reference_ids: &ConfigurationKeyReferenceIds,
+) -> Result<(), db::Error> {
+    insert_configuration_entry(
+        connection,
+        configuration_key_reference_ids.system_enabled_code,
+        1,
+        None,
+        "true",
+    )
     .await?;
 
-    configuration_reference::Entity::insert(configuration_reference::ActiveModel {
-        name: Set("system.enabled.dashboard".to_owned()),
-        description: Set("Whether or not the Dashboard system is enabled".to_owned()),
-        type_id: Set(configuration_type_reference_ids.boolean),
-        optional: Set(false),
-        allows_multiple: Set(false),
-        allows_user_override: Set(false),
-        ..Default::default()
-    })
-    .exec(connection)
+    insert_configuration_entry(
+        connection,
+        configuration_key_reference_ids.system_enabled_dashboard,
+        1,
+        None,
+        "true",
+    )
     .await?;
 
-    configuration_reference::Entity::insert(configuration_reference::ActiveModel {
-        name: Set("system.enabled.deploy".to_owned()),
-        description: Set("Whether or not the Deploy system is enabled".to_owned()),
-        type_id: Set(configuration_type_reference_ids.boolean),
-        optional: Set(false),
-        allows_multiple: Set(false),
-        allows_user_override: Set(false),
-        ..Default::default()
-    })
-    .exec(connection)
+    insert_configuration_entry(
+        connection,
+        configuration_key_reference_ids.system_enabled_deploy,
+        1,
+        None,
+        "true",
+    )
     .await?;
 
-    configuration_reference::Entity::insert(configuration_reference::ActiveModel {
-        name: Set("system.enabled.document".to_owned()),
-        description: Set("Whether or not the Document system is enabled".to_owned()),
-        type_id: Set(configuration_type_reference_ids.boolean),
-        optional: Set(false),
-        allows_multiple: Set(false),
-        allows_user_override: Set(false),
-        ..Default::default()
-    })
-    .exec(connection)
+    insert_configuration_entry(
+        connection,
+        configuration_key_reference_ids.system_enabled_document,
+        1,
+        None,
+        "true",
+    )
     .await?;
 
-    configuration_reference::Entity::insert(configuration_reference::ActiveModel {
-        name: Set("system.enabled.ticket".to_owned()),
-        description: Set("Whether or not the Ticket system is enabled".to_owned()),
-        type_id: Set(configuration_type_reference_ids.boolean),
-        optional: Set(false),
-        allows_multiple: Set(false),
-        allows_user_override: Set(false),
-        ..Default::default()
-    })
-    .exec(connection)
+    insert_configuration_entry(
+        connection,
+        configuration_key_reference_ids.system_enabled_ticket,
+        1,
+        None,
+        "true",
+    )
     .await?;
 
     Ok(())
 }
 
-async fn seed(connection: &DatabaseConnection) -> Result<(), DbErr> {
+async fn seed(connection: &DatabaseConnection) -> Result<(), db::Error> {
     let configuration_type_reference_ids = seed_configuration_type_reference(connection).await?;
 
-    seed_configuration_reference(connection, &configuration_type_reference_ids).await?;
+    let configuration_key_reference_ids =
+        seed_configuration_key_reference(connection, &configuration_type_reference_ids).await?;
+
+    seed_configuration_entries(connection, &configuration_key_reference_ids).await?;
 
     Ok(())
 }

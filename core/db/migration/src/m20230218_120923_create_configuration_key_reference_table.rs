@@ -21,7 +21,9 @@
 // SOFTWARE.
 
 use super::m20230218_120854_create_configuration_type_reference_table::ConfigurationTypeReference;
+use migration_common::{create_audited_table, table::TableKind};
 use sea_orm_migration::prelude::*;
+use strum_macros::EnumIter;
 
 #[derive(DeriveMigrationName)]
 pub struct Migration;
@@ -29,56 +31,81 @@ pub struct Migration;
 #[async_trait::async_trait]
 impl MigrationTrait for Migration {
     async fn up(&self, manager: &SchemaManager) -> Result<(), DbErr> {
-        manager
-            .create_table(
-                Table::create()
-                    .table(ConfigurationKeyReference::Table)
-                    .if_not_exists()
+        create_audited_table(
+            manager,
+            ConfigurationKeyReference::Table,
+            ConfigurationKeyReferenceAudit::Table,
+            &|table_kind, table_create_statement| {
+                table_create_statement
                     .col(
-                        ColumnDef::new(ConfigurationKeyReference::Id)
-                            .integer()
-                            .not_null()
-                            .auto_increment()
-                            .primary_key(),
+                        match (
+                            &table_kind,
+                            ColumnDef::new(ConfigurationKeyReference::Id).integer(),
+                        ) {
+                            (TableKind::Source, x) => x.not_null().auto_increment().primary_key(),
+                            (TableKind::Audit, x) => x,
+                        },
                     )
                     .col(
-                        ColumnDef::new(ConfigurationKeyReference::Name)
-                            .string()
-                            .not_null()
-                            .unique_key(),
+                        match (
+                            &table_kind,
+                            ColumnDef::new(ConfigurationKeyReference::Name).string(),
+                        ) {
+                            (TableKind::Source, x) => x.not_null().unique_key(),
+                            (TableKind::Audit, x) => x,
+                        },
                     )
                     .col(
-                        ColumnDef::new(ConfigurationKeyReference::Description)
-                            .string()
-                            .not_null(),
+                        match (
+                            &table_kind,
+                            ColumnDef::new(ConfigurationKeyReference::Description).string(),
+                        ) {
+                            (TableKind::Source, x) => x.not_null(),
+                            (TableKind::Audit, x) => x,
+                        },
                     )
                     .col(
-                        ColumnDef::new(ConfigurationKeyReference::TypeId)
-                            .integer()
-                            .not_null(),
+                        match (
+                            &table_kind,
+                            ColumnDef::new(ConfigurationKeyReference::TypeId).integer(),
+                        ) {
+                            (TableKind::Source, x) => x.not_null(),
+                            (TableKind::Audit, x) => x,
+                        },
                     )
                     .col(
-                        ColumnDef::new(ConfigurationKeyReference::Optional)
-                            .boolean()
-                            .not_null(),
+                        match (
+                            &table_kind,
+                            ColumnDef::new(ConfigurationKeyReference::Optional).boolean(),
+                        ) {
+                            (TableKind::Source, x) => x.not_null(),
+                            (TableKind::Audit, x) => x,
+                        },
                     )
                     .col(
-                        ColumnDef::new(ConfigurationKeyReference::AllowsMultiple)
-                            .boolean()
-                            .not_null(),
+                        match (
+                            &table_kind,
+                            ColumnDef::new(ConfigurationKeyReference::AllowsMultiple).boolean(),
+                        ) {
+                            (TableKind::Source, x) => x.not_null(),
+                            (TableKind::Audit, x) => x,
+                        },
                     )
                     .col(
-                        ColumnDef::new(ConfigurationKeyReference::AllowsUserOverride)
-                            .boolean()
-                            .not_null(),
+                        match (
+                            &table_kind,
+                            ColumnDef::new(ConfigurationKeyReference::AllowsUserOverride).boolean(),
+                        ) {
+                            (TableKind::Source, x) => x.not_null(),
+                            (TableKind::Audit, x) => x,
+                        },
                     )
-                    // .col(
-                    //     ColumnDef::new(ConfigurationEntries::CreateTimestamp)
-                    //         .timestamp()
-                    //         .not_null(),
-                    // )
-                    // .col(ColumnDef::new(ConfigurationEntries::DeactivateTimestamp).timestamp())
-                    .foreign_key(
+                    .col(
+                        ColumnDef::new(ConfigurationKeyReference::DeactivateTimestamp).timestamp(),
+                    );
+
+                if table_kind == TableKind::Source {
+                    table_create_statement.foreign_key(
                         ForeignKey::create()
                             .name("foreign_key_configuration_reference_type_id")
                             .from(
@@ -89,10 +116,13 @@ impl MigrationTrait for Migration {
                                 ConfigurationTypeReference::Table,
                                 ConfigurationTypeReference::Id,
                             ),
-                    )
-                    .to_owned(),
-            )
-            .await
+                    );
+                }
+            },
+        )
+        .await?;
+
+        Ok(())
     }
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
@@ -102,12 +132,22 @@ impl MigrationTrait for Migration {
                     .table(ConfigurationKeyReference::Table)
                     .to_owned(),
             )
-            .await
+            .await?;
+
+        manager
+            .drop_table(
+                Table::drop()
+                    .table(ConfigurationKeyReferenceAudit::Table)
+                    .to_owned(),
+            )
+            .await?;
+
+        Ok(())
     }
 }
 
 /// Learn more at https://docs.rs/sea-query#iden
-#[derive(Iden)]
+#[derive(Iden, EnumIter, Clone, PartialEq)]
 pub enum ConfigurationKeyReference {
     Table,
     Id,
@@ -117,4 +157,26 @@ pub enum ConfigurationKeyReference {
     Optional,
     AllowsMultiple,
     AllowsUserOverride,
+    DeactivateTimestamp,
+}
+
+#[derive(Iden, EnumIter, Clone, PartialEq)]
+pub enum ConfigurationKeyReferenceAudit {
+    Table,
+    Id,
+    Name,
+    Description,
+    TypeId,
+    Optional,
+    AllowsMultiple,
+    AllowsUserOverride,
+    DeactivateTimestamp,
+    AuditId,
+    AuditAction,
+    AuditTimestampTransactionStart,
+    AuditTimestampStatementStart,
+    AuditTimestampTrigger,
+    AuditClientHost,
+    AuditClientPort,
+    AuditClientQuery,
 }

@@ -21,7 +21,9 @@
 // SOFTWARE.
 
 use super::m20230218_120923_create_configuration_key_reference_table::ConfigurationKeyReference;
+use migration_common::{create_audited_table, table::TableKind};
 use sea_orm_migration::prelude::*;
+use strum_macros::EnumIter;
 
 #[derive(DeriveMigrationName)]
 pub struct Migration;
@@ -29,41 +31,53 @@ pub struct Migration;
 #[async_trait::async_trait]
 impl MigrationTrait for Migration {
     async fn up(&self, manager: &SchemaManager) -> Result<(), DbErr> {
-        manager
-            .create_table(
-                Table::create()
-                    .table(ConfigurationEntries::Table)
-                    .if_not_exists()
+        create_audited_table(
+            manager,
+            ConfigurationEntries::Table,
+            ConfigurationEntriesAudit::Table,
+            &|table_kind, table_create_statement| {
+                table_create_statement
                     .col(
-                        ColumnDef::new(ConfigurationEntries::Id)
-                            .integer()
-                            .not_null()
-                            .auto_increment()
-                            .primary_key(),
+                        match (
+                            &table_kind,
+                            ColumnDef::new(ConfigurationEntries::Id).integer(),
+                        ) {
+                            (TableKind::Source, x) => x.not_null().auto_increment().primary_key(),
+                            (TableKind::Audit, x) => x,
+                        },
                     )
                     .col(
-                        ColumnDef::new(ConfigurationEntries::KeyId)
-                            .integer()
-                            .not_null(),
+                        match (
+                            &table_kind,
+                            ColumnDef::new(ConfigurationEntries::KeyId).integer(),
+                        ) {
+                            (TableKind::Source, x) => x.not_null(),
+                            (TableKind::Audit, x) => x,
+                        },
                     )
                     .col(ColumnDef::new(ConfigurationEntries::UserId).string())
                     .col(
-                        ColumnDef::new(ConfigurationEntries::Order)
-                            .integer()
-                            .not_null(),
+                        match (
+                            &table_kind,
+                            ColumnDef::new(ConfigurationEntries::OrderIndex).integer(),
+                        ) {
+                            (TableKind::Source, x) => x.not_null(),
+                            (TableKind::Audit, x) => x,
+                        },
                     )
                     .col(
-                        ColumnDef::new(ConfigurationEntries::Value)
-                            .string()
-                            .not_null(),
+                        match (
+                            &table_kind,
+                            ColumnDef::new(ConfigurationEntries::Value).string(),
+                        ) {
+                            (TableKind::Source, x) => x.not_null(),
+                            (TableKind::Audit, x) => x,
+                        },
                     )
-                    .col(
-                        ColumnDef::new(ConfigurationEntries::CreateTimestamp)
-                            .timestamp()
-                            .not_null(),
-                    )
-                    .col(ColumnDef::new(ConfigurationEntries::DeactivateTimestamp).timestamp())
-                    .foreign_key(
+                    .col(ColumnDef::new(ConfigurationEntries::DeactivateTimestamp).timestamp());
+
+                if table_kind == TableKind::Source {
+                    table_create_statement.foreign_key(
                         ForeignKey::create()
                             .name("foreign_key_configuration_id")
                             .from(ConfigurationEntries::Table, ConfigurationEntries::KeyId)
@@ -71,28 +85,59 @@ impl MigrationTrait for Migration {
                                 ConfigurationKeyReference::Table,
                                 ConfigurationKeyReference::Id,
                             ),
-                    )
-                    .to_owned(),
-            )
-            .await
+                    );
+                }
+            },
+        )
+        .await?;
+
+        Ok(())
     }
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager
             .drop_table(Table::drop().table(ConfigurationEntries::Table).to_owned())
-            .await
+            .await?;
+
+        manager
+            .drop_table(
+                Table::drop()
+                    .table(ConfigurationEntriesAudit::Table)
+                    .to_owned(),
+            )
+            .await?;
+
+        Ok(())
     }
 }
 
 /// Learn more at https://docs.rs/sea-query#iden
-#[derive(Iden)]
+#[derive(Iden, EnumIter, Clone, PartialEq)]
 enum ConfigurationEntries {
     Table,
     Id,
     KeyId,
     UserId,
-    Order,
+    OrderIndex,
     Value,
-    CreateTimestamp,
     DeactivateTimestamp,
+}
+
+#[derive(Iden, EnumIter, Clone, PartialEq)]
+enum ConfigurationEntriesAudit {
+    Table,
+    Id,
+    KeyId,
+    UserId,
+    OrderIndex,
+    Value,
+    DeactivateTimestamp,
+    AuditId,
+    AuditAction,
+    AuditTimestampTransactionStart,
+    AuditTimestampStatementStart,
+    AuditTimestampTrigger,
+    AuditClientHost,
+    AuditClientPort,
+    AuditClientQuery,
 }

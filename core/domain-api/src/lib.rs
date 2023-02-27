@@ -20,4 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+//! Domain objects for the Portobello REST API.
+//!
+//! These objects should exactly match the definitions in
+//! `core/api-spec/openapi.yml`.
+
+#![allow(missing_docs)]
+
 pub mod configuration;
+
+use serde::{Deserialize, Serialize};
+use validator::Validate;
+
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+pub struct ErrorWithMessageResponse {
+    #[validate(length(min = 1))]
+    pub message: String,
+}

@@ -1,21 +1,33 @@
-use db::entities::{configuration_reference, configuration_type_reference};
-use sea_orm::{DatabaseConnection, EntityTrait, Set};
+// MIT License
+//
+// Copyright (c) 2023 Sophie Katz
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
-async fn initialize_unit_database() -> Result<DatabaseConnection, db::Error> {
-    let connection = db::connect_db(db::DatabaseInstance::Unit)?;
+#![allow(incomplete_features)]
+#![feature(async_fn_in_trait)]
 
-    // Order is important here due to foreign keys
-
-    configuration_reference::Entity::delete_many()
-        .exec(&connection)
-        .await?;
-
-    configuration_type_reference::Entity::delete_many()
-        .exec(&connection)
-        .await?;
-
-    Ok(connection)
-}
+use db::{
+    entities::{configuration_type_reference, configuration_type_reference_audit},
+    testing::initialize_unit_database,
+};
+use sea_orm::{ActiveModelTrait, EntityTrait, QueryOrder, Set};
 
 #[test]
 fn connect_db_development() -> Result<(), db::Error> {
@@ -28,13 +40,21 @@ fn connect_db_unit() -> Result<(), db::Error> {
 }
 
 #[async_std::test]
-async fn configuration_type_references() -> Result<(), db::Error> {
+async fn test_auditing() -> Result<(), db::Error> {
     // Initialize unit testing database
     let connection = initialize_unit_database().await?;
 
-    // Make sure there are no entries already in the table
+    // Make sure there are no entries already in the source table
     assert_eq!(
         configuration_type_reference::Entity::find()
+            .all(&connection)
+            .await?,
+        vec![]
+    );
+
+    // Make sure there are no entries already in the audit table
+    assert_eq!(
+        configuration_type_reference_audit::Entity::find()
             .all(&connection)
             .await?,
         vec![]
@@ -43,8 +63,8 @@ async fn configuration_type_references() -> Result<(), db::Error> {
     // Insert one
     let first_inserted_id =
         configuration_type_reference::Entity::insert(configuration_type_reference::ActiveModel {
-            name: Set("integer".to_owned()),
-            description: Set("A signed integer value".to_owned()),
+            name: Set("boolean".to_owned()),
+            description: Set("A true/false value".to_owned()),
             ..Default::default()
         })
         .exec(&connection)
@@ -53,11 +73,43 @@ async fn configuration_type_references() -> Result<(), db::Error> {
 
     assert!(first_inserted_id > 0);
 
+    // See if it inserted correctly
+    assert_eq!(
+        configuration_type_reference::Entity::find()
+            .all(&connection)
+            .await?,
+        vec![configuration_type_reference::Model {
+            id: first_inserted_id,
+            name: "boolean".to_owned(),
+            description: "A true/false value".to_owned(),
+            deactivate_timestamp: None,
+        }]
+    );
+
+    // See if it was audited correctly
+    let audit_rows = configuration_type_reference_audit::Entity::find()
+        .all(&connection)
+        .await?;
+
+    assert_eq!(audit_rows.len(), 1);
+    assert_eq!(audit_rows[0].id, Some(first_inserted_id));
+    assert_eq!(audit_rows[0].name, Some("boolean".to_owned()));
+    assert_eq!(
+        audit_rows[0].description,
+        Some("A true/false value".to_owned())
+    );
+    assert_eq!(audit_rows[0].deactivate_timestamp, None);
+
+    let first_audit_id = audit_rows[0].audit_id;
+
+    assert!(first_audit_id > 0);
+    assert_eq!(audit_rows[0].audit_action, "I");
+
     // Try and insert a duplicate - expected to fail
     assert!(configuration_type_reference::Entity::insert(
         configuration_type_reference::ActiveModel {
-            name: Set("integer".to_owned()),
-            description: Set("A signed integer value".to_owned()),
+            name: Set("boolean".to_owned()),
+            description: Set("A different true/false value".to_owned()),
             ..Default::default()
         }
     )
@@ -65,215 +117,121 @@ async fn configuration_type_references() -> Result<(), db::Error> {
     .await
     .is_err());
 
-    // Select the one entry
-    assert_eq!(
-        configuration_type_reference::Entity::find()
-            .all(&connection)
-            .await?,
-        vec![configuration_type_reference::Model {
-            id: first_inserted_id,
-            name: "integer".to_owned(),
-            description: "A signed integer value".to_owned()
-        }]
-    );
-
-    // Insert another unique entry
-    assert_eq!(
-        configuration_type_reference::Entity::insert(configuration_type_reference::ActiveModel {
-            name: Set("boolean".to_owned()),
-            description: Set("A true or false value".to_owned()),
-            ..Default::default()
-        })
-        .exec(&connection)
-        .await?
-        .last_insert_id,
-        first_inserted_id + 2
-    );
-
-    // Select both entries
-    assert_eq!(
-        configuration_type_reference::Entity::find()
-            .all(&connection)
-            .await?,
-        vec![
-            configuration_type_reference::Model {
-                id: first_inserted_id,
-                name: "integer".to_owned(),
-                description: "A signed integer value".to_owned()
-            },
-            configuration_type_reference::Model {
-                id: first_inserted_id + 2,
-                name: "boolean".to_owned(),
-                description: "A true or false value".to_owned()
-            }
-        ]
-    );
-
-    // Select one entry by id
-    assert_eq!(
+    // Update one
+    let mut first_inserted: configuration_type_reference::ActiveModel =
         configuration_type_reference::Entity::find_by_id(first_inserted_id)
-            .all(&connection)
-            .await?,
-        vec![configuration_type_reference::Model {
-            id: first_inserted_id,
-            name: "integer".to_owned(),
-            description: "A signed integer value".to_owned()
-        }]
-    );
+            .one(&connection)
+            .await?
+            .unwrap()
+            .into();
 
-    Ok(())
-}
+    first_inserted.deactivate_timestamp = Set(Some(chrono::Utc::now().naive_utc()));
 
-#[async_std::test]
-async fn configuration_references() -> Result<(), db::Error> {
-    // Initialize unit testing database
-    let connection = initialize_unit_database().await?;
+    first_inserted.update(&connection).await?;
 
-    // Add in dependency entries
-    let configuration_type_id =
-        configuration_type_reference::Entity::insert(configuration_type_reference::ActiveModel {
-            name: Set("integer".to_owned()),
-            description: Set("A signed integer value".to_owned()),
-            ..Default::default()
-        })
-        .exec(&connection)
-        .await?
-        .last_insert_id;
+    // See if it was updated correctly
+    let source_rows = configuration_type_reference::Entity::find()
+        .all(&connection)
+        .await?;
 
-    assert!(configuration_type_id > 0);
+    assert_eq!(source_rows.len(), 1);
+    assert_eq!(source_rows[0].id, first_inserted_id);
+    assert_eq!(source_rows[0].name, "boolean".to_owned());
+    assert_eq!(source_rows[0].description, "A true/false value".to_owned());
+    assert!(source_rows[0].deactivate_timestamp.is_some());
 
-    // Make sure there are no entries already in the table
+    // See if it was audited correctly
+    let audit_rows = configuration_type_reference_audit::Entity::find()
+        .order_by_asc(configuration_type_reference_audit::Column::AuditId)
+        .all(&connection)
+        .await?;
+
+    assert_eq!(audit_rows.len(), 2);
+
+    assert_eq!(audit_rows[0].id, Some(first_inserted_id));
+    assert_eq!(audit_rows[0].name, Some("boolean".to_owned()));
     assert_eq!(
-        configuration_reference::Entity::find()
-            .all(&connection)
-            .await?,
-        vec![]
+        audit_rows[0].description,
+        Some("A true/false value".to_owned())
     );
+    assert_eq!(audit_rows[0].deactivate_timestamp, None);
 
-    // Insert one
-    let first_inserted_id =
-        configuration_reference::Entity::insert(configuration_reference::ActiveModel {
-            name: Set("a".to_owned()),
-            description: Set("A".to_owned()),
-            type_id: Set(configuration_type_id),
-            optional: Set(false),
-            allows_multiple: Set(false),
-            allows_user_override: Set(false),
-            ..Default::default()
-        })
-        .exec(&connection)
-        .await?
-        .last_insert_id;
+    let first_audit_id = audit_rows[0].audit_id;
 
-    assert!(first_inserted_id > 0);
+    assert!(first_audit_id > 0);
+    assert_eq!(audit_rows[0].audit_action, "I");
 
-    // Try and insert a duplicate - expected to fail
-    assert!(
-        configuration_reference::Entity::insert(configuration_reference::ActiveModel {
-            name: Set("a".to_owned()),
-            description: Set("A".to_owned()),
-            type_id: Set(configuration_type_id),
-            optional: Set(false),
-            allows_multiple: Set(false),
-            allows_user_override: Set(false),
-            ..Default::default()
-        })
-        .exec(&connection)
-        .await
-        .is_err()
-    );
-
-    // Try and insert an entry that violates a foreign key - expected to fail
-    assert!(
-        configuration_reference::Entity::insert(configuration_reference::ActiveModel {
-            name: Set("b".to_owned()),
-            description: Set("B".to_owned()),
-            type_id: Set(configuration_type_id + 1),
-            optional: Set(false),
-            allows_multiple: Set(false),
-            allows_user_override: Set(false),
-            ..Default::default()
-        })
-        .exec(&connection)
-        .await
-        .is_err()
-    );
-
-    // Select the one entry
+    assert_eq!(audit_rows[1].id, Some(first_inserted_id));
+    assert_eq!(audit_rows[1].name, Some("boolean".to_owned()));
     assert_eq!(
-        configuration_reference::Entity::find()
-            .all(&connection)
-            .await?,
-        vec![configuration_reference::Model {
-            id: first_inserted_id,
-            name: "a".to_owned(),
-            description: "A".to_owned(),
-            type_id: configuration_type_id,
-            optional: false,
-            allows_multiple: false,
-            allows_user_override: false,
-        }]
+        audit_rows[1].description,
+        Some("A true/false value".to_owned())
     );
+    assert_eq!(audit_rows[1].deactivate_timestamp, None);
 
-    // Insert another unique entry
-    assert_eq!(
-        configuration_reference::Entity::insert(configuration_reference::ActiveModel {
-            name: Set("b".to_owned()),
-            description: Set("B".to_owned()),
-            type_id: Set(configuration_type_id),
-            optional: Set(false),
-            allows_multiple: Set(false),
-            allows_user_override: Set(false),
-            ..Default::default()
-        })
+    let second_audit_id = audit_rows[1].audit_id;
+
+    assert!(first_audit_id < second_audit_id);
+    assert_eq!(audit_rows[1].audit_action, "U");
+
+    // Delete one
+    configuration_type_reference::Entity::delete_by_id(first_inserted_id)
         .exec(&connection)
-        .await?
-        .last_insert_id,
-        first_inserted_id + 3
-    );
+        .await?;
 
-    // Select both entries
-    assert_eq!(
-        configuration_reference::Entity::find()
-            .all(&connection)
-            .await?,
-        vec![
-            configuration_reference::Model {
-                id: first_inserted_id,
-                name: "a".to_owned(),
-                description: "A".to_owned(),
-                type_id: configuration_type_id,
-                optional: false,
-                allows_multiple: false,
-                allows_user_override: false,
-            },
-            configuration_reference::Model {
-                id: first_inserted_id + 3,
-                name: "b".to_owned(),
-                description: "B".to_owned(),
-                type_id: configuration_type_id,
-                optional: false,
-                allows_multiple: false,
-                allows_user_override: false,
-            }
-        ]
-    );
+    // See if it was deleted correctly
+    let source_rows = configuration_type_reference::Entity::find()
+        .all(&connection)
+        .await?;
 
-    // Select one entry by id
+    assert_eq!(source_rows, vec![]);
+
+    // See if it was audited correctly
+    let audit_rows = configuration_type_reference_audit::Entity::find()
+        .order_by_asc(configuration_type_reference_audit::Column::AuditId)
+        .all(&connection)
+        .await?;
+
+    assert_eq!(audit_rows.len(), 3);
+
+    assert_eq!(audit_rows[0].id, Some(first_inserted_id));
+    assert_eq!(audit_rows[0].name, Some("boolean".to_owned()));
     assert_eq!(
-        configuration_reference::Entity::find_by_id(first_inserted_id)
-            .all(&connection)
-            .await?,
-        vec![configuration_reference::Model {
-            id: first_inserted_id,
-            name: "a".to_owned(),
-            description: "A".to_owned(),
-            type_id: configuration_type_id,
-            optional: false,
-            allows_multiple: false,
-            allows_user_override: false,
-        }]
+        audit_rows[0].description,
+        Some("A true/false value".to_owned())
     );
+    assert_eq!(audit_rows[0].deactivate_timestamp, None);
+
+    let first_audit_id = audit_rows[0].audit_id;
+
+    assert!(first_audit_id > 0);
+    assert_eq!(audit_rows[0].audit_action, "I");
+
+    assert_eq!(audit_rows[1].id, Some(first_inserted_id));
+    assert_eq!(audit_rows[1].name, Some("boolean".to_owned()));
+    assert_eq!(
+        audit_rows[1].description,
+        Some("A true/false value".to_owned())
+    );
+    assert_eq!(audit_rows[1].deactivate_timestamp, None);
+
+    let second_audit_id = audit_rows[1].audit_id;
+
+    assert!(first_audit_id < second_audit_id);
+    assert_eq!(audit_rows[1].audit_action, "U");
+
+    assert_eq!(audit_rows[2].id, Some(first_inserted_id));
+    assert_eq!(audit_rows[2].name, Some("boolean".to_owned()));
+    assert_eq!(
+        audit_rows[2].description,
+        Some("A true/false value".to_owned())
+    );
+    assert!(audit_rows[2].deactivate_timestamp.is_some());
+
+    let third_audit_id = audit_rows[2].audit_id;
+
+    assert!(second_audit_id < third_audit_id);
+    assert_eq!(audit_rows[2].audit_action, "D");
 
     Ok(())
 }

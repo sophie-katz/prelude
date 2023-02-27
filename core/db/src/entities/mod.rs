@@ -3,5 +3,8 @@
 pub mod prelude;
 
 pub mod configuration_entries;
+pub mod configuration_entries_audit;
 pub mod configuration_key_reference;
+pub mod configuration_key_reference_audit;
 pub mod configuration_type_reference;
+pub mod configuration_type_reference_audit;

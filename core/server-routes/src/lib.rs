@@ -20,56 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// #[macro_use]
-// extern crate rocket;
+#![allow(missing_docs)]
+
+#[macro_use]
+extern crate rocket;
 
 use rocket::{build, Build, Rocket};
 use sea_orm::DatabaseConnection;
 
-pub mod authorization;
-pub mod user;
+pub mod configuration;
 
 /// Build Rocket instance
 pub fn rocket(db: DatabaseConnection) -> Rocket<Build> {
-    build().manage(db)
-    // .mount("/user", routes![user::index])
-    // .mount(
-    //     "/authorization",
-    //     routes![authorization::login, authorization::test],
-    // )
-}
-
-#[cfg(test)]
-mod tests {
-    use super::rocket;
-    // use db::entities::user;
-    // use domain_api::user::UserResponse;
-    // use rocket::{http::Status, local::blocking::Client};
-    use sea_orm::{DatabaseBackend, DatabaseConnection, MockDatabase};
-
-    // fn connect_db_mock() -> DatabaseConnection {
-    //     MockDatabase::new(DatabaseBackend::Postgres)
-    //         .append_query_results([vec![user::Model {
-    //             id: 1,
-    //             username: "admin".to_owned(),
-    //             icon: None,
-    //         }]])
-    //         .into_connection()
-    // }
-
-    // #[test]
-    // fn users_index() {
-    //     let db = connect_db_mock();
-    //     let client = Client::tracked(rocket(db)).expect("error creating Rocket instance");
-    //     let response = client.get("/user").dispatch();
-    //     assert_eq!(response.status(), Status::Ok);
-    //     assert_eq!(
-    //         response.into_json::<Vec<UserResponse>>().unwrap(),
-    //         vec![UserResponse {
-    //             id: 1,
-    //             username: "admin".to_owned(),
-    //             icon: None
-    //         }]
-    //     );
-    // }
+    build()
+        .manage(db)
+        .mount("/configuration/types", routes![configuration::types::index])
+        .mount("/configuration/keys", routes![configuration::keys::index])
 }

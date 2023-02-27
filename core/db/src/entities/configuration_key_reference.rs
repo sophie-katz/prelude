@@ -14,6 +14,7 @@ pub struct Model {
     pub optional: bool,
     pub allows_multiple: bool,
     pub allows_user_override: bool,
+    pub deactivate_timestamp: Option<DateTime>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]

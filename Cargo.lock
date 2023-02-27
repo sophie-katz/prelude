@@ -708,7 +708,6 @@ dependencies = [
  "config-env",
  "futures",
  "sea-orm",
- "validator",
 ]
 
 [[package]]
@@ -2525,9 +2524,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.91"
+version = "1.0.93"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "877c235533714907a8c2464236f5c4b2a17262ef1bd71f38f35ea592c8da6883"
+checksum = "cad406b69c91885b5107daf2c29572f6c8cdb3c66826821e286c533490c0bc76"
 dependencies = [
  "itoa",
  "ryu",
@@ -2568,6 +2567,7 @@ dependencies = [
 name = "server-routes"
 version = "0.1.0"
 dependencies = [
+ "async-std",
  "db",
  "domain-api",
  "jsonwebtoken",
@@ -2575,6 +2575,7 @@ dependencies = [
  "rocket",
  "sea-orm",
  "serde",
+ "serde_json",
  "validator",
 ]
 

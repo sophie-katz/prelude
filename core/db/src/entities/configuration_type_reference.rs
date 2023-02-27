@@ -10,6 +10,7 @@ pub struct Model {
     #[sea_orm(unique)]
     pub name: String,
     pub description: String,
+    pub deactivate_timestamp: Option<DateTime>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]

@@ -9,9 +9,8 @@ pub struct Model {
     pub id: i32,
     pub key_id: i32,
     pub user_id: Option<String>,
-    pub order: i32,
+    pub order_index: i32,
     pub value: String,
-    pub create_timestamp: DateTime,
     pub deactivate_timestamp: Option<DateTime>,
 }
 
