@@ -1,0 +1,17 @@
+.openapi-generator-ignore
+apis/DefaultApi.ts
+apis/index.ts
+index.ts
+models/ConfigurationEntryItemResponse.ts
+models/ConfigurationEntryItemSetResponse.ts
+models/ConfigurationEntryResponse.ts
+models/ConfigurationEntrySetResponse.ts
+models/ConfigurationEntryUserResponse.ts
+models/ConfigurationKeyResponse.ts
+models/ConfigurationKeySetResponse.ts
+models/ConfigurationTypeResponse.ts
+models/ConfigurationTypeSetResponse.ts
+models/ConfigurationValueResponse.ts
+models/ErrorWithMessageResponse.ts
+models/index.ts
+runtime.ts

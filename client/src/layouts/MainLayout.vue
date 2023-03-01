@@ -134,13 +134,15 @@
 import { defineComponent, ref } from 'vue';
 import UnderConstructionLarge from '../components/UnderConstructionLarge.vue';
 import { useAuthenticationStore } from "../stores/authentication";
+import { useAPIStore } from "../stores/api";
+
+const authenticationStore = useAuthenticationStore();
+const apiStore = useAPIStore();
 
 export default defineComponent({
     name: "MainLayout",
     setup() {
         const leftDrawerOpen = ref(false);
-
-        const authenticationStore = useAuthenticationStore();
 
         function toggleLeftDrawer() {
             leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -150,6 +152,10 @@ export default defineComponent({
           if (event.key == "[") {
             toggleLeftDrawer();
           }
+        });
+
+        apiStore.api.getConfigurationTypes().then((response) => {
+          console.log(response);
         });
 
         return {

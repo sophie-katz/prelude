@@ -13,7 +13,7 @@
     "build": "quasar build"
   },
   "dependencies": {
-    "@core/api-bindings-client-typescript-axios": "0.1.0",
+    "@core/api-bindings-client-typescript-fetch": "0.1.0",
     "@fontsource/poppins": "^4.5.10",
     "@quasar/extras": "^1.0.0",
     "keycloak-js": "^20.0.3",
@@ -32,7 +32,7 @@
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^9.0.0",
-    "prettier": "^2.5.1",
+    "prettier": "^2.8.4",
     "typescript": "^4.5.4"
   },
   "engines": {

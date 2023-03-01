@@ -88,6 +88,16 @@ module.exports = configure(function (/* ctx */) {
           "vue",
           "quasar/wrappers"
         ];
+
+        if (!viteConf.resolve) {
+          viteConf.resolve = {};
+        }
+
+        if (!viteConf.resolve.alias) {
+          viteConf.resolve.alias = {};
+        }
+
+        viteConf.resolve.alias.url = 'rollup-plugin-node-polyfills/polyfills/url';
       },
       // viteVuePluginOptions: {},
 
@@ -100,16 +110,16 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
-      open: true, // opens browser window automatically
+      open: false, // opens browser window automatically
 
-      // proxy: {
-      //   "/auth": {
-      //     target: "http://auth:8080",
-      //     changeOrigin: true,
-      //     secure: false,
-      //     rewrite: (path) => path.replace(/^\/auth/, "")
-      //   }
-      // }
+      proxy: {
+        "/api": {
+          target: "http://localhost:8000",
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/api/, "")
+        }
+      },
 
       watch: {
         // Needed for WSL2

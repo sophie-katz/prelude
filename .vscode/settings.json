@@ -65,7 +65,6 @@
     "editor.formatOnSave": true
   },
   "eslint.packageManager": "yarn",
-  "thunder-client.saveToWorkspace": false,
   "rust-analyzer.check.allTargets": false,
   "rust-analyzer.check.extraArgs": [
     "--tests",
@@ -75,7 +74,6 @@
     "-W",
     "missing_docs"
   ],
-  "thunder-client.customLocation": "/app/thunder",
   "editor.rulers": [
     80
   ],
