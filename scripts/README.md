@@ -1,1 +1,1 @@
-Any scripts that are used in development are stored here.
+Any scripts that are used in development are stored here. They should be single file and not compiled, otherwise they should probably go in [`utilities`](/utilities).

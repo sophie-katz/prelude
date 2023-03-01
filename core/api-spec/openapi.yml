@@ -20,25 +20,31 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+# If any changes are made to this file, they should also be made to the
+# server-routes crate and to the Thunder collection stored in
+# portobello-thunder.json.
+
 openapi: 3.0.3
 
 info:
   title: Portobello API
   description: Primary REST API for Portobello
   version: 0.1.0
-  
+
   contact:
     name: Portobello
     email: sophie@sophiekatz.us
     url: 'https://github.com/sophie-katz/portobello'
-    
+
   license:
     name: MIT
     url: 'https://opensource.org/license/mit/'
 
 servers:
-  - url: 'http://localhost:8000'
+  - url: 'http://localhost:9000/api'
     description: Local development
+  - url: 'http://localhost:9001'
+    description: Local development without Quasar proxy
 
 paths:
   # Configuration paths

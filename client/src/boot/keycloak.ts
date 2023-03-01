@@ -8,7 +8,7 @@ export default boot(async ({app, store}) => {
   const authenticationStore = useAuthenticationStore();
 
   const keycloak = new Keycloak({
-    url: "http://localhost:8080",
+    url: "http://localhost:9003",
     realm: "portobello",
     clientId: "portobello"
   });

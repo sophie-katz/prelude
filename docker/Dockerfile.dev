@@ -99,6 +99,9 @@ RUN . $NVM_DIR/nvm.sh && \
     corepack prepare yarn@${PORTOBELLO_YARN_VERSION} --activate && \
     yarn --version
 
+# Update .bashrc
+RUN echo -e "\npython3 /app/scripts/CheckForUpdates.py\necho\n" >> /home/dev/.bashrc
+
 # Write image info to within image
 RUN mkdir /home/dev/image && \
     date "+%F %T" > /home/dev/image/build_timestamp

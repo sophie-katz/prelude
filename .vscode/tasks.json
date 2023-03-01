@@ -1,7 +1,7 @@
 {
 	"version": "2.0.0",
 	"tasks": [
-		// Default build command
+		// Default Cargo build command
 		{
 			"type": "cargo",
 			"command": "build",
@@ -14,7 +14,7 @@
 			},
 			"label": "rust: cargo build"
 		},
-		// Clean command
+		// Cargo clean command
 		{
 			"type": "cargo",
 			"command": "clean",
@@ -23,7 +23,7 @@
 			],
 			"label": "rust: cargo clean"
 		},
-		// Clean command
+		// Cargo deep clean command
 		{
 			"type": "shell",
 			"command": "rm",
@@ -34,7 +34,7 @@
 			"label": "rust: deep clean",
 			"problemMatcher": []
 		},
-		// Linting command
+		// Cargo linting command
 		{
 			"type": "cargo",
 			"command": "clippy",
@@ -50,7 +50,7 @@
 			],
 			"label": "rust: cargo clippy"
 		},
-		// Formatting command
+		// Cargo formatting command
 		{
 			"type": "cargo",
 			"command": "fmt",
@@ -59,7 +59,7 @@
 			],
 			"label": "rust: cargo fmt"
 		},
-		// Generate documentation
+		// Generate Rust documentation
 		{
 			"type": "cargo",
 			"command": "doc",
@@ -68,7 +68,7 @@
 			],
 			"label": "rust: cargo doc"
 		},
-		// Run tests
+		// Run Cargo tests
 		{
 			"type": "cargo",
 			"command": "test",
@@ -77,7 +77,7 @@
 			],
 			"label": "rust: cargo test"
 		},
-		// Generate code coverage LCOV file
+		// Generate Rust code coverage LCOV file
 		{
 			"type": "cargo",
 			"command": "llvm-cov",
@@ -91,7 +91,7 @@
 			],
 			"label": "rust: cargo llvm-cov --lcov"
 		},
-		// Generate code coverage HTML report
+		// Generate Rust code coverage HTML report
 		{
 			"type": "cargo",
 			"command": "llvm-cov",
@@ -139,7 +139,7 @@
 				"run",
 				"migrate-update"
 			],
-			"label": "db: migrate",
+			"label": "yarn: update database migrations",
 			"problemMatcher": []
 		},
 		// Generate database entities
@@ -152,7 +152,7 @@
 				"run",
 				"generate-entities"
 			],
-			"label": "db: generate entities",
+			"label": "yarn: generate database entities",
 			"problemMatcher": []
 		},
 		// Seed database
@@ -166,7 +166,20 @@
 			"problemMatcher": [
 				"$rustc"
 			],
-			"label": "db: seed"
+			"label": "cargo: seed database"
+		},
+		// Test all packages
+		{
+			"type": "shell",
+			"command": "yarn",
+			"args": [
+				"workspaces",
+				"foreach",
+				"run",
+				"test"
+			],
+			"label": "yarn: test all workspaces",
+			"problemMatcher": []
 		}
 	]
 }

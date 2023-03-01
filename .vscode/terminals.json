@@ -3,7 +3,6 @@
     {
       "name": "Primary",
       "description": "General-use terminal",
-      "command": "bash /app/scripts/TerminalPrelude.bash",
       "recycle": true,
       "focus": true,
       "color": "terminal.ansiWhite"
@@ -11,7 +10,6 @@
     {
       "name": "Git",
       "description": "Terminal for git commands",
-      "command": "bash /app/scripts/TerminalPrelude.bash",
       "recycle": true,
       "icon": "git-branch",
       "color": "terminal.ansiGreen"
@@ -19,7 +17,6 @@
     {
       "name": "Rust",
       "description": "Terminal for Cargo and other Rust commands",
-      "command": "bash /app/scripts/TerminalPrelude.bash",
       "recycle": true,
       "icon": "gear",
       "color": "terminal.ansiRed"
@@ -28,7 +25,6 @@
       "name": "Client",
       "description": "Terminal for running the Portobello client",
       "commands": [
-        "bash /app/scripts/TerminalPrelude.bash",
         "yarn workspace client run dev"
       ],
       "recycle": true,
@@ -40,8 +36,7 @@
       "name": "Server",
       "description": "Terminal for running the Portobello server",
       "commands": [
-        "bash /app/scripts/TerminalPrelude.bash",
-        "cargo run --bin server"
+        "yarn workspace server run start"
       ],
       "recycle": true,
       "execute": false,

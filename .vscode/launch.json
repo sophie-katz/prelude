@@ -17,20 +17,6 @@
       },
       "args": [],
       "cwd": "${workspaceFolder}"
-    },
-    // {
-    //   "type": "lldb",
-    //   "request": "launch",
-    //   "name": "Debug unit tests in library 'example-lib'",
-    //   "cargo": {
-    //     "args": ["test", "--no-run", "--lib", "--package=example-lib"],
-    //     "filter": {
-    //       "name": "example-lib",
-    //       "kind": "lib"
-    //     }
-    //   },
-    //   "args": [],
-    //   "cwd": "${workspaceFolder}"
-    // }
+    }
   ]
 }

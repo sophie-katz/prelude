@@ -1,7 +1,1 @@
-# Utilities
-
-Utility programs that are too large to be scripts are stored here.
-
-| Program | Description | Language |
-|---------|-------------|----------|
-| `db-seed` | A seeding utility for a newly created database instance. | Rust |
+Utility programs are stored here. They are different from the scripts in the [`scripts`](/scripts) directory in that they are compiled.

@@ -53,11 +53,11 @@ services:
     env_file:
       - ../.env
     ports:
-      - "5432:5432"
+      - "9002:5432"
     volumes:
       - db:/var/lib/postgresql/data:cached
       - ./postgres-initdb.d:/docker-entrypoint-initdb.d:cached
-  
+
   # Database client
   db_client:
     # When updating this version, make sure to also update the *_LAST_UPDATED
@@ -66,7 +66,7 @@ services:
     env_file:
       - ../.env
     ports:
-      - "5050:80"
+      - "9004:80"
     volumes:
       - ./pgadmin4/servers.json:/pgadmin4/servers.json:cached
 
@@ -78,11 +78,15 @@ services:
     env_file:
       - ../.env
     ports:
-      - "8080:8080"
+      - "9003:8080"
     command: start-dev --import-realm
     volumes:
       - ./keycloak-import:/opt/keycloak/data/import
+      - auth:/opt/keycloak/data:cached
 
 volumes:
   db:
     driver: local
+  auth:
+    driver: local
+
