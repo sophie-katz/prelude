@@ -21,7 +21,10 @@
 // SOFTWARE.
 
 use db::{
-    seeding::{insert_configuration_key_reference, insert_configuration_type_reference},
+    seeding::{
+        insert_configuration_entry, insert_configuration_key_reference,
+        insert_configuration_type_reference,
+    },
     testing::initialize_unit_database,
 };
 use rocket::{http::Status, local::asynchronous::Client};
@@ -47,28 +50,45 @@ async fn test_index() -> Result<(), db::Error> {
     )
     .await?;
 
+    let entry_id =
+        insert_configuration_entry(&connection, systems_enabled_code_id, 1, None, "true").await?;
+
     let client = Client::tracked(server_routes::rocket(connection))
         .await
         .expect("error creating Rocket instance");
 
-    let response = client.get("/configuration/keys").dispatch().await;
+    let response = client.get("/configuration").dispatch().await;
 
     assert_eq!(response.status(), Status::Ok);
     assert_eq!(
         response.into_json::<serde_json::Value>().await.unwrap(),
         json!([
             {
-                "id": systems_enabled_code_id,
-                "name": "systems.enabled.code",
-                "description": "Whether the Code system is enabled or not",
-                "type": {
-                    "id": boolean_id,
-                    "name": "boolean",
-                    "description": "A true/false value"
+                "key": {
+                    "id": systems_enabled_code_id,
+                    "name": "systems.enabled.code",
+                    "description": "Whether the Code system is enabled or not",
+                    "type": {
+                        "id": boolean_id,
+                        "name": "boolean",
+                        "description": "A true/false value"
+                    },
+                    "optional": false,
+                    "allowsMultiple": false,
+                    "allowsUserOverride": false
                 },
-                "optional": false,
-                "allowsMultiple": false,
-                "allowsUserOverride": false,
+                "itemsGlobal": [
+                    {
+                        "id": entry_id,
+                        "value": {
+                            "asBoolean": true,
+                            "asInteger": null,
+                            "asFloat": null,
+                            "asString": null
+                        }
+                    }
+                ],
+                "user": null
             }
         ])
     );

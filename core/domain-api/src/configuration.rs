@@ -30,7 +30,7 @@ lazy_static! {
     pub static ref CONFIGURATION_KEY_NAME_REGEX: Regex = Regex::new(r"^[a-zA-Z0-9_.]+$").unwrap();
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate, Clone)]
 pub struct ConfigurationTypeResponse {
     #[validate(range(min = 1))]
     pub id: i32,
@@ -43,7 +43,7 @@ pub struct ConfigurationTypeResponse {
 
 pub type ConfigurationTypeSetResponse = Vec<ConfigurationTypeResponse>;
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate, Clone)]
 pub struct ConfigurationKeyResponse {
     #[validate(range(min = 1))]
     pub id: i32,
@@ -63,7 +63,7 @@ pub struct ConfigurationKeyResponse {
 
 pub type ConfigurationKeySetResponse = Vec<ConfigurationKeyResponse>;
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate, Clone, Default)]
 pub struct ConfigurationValueResponse {
     #[serde(rename = "asBoolean")]
     pub as_boolean: Option<bool>,
@@ -75,14 +75,14 @@ pub struct ConfigurationValueResponse {
     pub as_string: Option<String>,
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate, Clone)]
 pub struct ConfigurationEntryItemResponse {
     #[validate(range(min = 1))]
     pub id: i32,
     pub value: ConfigurationValueResponse,
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate, Clone)]
 pub struct ConfigurationEntryUserResponse {
     #[validate(length(min = 1))]
     #[serde(rename = "userId")]
@@ -91,9 +91,9 @@ pub struct ConfigurationEntryUserResponse {
     pub items: Vec<ConfigurationEntryItemResponse>,
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Validate)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Validate, Clone)]
 pub struct ConfigurationEntryResponse {
-    key: ConfigurationKeyResponse,
+    pub key: ConfigurationKeyResponse,
     #[validate(length(min = 1))]
     #[serde(rename = "itemsGlobal")]
     pub items_global: Vec<ConfigurationEntryItemResponse>,

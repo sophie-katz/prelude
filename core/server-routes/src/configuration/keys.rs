@@ -20,48 +20,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use db::entities::{configuration_key_reference, configuration_type_reference};
-use domain_api::configuration::{
-    ConfigurationKeyResponse, ConfigurationKeySetResponse, ConfigurationTypeResponse,
-};
+use db::queries::configuration::{get_all_configuration_keys, get_all_configuration_types};
+use domain_api::configuration::ConfigurationKeySetResponse;
 use rocket::{serde::json::Json, State};
-use sea_orm::{DatabaseConnection, EntityTrait};
-use validator::Validate;
+use sea_orm::DatabaseConnection;
 
 #[get("/")]
 pub async fn index(db: &State<DatabaseConnection>) -> Json<ConfigurationKeySetResponse> {
     let connection = db as &DatabaseConnection;
 
-    let configuration_keys = configuration_key_reference::Entity::find()
-        .find_also_related(configuration_type_reference::Entity)
-        .all(connection)
+    let types = get_all_configuration_types(connection)
         .await
-        .unwrap()
-        .into_iter()
-        .map(|(row_key, row_type)| {
-            let row_type = row_type.unwrap();
+        .expect("failed to get configuration types from database");
 
-            let configuration_key_response = ConfigurationKeyResponse {
-                id: row_key.id,
-                name: row_key.name,
-                description: row_key.description,
-                configuration_type: ConfigurationTypeResponse {
-                    id: row_type.id,
-                    name: row_type.name,
-                    description: row_type.description,
-                },
-                optional: row_key.optional,
-                allows_multiple: row_key.allows_multiple,
-                allows_user_override: row_key.allows_user_override,
-            };
-
-            configuration_key_response
-                .validate()
-                .expect("configuration key response loaded from database does not pass validation");
-
-            configuration_key_response
-        })
-        .collect::<ConfigurationKeySetResponse>();
-
-    Json(configuration_keys)
+    Json(
+        get_all_configuration_keys(connection, &types)
+            .await
+            .expect("failed to get configuration types from database"),
+    )
 }

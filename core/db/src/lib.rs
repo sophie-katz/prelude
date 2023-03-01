@@ -26,6 +26,7 @@
 #![feature(async_fn_in_trait)]
 
 pub mod entities;
+pub mod queries;
 pub mod seeding;
 pub mod testing;
 
@@ -37,7 +38,9 @@ use sea_orm::*;
 use std::{
     error,
     fmt::{self, Display},
+    num::{ParseFloatError, ParseIntError},
 };
+use validator::ValidationErrors;
 
 /// An alias for the datetime type used for timestamps in the database.
 pub type DateTime = chrono::DateTime<Utc>;
@@ -45,10 +48,34 @@ pub type DateTime = chrono::DateTime<Utc>;
 /// Error type for this crate
 #[derive(Debug)]
 pub enum Error {
+    /// A configuration type was not found for the given id
+    ConfigurationTypeNotFound(i32),
+    /// A configuration key was not found for the given id
+    ConfigurationKeyNotFound(i32),
+    /// Could not parse a boolean configuration value
+    ConfigurationValueParseErrorBoolean(String),
+    /// Wrapper for integer parsing errors
+    NumParseIntError(ParseIntError),
+    /// Wrapper for float parsing errors
+    NumParseFloatError(ParseFloatError),
     /// Wrapper for config-env errors
     ConfigEnvError(config_env::Error),
     /// Wrapper for SeaORM errors
     SeaORMDbErr(DbErr),
+    /// Wrapper for validator errors
+    ValidatorValidationErrors(ValidationErrors),
+}
+
+impl From<ParseIntError> for Error {
+    fn from(value: ParseIntError) -> Self {
+        Self::NumParseIntError(value)
+    }
+}
+
+impl From<ParseFloatError> for Error {
+    fn from(value: ParseFloatError) -> Self {
+        Self::NumParseFloatError(value)
+    }
 }
 
 impl From<config_env::Error> for Error {
@@ -63,11 +90,29 @@ impl From<DbErr> for Error {
     }
 }
 
+impl From<ValidationErrors> for Error {
+    fn from(value: ValidationErrors) -> Self {
+        Self::ValidatorValidationErrors(value)
+    }
+}
+
 impl Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
+            Error::ConfigurationTypeNotFound(id) => {
+                write!(f, "configuration type not found for id {id}")
+            }
+            Error::ConfigurationKeyNotFound(id) => {
+                write!(f, "configuration key not found for id {id}")
+            }
+            Error::ConfigurationValueParseErrorBoolean(text) => {
+                write!(f, "could not parse {text:#?} as a boolean")
+            }
+            Error::NumParseIntError(err) => write!(f, "{err}"),
+            Error::NumParseFloatError(err) => write!(f, "{err}"),
             Error::ConfigEnvError(err) => write!(f, "{err}"),
             Error::SeaORMDbErr(err) => write!(f, "{err}"),
+            Error::ValidatorValidationErrors(err) => write!(f, "{err}"),
         }
     }
 }

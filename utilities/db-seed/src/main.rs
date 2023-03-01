@@ -35,8 +35,11 @@ use sea_orm::DatabaseConnection;
 
 struct ConfigurationTypeReferenceIds {
     boolean: i32,
+    #[allow(dead_code)]
     integer: i32,
+    #[allow(dead_code)]
     float: i32,
+    #[allow(dead_code)]
     string: i32,
 }
 

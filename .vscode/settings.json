@@ -68,6 +68,7 @@
   "thunder-client.saveToWorkspace": false,
   "rust-analyzer.check.allTargets": false,
   "rust-analyzer.check.extraArgs": [
+    "--tests",
     "--",
     "-W",
     "clippy::all",

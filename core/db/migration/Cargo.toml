@@ -33,8 +33,8 @@ path = "src/lib.rs"
 [dependencies]
 async-std = { version = "^1", features = ["attributes", "tokio1"] }
 strum = "0.24.1"
-strum_macros = "0.24.1"
 migration-common = { path = "../migration-common" }
+strum_macros = "0.24.1"
 
 [dependencies.sea-orm-migration]
 version = "0.11.0"

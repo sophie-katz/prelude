@@ -23,8 +23,10 @@
 use db::{seeding::insert_configuration_type_reference, testing::initialize_unit_database};
 use rocket::{http::Status, local::asynchronous::Client};
 use serde_json::json;
+use serial_test::serial;
 
 #[async_std::test]
+#[serial]
 async fn test_index() -> Result<(), db::Error> {
     let connection = initialize_unit_database().await?;
 

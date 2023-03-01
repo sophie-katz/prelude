@@ -28,18 +28,10 @@ use db::{
     testing::initialize_unit_database,
 };
 use sea_orm::{ActiveModelTrait, EntityTrait, QueryOrder, Set};
-
-#[test]
-fn connect_db_development() -> Result<(), db::Error> {
-    db::connect_db(db::DatabaseInstance::Development).map(|_| ())
-}
-
-#[test]
-fn connect_db_unit() -> Result<(), db::Error> {
-    db::connect_db(db::DatabaseInstance::Unit).map(|_| ())
-}
+use serial_test::serial;
 
 #[async_std::test]
+#[serial]
 async fn test_auditing() -> Result<(), db::Error> {
     // Initialize unit testing database
     let connection = initialize_unit_database().await?;

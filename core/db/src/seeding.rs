@@ -114,6 +114,10 @@ pub async fn insert_configuration_key_reference(
 ///               on the global value.
 /// * `value` - The string representation of the configuratin entry's value.
 ///
+/// # Returns
+///
+/// The id of the newly inserted configuration entry item.
+///
 /// # Errors
 ///
 /// Returns any database errors.
@@ -123,16 +127,17 @@ pub async fn insert_configuration_entry(
     order_index: i32,
     user_id: Option<&str>,
     value: &str,
-) -> Result<(), crate::Error> {
-    configuration_entries::Entity::insert(configuration_entries::ActiveModel {
-        key_id: Set(key_id),
-        order_index: Set(order_index),
-        value: Set(value.to_owned()),
-        user_id: Set(user_id.map(|x| x.to_owned())),
-        ..Default::default()
-    })
-    .exec(connection)
-    .await?;
-
-    Ok(())
+) -> Result<i32, crate::Error> {
+    Ok(
+        configuration_entries::Entity::insert(configuration_entries::ActiveModel {
+            key_id: Set(key_id),
+            order_index: Set(order_index),
+            value: Set(value.to_owned()),
+            user_id: Set(user_id.map(|x| x.to_owned())),
+            ..Default::default()
+        })
+        .exec(connection)
+        .await?
+        .last_insert_id,
+    )
 }

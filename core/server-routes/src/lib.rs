@@ -34,6 +34,7 @@ pub mod configuration;
 pub fn rocket(db: DatabaseConnection) -> Rocket<Build> {
     build()
         .manage(db)
+        .mount("/configuration", routes![configuration::index])
         .mount("/configuration/types", routes![configuration::types::index])
         .mount("/configuration/keys", routes![configuration::keys::index])
 }
