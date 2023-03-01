@@ -5,7 +5,6 @@ Portobello is intended to be developed inside VS Code. Everything that can be do
 * [Installing dependencies on your system](#installing-dependencies-on-your-system)
 * [Opening the project in VS Code](#opening-the-project-in-vs-code)
 * [Running a local instance for development](#running-a-local-instance-for-development)
-    * [Port mapping](#port-mapping)
 * [REST API client](#rest-api-client)
 * [VS Code usage reference](#vs-code-usage-reference)
 * [Known issues](#known-issues)
