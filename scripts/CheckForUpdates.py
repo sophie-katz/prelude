@@ -160,6 +160,13 @@ def get_env_safe(name: str) -> str:
 
     return result
 
+def check_license_txt_year() -> bool:
+    with open("/app/LICENSE.txt") as file:
+        text = file.read()
+
+        if str(datetime.datetime.today().year) not in text:
+            print("\n\033[1mWarning:\033[0;0m Copyright year needs to be updated")
+
 # Extract versions
 ubuntu_version:                str           = get_env_safe("PORTOBELLO_UBUNTU_VERSION")
 ubuntu_version_last_updated:   datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_UBUNTU_VERSION_LAST_UPDATED"), date_format).date()
@@ -272,6 +279,8 @@ if not check_date("Docker image last built", docker_image_last_built, days_thres
 
 - In VS Code, click 'Dev Contaner' button on the bottom left of the window
 - Select 'Rebuild Container'""")
+
+check_license_txt_year()
 
 if not all_up_to_date:
     for i in update_instructions:
