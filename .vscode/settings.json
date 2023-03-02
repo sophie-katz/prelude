@@ -77,8 +77,8 @@
   "editor.rulers": [
     80
   ],
-  "java.compile.nullAnalysis.mode": "automatic",
   "rust-analyzer.inlayHints.chainingHints.enable": true,
   "rust-analyzer.inlayHints.typeHints.enable": true,
-  "testExplorer.useNativeTesting": true
+  "testExplorer.useNativeTesting": true,
+  "jest.jestCommandLine": "yarn workspaces foreach run test"
 }
