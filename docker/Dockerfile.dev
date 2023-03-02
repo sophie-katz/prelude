@@ -100,7 +100,9 @@ RUN . $NVM_DIR/nvm.sh && \
     yarn --version
 
 # Update .bashrc
-RUN echo -e "\npython3 /app/scripts/CheckForUpdates.py\necho\n" >> /home/dev/.bashrc
+RUN echo >> /home/dev/.bashrc && \
+    echo "python3 /app/scripts/CheckForUpdates.py" >> /home/dev/.bashrc && \
+    echo "echo" >> /home/dev/.bashrc
 
 # Write image info to within image
 RUN mkdir /home/dev/image && \
