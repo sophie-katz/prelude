@@ -26,10 +26,8 @@ SOFTWARE.
   <q-layout view="hHh Lpr lFf">
     <q-header>
       <q-toolbar class="items-stretch bg-grey-3 text-primary">
-        <q-btn
-          flat
-          icon="apps">
-          <q-menu anchor="bottom left" style="width: 500px;" class="bg-grey-1">
+        <q-btn flat icon="apps">
+          <q-menu anchor="bottom left" style="width: 500px" class="bg-grey-1">
             <div class="column">
               <div class="row col q-pa-md">
                 <q-btn
@@ -39,7 +37,7 @@ SOFTWARE.
                   label="Code"
                   size="md"
                   to="/code"
-                  />
+                />
 
                 <q-btn
                   class="col-5"
@@ -48,7 +46,7 @@ SOFTWARE.
                   label="Dashboard"
                   size="md"
                   to="/dashboard"
-                  />
+                />
               </div>
 
               <div class="row col q-pa-md">
@@ -58,7 +56,7 @@ SOFTWARE.
                   icon="sync"
                   label="Deploy"
                   to="/deploy"
-                  />
+                />
 
                 <q-btn
                   class="col-5"
@@ -66,7 +64,7 @@ SOFTWARE.
                   icon="description"
                   label="Document"
                   to="/document"
-                  />
+                />
               </div>
 
               <div class="row col q-pa-md">
@@ -76,17 +74,14 @@ SOFTWARE.
                   icon="view_kanban"
                   label="Ticket"
                   to="/ticket"
-                  />
+                />
               </div>
             </div>
           </q-menu>
         </q-btn>
 
-        <q-toolbar-title
-          class="column justify-center q-ml-lg">
-          <q-breadcrumbs
-            class="col-auto"
-            active-color="primary">
+        <q-toolbar-title class="column justify-center q-ml-lg">
+          <q-breadcrumbs class="col-auto" active-color="primary">
             <q-breadcrumbs-el icon="home" />
             <q-breadcrumbs-el label="Tickets" />
             <q-breadcrumbs-el label="PBLO-1" />
@@ -94,22 +89,26 @@ SOFTWARE.
         </q-toolbar-title>
 
         <div class="column justify-center">
-          <q-btn
-            flat
-            round>
-            <q-avatar
-                color="secondary"
-                text-color="white">
-                SK
-            </q-avatar>
+          <q-btn flat round>
+            <q-avatar color="secondary" text-color="white"> SK </q-avatar>
 
-            <q-menu anchor="bottom left" class="bg-grey-1" style="width: 200px;" :offset="[0, 4]">
+            <q-menu
+              anchor="bottom left"
+              class="bg-grey-1"
+              style="width: 200px"
+              :offset="[0, 4]"
+            >
               <div class="column q-ma-md items-center">
                 <div class="col">
                   {{ currentUserName() }}
                 </div>
 
-                <q-btn class="col-auto q-mt-md" color="primary" label="Sign out" @click="signOut" />
+                <q-btn
+                  class="col-auto q-mt-md"
+                  color="primary"
+                  label="Sign out"
+                  @click="signOut"
+                />
               </div>
             </q-menu>
           </q-btn>
@@ -117,16 +116,12 @@ SOFTWARE.
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <div class="column full-height">
         <div class="col">
           <under-construction-large />
         </div>
-        <div class="col-auto text-center" style="opacity: 0.5;">
+        <div class="col-auto text-center" style="opacity: 0.5">
           Press [ to open/close
         </div>
       </div>
@@ -135,7 +130,10 @@ SOFTWARE.
     <q-page-container>
       <q-page>
         <div class="row absolute-left items-end">
-          <div class="col column" style="margin-left: -12px; margin-bottom: 24px;">
+          <div
+            class="col column"
+            style="margin-left: -12px; margin-bottom: 24px"
+          >
             <q-btn
               class="rotate-90"
               square
@@ -145,7 +143,8 @@ SOFTWARE.
               text-color="black"
               size="xs"
               :icon="leftDrawerOpen ? 'expand_more' : 'expand_less'"
-              @click="toggleLeftDrawer" />
+              @click="toggleLeftDrawer"
+            />
           </div>
         </div>
         <router-view />
@@ -157,42 +156,43 @@ SOFTWARE.
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import UnderConstructionLarge from '../components/UnderConstructionLarge.vue';
-import { useAuthenticationStore } from "../stores/authentication";
-import { useAPIStore } from "../stores/api";
+import { useAuthenticationStore } from '../stores/authentication';
+import { useAPIStore } from '../stores/api';
 
 const authenticationStore = useAuthenticationStore();
 const apiStore = useAPIStore();
 
 export default defineComponent({
-    name: "MainLayout",
-    setup() {
-        const leftDrawerOpen = ref(false);
+  name: 'MainLayout',
+  setup() {
+    const leftDrawerOpen = ref(false);
 
-        function toggleLeftDrawer() {
-            leftDrawerOpen.value = !leftDrawerOpen.value;
-        };
+    function toggleLeftDrawer() {
+      leftDrawerOpen.value = !leftDrawerOpen.value;
+    }
 
-        document.addEventListener("keydown", function (event) {
-          if (event.key == "[") {
-            toggleLeftDrawer();
-          }
+    document.addEventListener('keydown', function (event) {
+      if (event.key == '[') {
+        toggleLeftDrawer();
+      }
+    });
+
+    apiStore.api.getConfigurationTypes().then((response) => {
+      console.log(response);
+    });
+
+    return {
+      leftDrawerOpen,
+      toggleLeftDrawer,
+      signOut: () => {
+        authenticationStore.keycloakInstance?.logout({
+          redirectUri: 'http://localhost:9000/#/',
         });
-
-        apiStore.api.getConfigurationTypes().then((response) => {
-          console.log(response);
-        });
-
-        return {
-            leftDrawerOpen,
-            toggleLeftDrawer,
-            signOut: () => {
-              authenticationStore.keycloakInstance?.logout({
-                redirectUri: "http://localhost:9000/#/"
-              });
-            },
-            currentUserName: () => authenticationStore.keycloakInstance?.idTokenParsed?.preferred_username,
-        };
-    },
-    components: { UnderConstructionLarge }
+      },
+      currentUserName: () =>
+        authenticationStore.keycloakInstance?.idTokenParsed?.preferred_username,
+    };
+  },
+  components: { UnderConstructionLarge },
 });
 </script>

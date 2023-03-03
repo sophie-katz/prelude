@@ -51,7 +51,7 @@ Follow these steps to get your VS Code development environment up and running.
 - **Clone:** Clone the source code from this repo.
 - **Open:** Open this directory in VS Code.
 - **Enter Dockerized environment:** Click the green button on the bottom left of the VS Code window, and then select "Reopen in Container". See [https://code.visualstudio.com/docs/remote/containers](https://code.visualstudio.com/docs/remote/containers) for more details.
-  - It will take a while when done for the first time as it needs to download and build Docker images. Click "Show log" to see progress.
+  - It will take a while when done for the first time as it needs to download and build Docker images. Click "show log" to see progress.
   - Once it completes, VS Code will be running inside a Dockerized development environment. Any code running inside VS Code is guaranteed to behave exactly the same as in production.
   - It will also start up third party services which will run alongside Portobello and allow it to run as in production.
 
@@ -121,6 +121,7 @@ The VS Code project is set up for the following features:
 
 ## Known issues
 
-- If you run into errors saying that modules cannot be imported in `*.vue` files, you may need to set the typescript version. Run the VS Code command `Volar: Select Typescript Version...` and select the version prefixed with `.yarn/`.
+- If you run into errors saying that the prettier module cannot be found, you may need to set the typescript version used by VS Code. Run the VS Code command `Typescript: Select Typescript Version...` and select the version prefixed with `.yarn/`.
+- If you run into errors saying that modules cannot be imported in `*.vue` files, you may need to set the typescript version used by Volar. Run the VS Code command `Volar: Select Typescript Version...` and select the version prefixed with `.yarn/`.
 - If you use "Reopen in Container" in VS Code and it errors out silently and immediately, try running the command "Dev Containers: Show Container Log" to get more details.
   - Frequently, this is caused by not copying `.env.example.dev` to `.env`.

@@ -32,6 +32,6 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'CodePage',
-  components: { UnderConstructionLarge }
+  components: { UnderConstructionLarge },
 });
 </script>

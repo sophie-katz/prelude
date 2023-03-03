@@ -33,7 +33,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'document', component: () => import('pages/DocumentPage.vue') },
       { path: 'search', component: () => import('pages/SearchPage.vue') },
       { path: 'code', component: () => import('pages/CodePage.vue') },
-      { path: 'ticket', component: () => import('pages/TicketPage.vue') }
+      { path: 'ticket', component: () => import('pages/TicketPage.vue') },
     ],
   },
 
