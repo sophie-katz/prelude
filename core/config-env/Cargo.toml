@@ -21,9 +21,9 @@
 # SOFTWARE.
 
 [package]
-name = "config-env"
-version = "0.1.0"
 edition = "2021"
+name    = "config-env"
+version = "0.1.0"
 
 [dependencies]
 dotenv = "0.15.0"

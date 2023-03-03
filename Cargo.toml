@@ -29,7 +29,7 @@ members = [
     "core/db/migration-common",
     "core/server-routes",
     "server",
-    "utilities/db-seed"
+    "utilities/db-seed",
 ]
 
 [profile.dev]
