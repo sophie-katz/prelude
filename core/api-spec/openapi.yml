@@ -34,16 +34,16 @@ info:
   contact:
     name: Portobello
     email: sophie@sophiekatz.us
-    url: 'https://github.com/sophie-katz/portobello'
+    url: "https://github.com/sophie-katz/portobello"
 
   license:
     name: MIT
-    url: 'https://opensource.org/license/mit/'
+    url: "https://opensource.org/license/mit/"
 
 servers:
-  - url: 'http://localhost:9000/api'
+  - url: "http://localhost:9000/api"
     description: Local development
-  - url: 'http://localhost:9001'
+  - url: "http://localhost:9001"
     description: Local development without Quasar proxy
 
 paths:
@@ -56,12 +56,12 @@ paths:
       summary: List configuration values
       description: Gets the current values of all configuration keys
       responses:
-        '200':
+        "200":
           description: Gets the list of configuration values
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configurationEntrySetResponse'
+                $ref: "#/components/schemas/configurationEntrySetResponse"
               example:
                 - key:
                     id: 53
@@ -100,8 +100,8 @@ paths:
                       - id: 918
                         value:
                           asBoolean: true
-        '500':
-          $ref: '#/components/responses/unexpectedError'
+        "500":
+          $ref: "#/components/responses/unexpectedError"
 
   /configuration/types:
     get:
@@ -109,12 +109,12 @@ paths:
       summary: List types for configuration values
       description: Returns a map of named types for configuration values
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configurationTypeSetResponse'
+                $ref: "#/components/schemas/configurationTypeSetResponse"
               example:
                 - id: 1
                   name: boolean
@@ -122,8 +122,8 @@ paths:
                 - id: 2
                   name: integer
                   description: A signed integer value
-        '500':
-          $ref: '#/components/responses/unexpectedError'
+        "500":
+          $ref: "#/components/responses/unexpectedError"
 
   /configuration/keys:
     get:
@@ -131,12 +131,12 @@ paths:
       summary: List configuration keys
       description: Returns a map of named configuration keys
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configurationKeySetResponse'
+                $ref: "#/components/schemas/configurationKeySetResponse"
               example:
                 - id: 53
                   name: systems.enabled.code
@@ -159,8 +159,8 @@ paths:
                   allowsMultiple: false
                   allowsUserOverride: true
 
-        '500':
-          $ref: '#/components/responses/unexpectedError'
+        "500":
+          $ref: "#/components/responses/unexpectedError"
 
 components:
   schemas:
@@ -190,19 +190,19 @@ components:
     ##############################
 
     configurationTypeName:
-      $ref: '#/components/schemas/name'
+      $ref: "#/components/schemas/name"
       description: Name of the configuration value type
       nullable: false
-      pattern: '^[a-zA-Z0-9_]+$'
+      pattern: "^[a-zA-Z0-9_]+$"
       examples:
         - integer
         - string
 
     configurationKeyName:
-      $ref: '#/components/schemas/name'
+      $ref: "#/components/schemas/name"
       description: Name of the configuration key
       nullable: false
-      pattern: '^[a-zA-Z0-9_.]+'
+      pattern: "^[a-zA-Z0-9_.]+"
       example: systems.enabled.code
 
     userId:
@@ -225,12 +225,12 @@ components:
         - description
       properties:
         id:
-          $ref: '#/components/schemas/id'
+          $ref: "#/components/schemas/id"
           description: Unique id of the configuration value type
         name:
-          $ref: '#/components/schemas/configurationTypeName'
+          $ref: "#/components/schemas/configurationTypeName"
         description:
-          $ref: '#/components/schemas/description'
+          $ref: "#/components/schemas/description"
           description: Name of the configuration value type
           examples:
             - A signed integer value
@@ -245,7 +245,7 @@ components:
       type: array
       nullable: false
       items:
-        $ref: '#/components/schemas/configurationTypeResponse'
+        $ref: "#/components/schemas/configurationTypeResponse"
       minItems: 1
       example:
         - id: 1
@@ -269,16 +269,16 @@ components:
         - allowsUserOverride
       properties:
         id:
-          $ref: '#/components/schemas/id'
+          $ref: "#/components/schemas/id"
           description: Unique id of the configuration key
         name:
-          $ref: '#/components/schemas/configurationKeyName'
+          $ref: "#/components/schemas/configurationKeyName"
         description:
-          $ref: '#/components/schemas/description'
+          $ref: "#/components/schemas/description"
           description: Name of the type
           example: Whether or not the Code system is enabled
         type:
-          $ref: '#/components/schemas/configurationTypeResponse'
+          $ref: "#/components/schemas/configurationTypeResponse"
           nullable: false
         optional:
           description: Whether or not the key is optional
@@ -310,7 +310,7 @@ components:
       nullable: false
       minItems: 1
       items:
-        $ref: '#/components/schemas/configurationKeyResponse'
+        $ref: "#/components/schemas/configurationKeyResponse"
       example:
         - id: 53
           name: systems.enabled.code
@@ -371,10 +371,10 @@ components:
         - value
       properties:
         id:
-          $ref: '#/components/schemas/id'
+          $ref: "#/components/schemas/id"
           description: Unique id of the configuration entry
         value:
-          $ref: '#/components/schemas/configurationValueResponse'
+          $ref: "#/components/schemas/configurationValueResponse"
           description: Value for the configuration key
       example:
         id: 895
@@ -390,7 +390,7 @@ components:
       nullable: false
       minItems: 1
       items:
-        $ref: '#/components/schemas/configurationEntryItemResponse'
+        $ref: "#/components/schemas/configurationEntryItemResponse"
       example:
         - id: 154
           value:
@@ -408,10 +408,10 @@ components:
         - items
       properties:
         userId:
-          $ref: '#/components/schemas/userId'
+          $ref: "#/components/schemas/userId"
           description: The user id for which the entry items are set
         items:
-          $ref: '#/components/schemas/configurationEntryItemSetResponse'
+          $ref: "#/components/schemas/configurationEntryItemSetResponse"
           description: The user-set items
       example:
         userId: 6b2a369d-77bb-440e-acae-d742a40473db
@@ -430,13 +430,13 @@ components:
         - user
       properties:
         key:
-          $ref: '#/components/schemas/configurationKeyResponse'
+          $ref: "#/components/schemas/configurationKeyResponse"
           description: The configuration key of the entry
         itemsGlobal:
-          $ref: '#/components/schemas/configurationEntryItemSetResponse'
+          $ref: "#/components/schemas/configurationEntryItemSetResponse"
           description: The globally set items
         user:
-          $ref: '#/components/schemas/configurationEntryUserResponse'
+          $ref: "#/components/schemas/configurationEntryUserResponse"
       example:
         key:
           id: 97
@@ -466,7 +466,7 @@ components:
       nullable: false
       minItems: 1
       items:
-        $ref: '#/components/schemas/configurationEntryResponse'
+        $ref: "#/components/schemas/configurationEntryResponse"
       example:
         - key:
             id: 53
@@ -522,6 +522,6 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorWithMessageResponse'
+            $ref: "#/components/schemas/errorWithMessageResponse"
           example:
             message: could not connect to database
