@@ -117,9 +117,9 @@ async fn test_get_all_configuration_keys() -> Result<(), db::Error> {
     assert_eq!(keys[0].configuration_type.id, boolean_id);
     assert_eq!(keys[0].configuration_type.name, "boolean");
     assert_eq!(keys[0].configuration_type.description, "A true/false value");
-    assert_eq!(keys[0].optional, false);
-    assert_eq!(keys[0].allows_multiple, false);
-    assert_eq!(keys[0].allows_user_override, false);
+    assert!(!keys[0].optional);
+    assert!(!keys[0].allows_multiple);
+    assert!(!keys[0].allows_user_override);
 
     assert!(keys[1].id > 0);
     assert_eq!(keys[1].name, "systems.enabled.ticket");
@@ -130,9 +130,9 @@ async fn test_get_all_configuration_keys() -> Result<(), db::Error> {
     assert_eq!(keys[1].configuration_type.id, boolean_id);
     assert_eq!(keys[1].configuration_type.name, "boolean");
     assert_eq!(keys[1].configuration_type.description, "A true/false value");
-    assert_eq!(keys[1].optional, false);
-    assert_eq!(keys[1].allows_multiple, false);
-    assert_eq!(keys[1].allows_user_override, false);
+    assert!(!keys[1].optional);
+    assert!(!keys[1].allows_multiple);
+    assert!(!keys[1].allows_user_override);
 
     assert_eq!(keys[1].id, keys[0].id + 1);
 
@@ -192,9 +192,9 @@ async fn test_get_all_configuration_entries() -> Result<(), db::Error> {
         entries[0].key.configuration_type.description,
         "A true/false value"
     );
-    assert_eq!(entries[0].key.optional, false);
-    assert_eq!(entries[0].key.allows_multiple, false);
-    assert_eq!(entries[0].key.allows_user_override, false);
+    assert!(!entries[0].key.optional);
+    assert!(!entries[0].key.allows_multiple);
+    assert!(!entries[0].key.allows_user_override);
     assert_eq!(entries[0].items_global.len(), 1);
     assert!(entries[0].items_global[0].id > 0);
     assert_eq!(entries[0].items_global[0].value.as_boolean, Some(true));

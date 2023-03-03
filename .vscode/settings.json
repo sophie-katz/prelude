@@ -80,5 +80,14 @@
   "rust-analyzer.inlayHints.chainingHints.enable": true,
   "rust-analyzer.inlayHints.typeHints.enable": true,
   "testExplorer.useNativeTesting": true,
-  "jest.jestCommandLine": "yarn workspaces foreach run test"
+  "jest.jestCommandLine": "yarn workspaces foreach run test",
+  "editor.formatOnSave": true,
+  "markdown.preview.scrollEditorWithPreview": false,
+  "markdown.preview.scrollPreviewWithEditor": false,
+  "markdown.updateLinksOnFileMove.enabled": "prompt",
+  "markdown.validate.enabled": true,
+  "markdown.validate.fileLinks.enabled": "error",
+  "markdown.validate.fragmentLinks.enabled": "error",
+  "markdown.validate.referenceLinks.enabled": "error",
+  "markdown.validate.unusedLinkDefinitions.enabled": "warning"
 }

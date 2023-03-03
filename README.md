@@ -30,12 +30,12 @@ Portobello is a project management and monitoring suite.
 
 ## Guides
 
-* See [Installation](/docs/Installation.md) for how to install and set up Portobello.
-* See [Contributing](/docs/Contributing.md) for details on how to set this project up for local development.
+- See [Installation](/docs/Installation.md) for how to install and set up Portobello.
+- See [Contributing](/docs/Contributing.md) for details on how to set this project up for local development.
 
 ## Resources
 
-| URL | Description |
-|------|-------------|
-| [Google Drive folder](https://drive.google.com/drive/folders/1N00nt2MpcOYI9LJROfeZS94XxQnfkklY?usp=share_link) | Google Drive storage location |
-| [REST API Documentation](https://portobello.stoplight.io/docs/portobello) | Documentation for REST API generated from OpenAPI spec with Spotlight |
+| URL                                                                                                            | Description                                                           |
+| -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| [Google Drive folder](https://drive.google.com/drive/folders/1N00nt2MpcOYI9LJROfeZS94XxQnfkklY?usp=share_link) | Google Drive storage location                                         |
+| [REST API Documentation](https://portobello.stoplight.io/docs/portobello)                                      | Documentation for REST API generated from OpenAPI spec with Spotlight |
