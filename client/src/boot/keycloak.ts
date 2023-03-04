@@ -26,7 +26,7 @@ import { useAuthenticationStore } from '../stores/authentication';
 
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
-export default boot(async ({ app, store }) => {
+export default boot(async ({}) => {
   const authenticationStore = useAuthenticationStore();
 
   const keycloak = new Keycloak({

@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as api from "./index";
+import * as api from './index';
 
-test("asdf", () => {
+test('asdf', () => {
   expect(true).toBe(true);
 });
