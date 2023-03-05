@@ -27,13 +27,13 @@ set -e
 # NOTE: This script is very similar to docker/postgres-initdb.d/CreateDatabases.bash
 
 PGPASSWORD="$POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" --host "$POSTGRES_HOST" <<-EOSQL
-    DROP DATABASE IF EXISTS portobello_dev;
+    DROP DATABASE IF EXISTS prelude_dev;
 
-    DROP DATABASE IF EXISTS portobello_unit;
+    DROP DATABASE IF EXISTS prelude_unit;
 
-    CREATE DATABASE portobello_dev;
-    GRANT ALL PRIVILEGES ON DATABASE portobello_dev TO $POSTGRES_USER;
+    CREATE DATABASE prelude_dev;
+    GRANT ALL PRIVILEGES ON DATABASE prelude_dev TO $POSTGRES_USER;
 
-    CREATE DATABASE portobello_unit;
-    GRANT ALL PRIVILEGES ON DATABASE portobello_unit TO $POSTGRES_USER;
+    CREATE DATABASE prelude_unit;
+    GRANT ALL PRIVILEGES ON DATABASE prelude_unit TO $POSTGRES_USER;
 EOSQL

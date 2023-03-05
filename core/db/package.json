@@ -3,13 +3,13 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "migrate-dev-update": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash portobello_dev up\"",
-    "migrate-dev-refresh": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash portobello_dev refresh\"",
-    "migrate-unit-update": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash portobello_unit up\"",
-    "migrate-unit-refresh": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash portobello_unit refresh\"",
+    "migrate-dev-update": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash prelude_dev up\"",
+    "migrate-dev-refresh": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash prelude_dev refresh\"",
+    "migrate-unit-update": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash prelude_unit up\"",
+    "migrate-unit-refresh": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/MigrateDatabase.bash prelude_unit refresh\"",
     "migrate-update": "yarn workspace @core/db run migrate-dev-update && yarn workspace @core/db run migrate-unit-update",
     "migrate-refresh": "yarn workspace @core/db run migrate-dev-refresh && yarn workspace @core/db run migrate-unit-refresh",
-    "generate-entities": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/GenerateEntities.bash portobello_dev refresh\"",
+    "generate-entities": "dotenv -e /app/.env -- cross-env-shell \"bash /app/core/db/scripts/GenerateEntities.bash prelude_dev refresh\"",
     "recreate-databases": "dotenv -e /app/.env -- cross-env-shell \"bash /app/docker/postgres-initdb.d/RecreateDatabases.bash\""
   },
   "dependencies": {

@@ -30,9 +30,9 @@ export default boot(async ({}) => {
   const authenticationStore = useAuthenticationStore();
 
   const keycloak = new Keycloak({
-    url: 'http://localhost:9003',
-    realm: 'portobello',
-    clientId: 'portobello',
+    url: "http://localhost:9003",
+    realm: "prelude",
+    clientId: "prelude"
   });
 
   console.log('Initializing Keycloak.JS');

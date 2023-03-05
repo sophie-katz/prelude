@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-# Portobello database layer
+# Prelude database layer
 
 This crate uses SeaORM to define and interact with the PostgreSQL database.
 
@@ -57,4 +57,4 @@ When changing the database structure, the [entity code](https://www.sea-ql.org/S
 yarn workspace @core/db run generate-entities
 ```
 
-**NOTE:** Entities are generated off of the `portobello_dev` database, so make sure that this is fully migrated before running this.
+**NOTE:** Entities are generated off of the `prelude_dev` database, so make sure that this is fully migrated before running this.

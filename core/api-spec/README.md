@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-# Portobello API specification
+# Prelude API specification
 
 ## Generating bindings
 
@@ -44,4 +44,4 @@ yarn workspace @core/api-spec run validate
 
 ## Developer workflow
 
-If any changes are made to [`openapi.yml`](openapi.yml), they should also be made to the [`server-routes`](/core/server-routes) crate and to the [Thunder](https://www.thunderclient.com/) collection stored in [`portobello-thunder.json`](/portobello-thunder.json) (see [REST API client](/docs/Contributing.md#rest-api-client) in [Contributing](/docs/Contributing.md) for details).
+If any changes are made to [`openapi.yml`](openapi.yml), they should also be made to the [`server-routes`](/core/server-routes) crate and to the [Thunder](https://www.thunderclient.com/) collection stored in [`prelude-thunder.json`](/prelude-thunder.json) (see [REST API client](/docs/Contributing.md#rest-api-client) in [Contributing](/docs/Contributing.md) for details).

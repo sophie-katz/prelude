@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.0.1",
   "description": "A Quasar Project",
-  "productName": "Portobello",
+  "productName": "Prelude",
   "author": "Sophie Katz <sophie@sophiekatz.us>",
   "private": true,
   "scripts": {

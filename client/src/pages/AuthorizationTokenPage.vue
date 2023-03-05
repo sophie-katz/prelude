@@ -34,7 +34,7 @@ SOFTWARE.
 </template>
 
 <script lang="ts">
-// TODO: https://github.com/sophie-katz/portobello/issues/11
+// TODO: https://github.com/sophie-katz/prelude/issues/11
 
 import { defineComponent } from 'vue';
 import { useAuthenticationStore } from '../stores/authentication';

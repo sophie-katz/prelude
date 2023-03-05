@@ -22,6 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-# Installing Portobello
+# Installing Prelude
 
 This project is still heavily under development and is not yet mature enough to have any kind of deployment pipeline in place. Once there's enough to deploy, this will be updated!

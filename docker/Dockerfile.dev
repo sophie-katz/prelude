@@ -27,17 +27,17 @@ FROM ubuntu:22.04
 # NOTE: When updating any of these versions, make sure to also update the
 # *_LAST_UPDATED date so that out-of-date dependencies can be tracked.
 
-ENV PORTOBELLO_UBUNTU_VERSION_LAST_UPDATED=2023-02-03
-ENV PORTOBELLO_UBUNTU_VERSION=22.04
+ENV PRELUDE_UBUNTU_VERSION_LAST_UPDATED=2023-02-03
+ENV PRELUDE_UBUNTU_VERSION=22.04
 
-ENV PORTOBELLO_NVM_VERSION_LAST_UPDATED=2023-02-03
-ENV PORTOBELLO_NVM_VERSION=v0.39.3
+ENV PRELUDE_NVM_VERSION_LAST_UPDATED=2023-02-03
+ENV PRELUDE_NVM_VERSION=v0.39.3
 
-ENV PORTOBELLO_NODE_VERSION_LAST_UPDATED=2023-02-03
-ENV PORTOBELLO_NODE_VERSION=v18.13.0
+ENV PRELUDE_NODE_VERSION_LAST_UPDATED=2023-02-03
+ENV PRELUDE_NODE_VERSION=v18.13.0
 
-ENV PORTOBELLO_YARN_VERSION_LAST_UPDATED=2023-02-03
-ENV PORTOBELLO_YARN_VERSION=v3.3.1
+ENV PRELUDE_YARN_VERSION_LAST_UPDATED=2023-02-03
+ENV PRELUDE_YARN_VERSION=v3.3.1
 
 # Update and install system packages
 RUN apt-get update && \
@@ -83,20 +83,20 @@ ENV CARGO_TARGET_DIR /home/dev/target
 
 # Install NVM
 ENV NVM_DIR /home/dev/.nvm
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${PORTOBELLO_NVM_VERSION}/install.sh | bash; \
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${PRELUDE_NVM_VERSION}/install.sh | bash; \
     . $NVM_DIR/nvm.sh && \
     nvm --version
 
 # Install Node.JS
 RUN . $NVM_DIR/nvm.sh && \
-    nvm install ${PORTOBELLO_NODE_VERSION} && \
-    nvm use ${PORTOBELLO_NODE_VERSION} && \
+    nvm install ${PRELUDE_NODE_VERSION} && \
+    nvm use ${PRELUDE_NODE_VERSION} && \
     node --version
 
 # Install Yarn
 RUN . $NVM_DIR/nvm.sh && \
     corepack enable && \
-    corepack prepare yarn@${PORTOBELLO_YARN_VERSION} --activate && \
+    corepack prepare yarn@${PRELUDE_YARN_VERSION} --activate && \
     yarn --version
 
 # Update .bashrc

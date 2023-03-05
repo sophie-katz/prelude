@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! The Portobello database layer.
+//! The Prelude database layer.
 
 #![allow(missing_docs, incomplete_features)]
 #![feature(async_fn_in_trait)]
@@ -139,13 +139,13 @@ impl DatabaseInstance {
     /// Gets the name of the database instance as it is known within PostgreSQL.
     pub fn as_name(self) -> &'static str {
         match self {
-            DatabaseInstance::Development => "portobello_dev",
-            DatabaseInstance::Unit => "portobello_unit",
+            DatabaseInstance::Development => "prelude_dev",
+            DatabaseInstance::Unit => "prelude_unit",
         }
     }
 }
 
-/// Connect to the Portobello database
+/// Connect to the Prelude database
 ///
 /// # Errors
 ///

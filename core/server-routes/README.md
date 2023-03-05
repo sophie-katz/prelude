@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-# Portobello API server routes
+# Prelude API server routes
 
 Declaration of all API server routes and top-level handlers for Rocket.
 

@@ -22,19 +22,19 @@
 
 # If any changes are made to this file, they should also be made to the
 # server-routes crate and to the Thunder collection stored in
-# portobello-thunder.json.
+# prelude-thunder.json.
 
 openapi: 3.0.3
 
 info:
-  title: Portobello API
-  description: Primary REST API for Portobello
+  title: Prelude API
+  description: Primary REST API for Prelude
   version: 0.1.0
 
   contact:
-    name: Portobello
+    name: Prelude
     email: sophie@sophiekatz.us
-    url: "https://github.com/sophie-katz/portobello"
+    url: 'https://github.com/sophie-katz/prelude'
 
   license:
     name: MIT

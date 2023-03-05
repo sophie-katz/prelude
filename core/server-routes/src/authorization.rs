@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// TODO: https://github.com/sophie-katz/portobello/issues/11
+// TODO: https://github.com/sophie-katz/prelude/issues/11
 
 // use jsonwebtoken::{decode, Algorithm, DecodingKey, Validation};
 // use oauth2::{
@@ -30,22 +30,22 @@
 
 // #[get("/login")]
 // pub fn login() {
-//     // Go to http://localhost:8080/realms/portobello/.well-known/openid-configuration to get configuration details
+//     // Go to http://localhost:8080/realms/prelude/.well-known/openid-configuration to get configuration details
 
 //     let client = BasicClient::new(
 //         // client_id
-//         ClientId::new("portobello".to_owned()),
+//         ClientId::new("prelude".to_owned()),
 //         // client_secret
 //         None,
 //         // auth_url
 //         AuthUrl::new(
-//             "http://localhost:8080/realms/portobello/protocol/openid-connect/auth".to_owned(),
+//             "http://localhost:8080/realms/prelude/protocol/openid-connect/auth".to_owned(),
 //         )
 //         .expect("todo"),
 //         // token_url
 //         Some(
 //             TokenUrl::new(
-//                 "http://auth:8080/realms/portobello/protocol/openid-connect/token".to_owned(),
+//                 "http://auth:8080/realms/prelude/protocol/openid-connect/token".to_owned(),
 //             )
 //             .expect("todo"),
 //         ),

@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Portobello API
- * Primary REST API for Portobello
+ * Prelude API
+ * Primary REST API for Prelude
  *
  * The version of the OpenAPI document: 0.1.0
  * Contact: sophie@sophiekatz.us

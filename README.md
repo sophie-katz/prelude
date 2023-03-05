@@ -22,16 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-# Portobello
+# Prelude
 
 <img src="https://img.shields.io/badge/license-MIT-green" /> <img src="https://img.shields.io/badge/rust-1.69.0-blue" /> <img src="https://img.shields.io/badge/node-v18.13.0-blue" /> <img src="https://img.shields.io/badge/platform-linux%7Cdocker-lightgrey" />
 
-Portobello is a project management and monitoring suite.
+Prelude is a project management and monitoring suite.
 
 ## Guides
 
-- See [Installation](/docs/Installation.md) for how to install and set up Portobello.
-- See [Contributing](/docs/Contributing.md) for details on how to set this project up for local development.
+* See [Installation](/docs/Installation.md) for how to install and set up Prelude.
+* See [Contributing](/docs/Contributing.md) for details on how to set this project up for local development.
 
 ## Resources
 

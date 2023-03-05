@@ -168,17 +168,17 @@ def check_license_txt_year() -> bool:
             print("\n\033[1mWarning:\033[0;0m Copyright year needs to be updated")
 
 # Extract versions
-ubuntu_version:                str           = get_env_safe("PORTOBELLO_UBUNTU_VERSION")
-ubuntu_version_last_updated:   datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_UBUNTU_VERSION_LAST_UPDATED"), date_format).date()
-nvm_version:                   str           = get_env_safe("PORTOBELLO_NVM_VERSION")
-nvm_version_last_updated:      datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_NVM_VERSION_LAST_UPDATED"), date_format).date()
-node_version:                  str           = get_env_safe("PORTOBELLO_NODE_VERSION")
-node_version_last_updated:     datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_NODE_VERSION_LAST_UPDATED"), date_format).date()
-yarn_version:                  str           = get_env_safe("PORTOBELLO_YARN_VERSION")
-yarn_version_last_updated:     datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_YARN_VERSION_LAST_UPDATED"), date_format).date()
-postgres_version_last_updated: datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_POSTGRES_VERSION_LAST_UPDATED"), date_format).date()
-pgadmin4_version_last_updated: datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_PGADMIN4_VERSION_LAST_UPDATED"), date_format).date()
-keycloak_version_last_updated: datetime.date = datetime.datetime.strptime(get_env_safe("PORTOBELLO_KEYCLOAK_VERSION_LAST_UPDATED"), date_format).date()
+ubuntu_version:                str           = get_env_safe("PRELUDE_UBUNTU_VERSION")
+ubuntu_version_last_updated:   datetime.date = datetime.datetime.strptime(get_env_safe("PRELUDE_UBUNTU_VERSION_LAST_UPDATED"), date_format).date()
+nvm_version:                   str           = get_env_safe("PRELUDE_NVM_VERSION")
+nvm_version_last_updated:      datetime.date = datetime.datetime.strptime(get_env_safe("PRELUDE_NVM_VERSION_LAST_UPDATED"), date_format).date()
+node_version:                  str           = get_env_safe("PRELUDE_NODE_VERSION")
+node_version_last_updated:     datetime.date = datetime.datetime.strptime(get_env_safe("PRELUDE_NODE_VERSION_LAST_UPDATED"), date_format).date()
+yarn_version:                  str           = get_env_safe("PRELUDE_YARN_VERSION")
+yarn_version_last_updated:     datetime.date = datetime.datetime.strptime(get_env_safe("PRELUDE_YARN_VERSION_LAST_UPDATED"), date_format).date()
+postgres_version_last_updated: datetime.date = datetime.datetime.strptime(get_env_safe("PRELUDE_POSTGRES_VERSION_LAST_UPDATED"), date_format).date()
+pgadmin4_version_last_updated: datetime.date = datetime.datetime.strptime(get_env_safe("PRELUDE_PGADMIN4_VERSION_LAST_UPDATED"), date_format).date()
+keycloak_version_last_updated: datetime.date = datetime.datetime.strptime(get_env_safe("PRELUDE_KEYCLOAK_VERSION_LAST_UPDATED"), date_format).date()
 yarn_lock_last_committed:      datetime.date = get_last_commit_date_of_file("/app/yarn.lock")
 cargo_lock_last_committed:     datetime.date = get_last_commit_date_of_file("/app/Cargo.lock")
 apt_packages_last_upgraded:    datetime.date = get_apt_packages_last_upgraded()
@@ -196,7 +196,7 @@ if not check_version("Ubuntu", ubuntu_version, ubuntu_version_last_updated, days
 - Go to https://hub.docker.com/_/ubuntu to find the latest Ubuntu Docker image
 - Edit Dockerfile.dev
 - Change the FROM image to the new image tag
-- Also update the PORTOBELLO_UBUNTU_VERSION and PORTOBELLO_UBUNTU_VERSION_LAST_UPDATED variables below""")
+- Also update the PRELUDE_UBUNTU_VERSION and PRELUDE_UBUNTU_VERSION_LAST_UPDATED variables below""")
 
 if not check_version("NVM", nvm_version, nvm_version_last_updated, days_threshold_nvm_version):
     all_up_to_date = False
@@ -204,7 +204,7 @@ if not check_version("NVM", nvm_version, nvm_version_last_updated, days_threshol
 
 - Go to https://github.com/nvm-sh/nvm/releases to find the latest NVM release
 - Edit Dockerfile.dev
-- Update the PORTOBELLO_NVM_VERSION and PORTOBELLO_NVM_VERSION_LAST_UPDATED variables""")
+- Update the PRELUDE_NVM_VERSION and PRELUDE_NVM_VERSION_LAST_UPDATED variables""")
 
 if not check_version("Node.JS", node_version, node_version_last_updated, days_threshold_node_version):
     all_up_to_date = False
@@ -212,7 +212,7 @@ if not check_version("Node.JS", node_version, node_version_last_updated, days_th
 
 - Run 'nvm version-remote --lts' to get the latest LTS release of Node.JS
 - Edit Dockerfile.dev
-- Update the PORTOBELLO_NODE_VERSION and PORTOBELLO_NODE_VERSION_LAST_UPDATED variables""")
+- Update the PRELUDE_NODE_VERSION and PRELUDE_NODE_VERSION_LAST_UPDATED variables""")
 
 if not check_version("Yarn", yarn_version, yarn_version_last_updated, days_threshold_yarn_version):
     all_up_to_date = False
@@ -220,7 +220,7 @@ if not check_version("Yarn", yarn_version, yarn_version_last_updated, days_thres
 
 - Go to https://github.com/yarnpkg/berry/releases to find the latest Yarn release
 - Edit Dockerfile.dev
-- Update the PORTOBELLO_YARN_VERSION and PORTOBELLO_YARN_VERSION_LAST_UPDATED variables""")
+- Update the PRELUDE_YARN_VERSION and PRELUDE_YARN_VERSION_LAST_UPDATED variables""")
 
 print()
 print("Last updated:")

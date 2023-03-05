@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! Code specific to testing the Portobello database layer.
+//! Code specific to testing the Prelude database layer.
 
 use crate::entities::{
     configuration_entries, configuration_entries_audit, configuration_key_reference,

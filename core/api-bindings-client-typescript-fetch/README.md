@@ -22,6 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-# Portobello REST API bindings for client-side Typescript with Fetch
+# Prelude REST API bindings for client-side Typescript with Fetch
 
 This is generated from [`core/api-spec`](/core/api-spec).

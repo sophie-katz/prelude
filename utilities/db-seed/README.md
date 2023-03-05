@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-# Portobello database seeder
+# Prelude database seeder
 
 Seeds an empty database instance with some basic test data.
 

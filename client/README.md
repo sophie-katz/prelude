@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-# Portobello web client
+# Prelude web client
 
-The web client for Portobello.
+The web client for Prelude.
 
 ## Developer workflow
 

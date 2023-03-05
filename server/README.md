@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-# Portobello API server
+# Prelude API server
 
-A thin executable that launches the Portobello API server.
+A thin executable that launches the Prelude API server.
 
 ## Developer workflow
 

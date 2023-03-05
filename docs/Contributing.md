@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-# Contributing to Portobello
+# Contributing to Prelude
 
-Portobello is intended to be developed inside VS Code. Everything that can be done inside VS Code can be done through other editors or via the command line, but these workflows are not supported.
+Prelude is intended to be developed inside VS Code. Everything that can be done inside VS Code can be done through other editors or via the command line, but these workflows are not supported.
 
 - [Installing dependencies on your system](#installing-dependencies-on-your-system)
 - [Opening the project in VS Code](#opening-the-project-in-vs-code)
@@ -48,50 +48,49 @@ Development may be done on Windows, macOS, or Linux. The following dependencies 
 
 Follow these steps to get your VS Code development environment up and running.
 
-- **Clone:** Clone the source code from this repo.
-- **Open:** Open this directory in VS Code.
-- **Enter Dockerized environment:** Click the green button on the bottom left of the VS Code window, and then select "Reopen in Container". See [https://code.visualstudio.com/docs/remote/containers](https://code.visualstudio.com/docs/remote/containers) for more details.
-  - It will take a while when done for the first time as it needs to download and build Docker images. Click "show log" to see progress.
-  - Once it completes, VS Code will be running inside a Dockerized development environment. Any code running inside VS Code is guaranteed to behave exactly the same as in production.
-  - It will also start up third party services which will run alongside Portobello and allow it to run as in production.
+* **Clone:** Clone the source code from this repo.
+* **Open:** Open this directory in VS Code.
+* **Enter Dockerized environment:** Click the green button on the bottom left of the VS Code window, and then select "Reopen in Container". See [https://code.visualstudio.com/docs/remote/containers](https://code.visualstudio.com/docs/remote/containers) for more details.
+    * It will take a while when done for the first time as it needs to download and build Docker images. Click "Show log" to see progress.
+    * Once it completes, VS Code will be running inside a Dockerized development environment. Any code running inside VS Code is guaranteed to behave exactly the same as in production.
+    * It will also start up third party services which will run alongside Prelude and allow it to run as in production.
 
 Run `docker ps` to see the running containers.
 
 ## Running a local instance for development
 
-- **Configure environment:** Copy `/app/.env.example.dev` to `/app/.env` and edit it, following the instructions in the comments within.
-- **Install Yarn dependencies:** Install project dependencies from Yarn by openning a terminal in VS Code and running the command: `yarn`
-- **Recreate databases:** To drop and recreate the databases, run the command: `yarn workspace @core/db run recreate-databases`
-  - See [Known issues](#known-issues) if you run into an error here.
-- **Migrate databases:** To drop and recreate the database schema, run the command: `yarn workspace @core/db run migrate-refresh`
-  - If you run into issues, try recreating the databases and trying again.
-- **Seed databases:** To seed the databases with the minimal data needed to run the application, run the command: `yarn workspace @utilities/db-seed run seed`
-- **Configure Portobello admin user:** Go to http://localhost:9003/admin/master/console/#/portobello/users. This is the admin console for the local instance of Keycloak, an authentication service used by Portobello.
-  - Click "Add user"
-  - Enter in a username
-  - Click "Create"
-  - Navigate to the "Credentials" tab
-  - Click "Set password"
-  - Enter in a secure password
-  - Disable the "Temporary" setting
-  - Click "Save" and then "Save password"
-  - You can now use these credentials to log into the local instance of Portobello.
-- **Running server:** To run the server for the Portobello REST API, open a new terminal and run the command: `yarn workspace server run start`
-  - This may take longer the first time as it has to install and build Cargo dependencies.
-- **Running client:** To run the web client for Portobello, open a new terminal and run the command: `yarn workspace client run dev`
-  - This may take longer the first time as it has to build the client.
-  - Follow instructions on how to open the local instance in your browser.
+* **Configure environment:** Copy `/app/.env.example.dev` to `/app/.env` and edit it, following the instructions in the comments within.
+* **Install Yarn dependencies:** Install project dependencies from Yarn by openning a terminal in VS Code and running the command: `yarn`
+* **Recreate databases:** To drop and recreate the databases, run the command: `yarn workspace @core/db run recreate-databases`
+    * See [Known issues](#known-issues) if you run into an error here.
+* **Migrate databases:** To drop and recreate the database schema, run the command: `yarn workspace @core/db run migrate-refresh`
+    * If you run into issues, try recreating the databases and trying again.
+* **Seed databases:** To seed the databases with the minimal data needed to run the application, run the command: `yarn workspace @utilities/db-seed run seed`
+* **Configure Prelude admin user:** Go to http://localhost:9003/admin/master/console/#/prelude/users. This is the admin console for the local instance of Keycloak, an authentication service used by Prelude.
+    * Click "Add user"
+    * Enter in a username
+    * Click "Create"
+    * Navigate to the "Credentials" tab
+    * Click "Set password"
+    * Enter in a secure password
+    * Disable the "Temporary" setting
+    * Click "Save" and then "Save password"
+    * You can now use these credentials to log into the local instance of Prelude.
+* **Running server:** To run the server for the Prelude REST API, open a new terminal and run the command: `yarn workspace server run start`
+    * This may take longer the first time as it has to install and build Cargo dependencies.
+* **Running client:** To run the web client for Prelude, open a new terminal and run the command: `yarn workspace client run dev`
+    * This may take longer the first time as it has to build the client.
+    * Follow instructions on how to open the local instance in your browser.
 
-See [`client/README.md`](/client/README.md) and [`server/README.md`](/server/README.md) for details on how to develop in the two main packages in this repo. Also see [Port map](PortMap.md) for a description of what ports Portobello uses for local development.
+See [`client/README.md`](/client/README.md) and [`server/README.md`](/server/README.md) for details on how to develop in the two main packages in this repo. Also see [Port map](PortMap.md) for a description of what ports Prelude uses for local development.
 
 ## REST API client
 
-To set up the REST API in VS Code, import the Portobello collection in Thunder:
-
-- Navigate to the Thunder sidebar panel
-- Go to the Collections tab
-- Using the hamburger menu, click Import
-- Import `/app/portobello-thunder.json`
+To set up the REST API in VS Code, import the Prelude collection in Thunder:
+* Navigate to the Thunder sidebar panel
+* Go to the Collections tab
+* Using the hamburger menu, click Import
+* Import `/app/prelude-thunder.json`
 
 In order to update the REST API configuration, re-export over the same path.
 

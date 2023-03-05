@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! Domain objects for the Portobello REST API.
+//! Domain objects for the Prelude REST API.
 //!
 //! These objects should exactly match the definitions in
 //! `core/api-spec/openapi.yml`.
