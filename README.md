@@ -39,3 +39,4 @@ Prelude is a project management and monitoring suite.
 | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
 | [Google Drive folder](https://drive.google.com/drive/folders/1N00nt2MpcOYI9LJROfeZS94XxQnfkklY?usp=share_link) | Google Drive storage location                                         |
 | [REST API Documentation](https://portobello.stoplight.io/docs/portobello)                                      | Documentation for REST API generated from OpenAPI spec with Spotlight |
+| [Figma Project](https://www.figma.com/files/project/85231228/Prelude)                                          | Figma project for UI design                                           |
