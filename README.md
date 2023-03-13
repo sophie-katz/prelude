@@ -26,12 +26,23 @@ SOFTWARE.
 
 <img src="https://img.shields.io/badge/license-MIT-green" /> <img src="https://img.shields.io/badge/rust-1.69.0-blue" /> <img src="https://img.shields.io/badge/node-v18.13.0-blue" /> <img src="https://img.shields.io/badge/platform-linux%7Cdocker-lightgrey" />
 
-Prelude is a project management and monitoring suite.
+<br /><br /><br />
+
+<p align="center">
+  <img src="client/src/assets/Icon/SVG/LightColor.svg#gh-light-mode-only" style="width: 100px;" />
+  <img src="client/src/assets/Icon/SVG/DarkColor.svg#gh-dark-mode-only" style="width: 100px;" />
+</p>
+
+<p align="center">
+Prelude is a project management, integration, and monitoring suite.
+</p>
+
+<br /><br /><br />
 
 ## Guides
 
-* See [Installation](/docs/Installation.md) for how to install and set up Prelude.
-* See [Contributing](/docs/Contributing.md) for details on how to set this project up for local development.
+- See [Installation](/docs/Installation.md) for how to install and set up Prelude.
+- See [Contributing](/docs/Contributing.md) for details on how to set this project up for local development.
 
 ## Resources
 
